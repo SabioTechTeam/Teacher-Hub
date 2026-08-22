@@ -1,0 +1,7 @@
+id: math.6.ratios.intro
+grade: 6
+subject: mathematics
+name: Ratio Concepts
+prerequisites: ["math.5.fractions.compare"]
+standards: ["6.RP.A.1"]
+difficulty: 0.6
