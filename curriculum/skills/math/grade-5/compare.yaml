@@ -1,0 +1,7 @@
+id: math.5.fractions.compare
+grade: 5
+subject: mathematics
+name: Compare Fractions
+prerequisites: ["math.4.fractions.equivalent"]
+standards: ["5.NF.A.1"]
+difficulty: 0.5
