@@ -5,13 +5,14 @@ Owner: Eric (use-case / pitch lead)
 
 ---
 
-## Slide 1 — Title
+## Slide 1 — Title ✅ LOCKED
 **Teacher-Hub**  
-AI tutor for grades 4–6 math  
+The right practice, written for this student  
 
-Diagnose → generate → grade → adapt
+Diagnose → generate → grade → adapt  
+Grades 4–6 math
 
-*Speaker note:* Say the name once, then the loop. Don’t explain the whole company yet.
+*Speaker note:* Name → human promise → loop. Don’t explain the company yet.
 
 ---
 
@@ -64,7 +65,7 @@ We personalize practice — we don’t diagnose disabilities. Teachers stay in c
 ---
 
 ## Open questions (we’re discussing)
-- [ ] Exact title subtitle?
+- [x] Title: B + loop (right practice / diagnose→generate→grade→adapt)
 - [x] Problem slide: A+B locked (kitchen table + one worksheet for 28)
 - [ ] Include neurodiversity line on slide 7 or keep verbal only?
 - [ ] Team slide? (hackathons sometimes want it — maybe skip to save time)
