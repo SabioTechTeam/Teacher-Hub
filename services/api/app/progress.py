@@ -188,6 +188,30 @@ def finish_assessment(student_id: str, assessment_id: str, result: dict[str, Any
     save_progress(student_id, progress)
 
 
+def register_assessment(
+    student_id: str, assessment_id: str, question_ids: list[str]
+) -> None:
+    """Record which questions were served.
+
+    The evaluator needs the full question set, not just the answered ones --
+    otherwise a half-finished quiz looks complete and can report mastery.
+    """
+    progress = load_progress(student_id)
+    entry = progress["assessments"].setdefault(assessment_id, {"answers": []})
+    entry["question_ids"] = list(question_ids)
+    progress["updated_at"] = _now()
+    save_progress(student_id, progress)
+
+
+def assessment_questions(student_id: str, assessment_id: str) -> list[str]:
+    entry = load_progress(student_id)["assessments"].get(assessment_id) or {}
+    ids = entry.get("question_ids")
+    if ids:
+        return list(ids)
+    # Older records predate question_ids; fall back to what was answered.
+    return [a["question_id"] for a in entry.get("answers", [])]
+
+
 def assessment_answers(student_id: str, assessment_id: str) -> list[dict[str, Any]]:
     progress = load_progress(student_id)
     return progress["assessments"].get(assessment_id, {}).get("answers", [])

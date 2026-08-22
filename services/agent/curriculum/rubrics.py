@@ -54,9 +54,17 @@ def standard_for(skill_id: str) -> Optional[dict]:
 
 
 def grounding(skill_id: str) -> str:
-    """Prompt fragment describing the standard, or "" when unmapped."""
+    """Prompt fragment describing the skill.
+
+    Prefers the CCSS standard. Falls back to the skill's own `description` when
+    no standard maps -- a bare skill name is not enough to pin the content, and
+    the model drifts to an adjacent skill without it.
+    """
     std = standard_for(skill_id)
     if not std:
+        skill = load_curriculum().get(skill_id)
+        if skill and skill.description:
+            return f"Skill definition: {skill.description}\n"
         return ""
     return (
         f"CCSS {std['id']}: {std['description']}\n"
@@ -66,13 +74,34 @@ def grounding(skill_id: str) -> str:
     )
 
 
-def proficiency(mastery: float, grade: int) -> tuple[int, str]:
-    """Mastery fraction -> the rubric's 1-4 level and its label.
+# The one place these thresholds live. They were duplicated in three files and two
+# of the copies had already drifted apart.
+# Level 3 "Meets Standard" sits at 0.8, the same cut update_student.ADVANCE_AT uses
+# to advance -- so a student advances exactly when they meet the standard.
+PROFICIENCY_CUTS: tuple[tuple[float, int], ...] = ((0.95, 4), (0.80, 3), (0.50, 2))
 
-    Level 3 "Meets Standard" is pinned to the same 0.8 that update_student
-    treats as advancing, so the label and the routing cannot disagree.
-    """
-    level = 4 if mastery >= 0.95 else 3 if mastery >= 0.8 else 2 if mastery >= 0.5 else 1
+
+def proficiency_level(fraction: float) -> int:
+    """Fraction correct (0-1) -> the rubric's 1-4 level."""
+    for cut, level in PROFICIENCY_CUTS:
+        if fraction >= cut:
+            return level
+    return 1
+
+
+def proficiency_scale_text() -> str:
+    """The same thresholds as prose, for prompts. Never hand-write these again."""
+    parts, prev = [], 1.01
+    for cut, level in PROFICIENCY_CUTS:
+        parts.append(f"{cut:.0%}-{prev - 0.01:.0%} is level {level}")
+        prev = cut
+    parts.append(f"below {PROFICIENCY_CUTS[-1][0]:.0%} is level 1")
+    return "; ".join(parts)
+
+
+def proficiency(mastery: float, grade: int) -> tuple[int, str]:
+    """Fraction correct -> the rubric's 1-4 level and its label."""
+    level = proficiency_level(mastery)
     book = rubric(grade)
     if not book:
         return level, ""

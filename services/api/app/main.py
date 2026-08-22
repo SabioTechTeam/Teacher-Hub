@@ -32,6 +32,7 @@ from schemas import ItemGrade, Worksheet  # noqa: E402
 from curriculum import load_curriculum  # noqa: E402
 
 from .store import STORE
+from . import diagnostic
 from . import seed
 
 # Populate mock fixtures on startup
@@ -117,18 +118,15 @@ from . import progress
 
 @app.post("/assessments/start")
 def assessment_start(student_id: str = "demo"):
-    """Start an assessment; returns a real id and the first question batch."""
-    assessment_id = seed.next_id("asmt")
-    questions = seed.questions_by_skill.get(DEFAULT_START_SKILL, [])
-    return {
-        "assessment_id": assessment_id,
-        "student_id": student_id,
-        "status": "started",
-        "questions": [
-            {k: q[k] for k in ("id", "prompt", "choices") if k in q}
-            for q in questions
-        ],
-    }
+    """Start the diagnostic: every skill in the curriculum, answer key withheld.
+
+    Covering all skills is what makes the result a diagnosis -- you cannot find a
+    student's weakest skill by testing only one of them.
+    """
+    STORE.student(student_id)
+    quiz = diagnostic.build_quiz(student_id)
+    quiz["status"] = "started"
+    return quiz
 
 
 @app.post("/assessments/{assessment_id}/answer")
@@ -142,31 +140,20 @@ def assessment_answer(assessment_id: str, body: AnswerIn, student_id: str = "dem
 
 @app.get("/assessments/{assessment_id}/results")
 def assessment_results(assessment_id: str, student_id: str = "demo"):
-    """Score the recorded answers per skill, persist and return the result."""
-    answers = progress.assessment_answers(student_id, assessment_id)
-    if not answers:
-        raise HTTPException(404, f"no answers recorded for {assessment_id}")
+    """Evaluate the finished quiz and seed the student model from the diagnosis."""
+    try:
+        result = diagnostic.evaluate(student_id, assessment_id)
+    except KeyError as exc:
+        raise HTTPException(404, str(exc))
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
 
-    scores: dict[str, list[int]] = {}
-    for a in answers:
-        scores.setdefault(a.get("skill_id") or "unknown", [0, 0])
-        scores[a["skill_id"]][1] += 1
-        if a["correct"]:
-            scores[a["skill_id"]][0] += 1
+    # So /worksheets/generate starts at the diagnosed gap, not DEFAULT_START_SKILL.
+    student = STORE.student(student_id)
+    student["mastery"] = {s["skill_id"]: s["mastery"] for s in result["skills"]}
+    student["grade_level"] = result["grade_level"]
+    student["target_skill"] = result["gap_skill"] or student.get("target_skill")
 
-    skill_scores = {
-        skill: round(correct / total, 2)
-        for skill, (correct, total) in scores.items()
-    }
-    gap_skill = min(skill_scores, key=skill_scores.get) if skill_scores else DEFAULT_START_SKILL
-
-    result = {
-        "assessment_id": assessment_id,
-        "scores": skill_scores,
-        "gap_skill": gap_skill,
-        "grade_level": seed.students.get(student_id, {}).get("grade_level", 5),
-    }
-    progress.finish_assessment(student_id, assessment_id, result)
     p = progress.load_progress(student_id)
     result["gamification"] = {
         "total_points": p["points"],

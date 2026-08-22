@@ -3,5 +3,11 @@ grade: 4
 subject: mathematics
 name: Parts of a Whole
 prerequisites: []
-standards: ["4.NF.A.1"]
+standards: []  # 3.NF.1; no grade-3 rubric yet, see specs/ccss-rubrics.md
+# Used for prompt grounding when no CCSS standard maps. Without it the model
+# reads the name loosely and writes "what is 1/2 of 8?" (that is 4.NF.4).
+description: >-
+  Name the fraction represented by a portion of a single whole -- for example the
+  fraction of a shape that is shaded, or of a set of equal pieces that is taken.
+  The answer is always a fraction, never a count.
 difficulty: 0.3

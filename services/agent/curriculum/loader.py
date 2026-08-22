@@ -37,6 +37,7 @@ class Skill:
     standards: list[str] = field(default_factory=list)
     difficulty: float = 0.5
     subject: str = "mathematics"
+    description: str = ""
 
 
 @dataclass
@@ -110,6 +111,7 @@ def load_curriculum() -> Curriculum:
                     standards=list(d.get("standards") or []),
                     difficulty=float(d.get("difficulty", 0.5)),
                     subject=d.get("subject", "mathematics"),
+                    description=str(d.get("description") or "").strip(),
                 )
         pre_path = os.path.join(root, "curriculum", "prerequisites", "math.yaml")
         if os.path.isfile(pre_path):

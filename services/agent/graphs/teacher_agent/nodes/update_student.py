@@ -78,10 +78,13 @@ def apply(
     before = dict(mastery)
     after = update_mastery(before, grades)
     decision, next_skill, next_grade, rationale = decide_next(target_skill, score, after)
-    # Report proficiency on the skill just attempted, against its own grade rubric.
+    # Proficiency describes THIS attempt, so it reads `score` -- not the EMA mastery.
+    # Reading mastery meant a student who aced their first worksheet sat at 0.625
+    # (0.5 seeded, lr 0.25) and was labelled "Approaching Standard" over 100%.
+    # score is also what ADVANCE_AT compares, so label and routing now agree.
     attempted = load_curriculum().get(target_skill)
     prof_level, prof_label = proficiency(
-        after.get(target_skill, score), attempted.grade if attempted else next_grade
+        score, attempted.grade if attempted else next_grade
     )
     return AttemptResult(
         worksheet_id=worksheet_id,
