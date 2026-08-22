@@ -6,3 +6,9 @@ __pycache__/
 .env.local
 *.db
 .DS_Store
+
+# build artifacts
+*.tsbuildinfo
+.next/
+__MACOSX/
+*.zip

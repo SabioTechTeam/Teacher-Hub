@@ -1,0 +1,263 @@
+/* ===== Shell ===== */
+.shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 64px 1fr;
+  background: var(--surface-2);
+}
+
+/* ===== Top nav ===== */
+.nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.navBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.navMark {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navGreet {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.logoutBtn {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 12px;
+  transition: border-color .15s, color .15s;
+}
+.logoutBtn:hover { border-color: var(--brand-rose); color: var(--brand-rose); }
+
+/* ===== Main content ===== */
+.main { padding: 32px 28px; max-width: 1100px; margin: 0 auto; width: 100%; }
+
+.pageHeader { margin-bottom: 28px; }
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -.5px;
+  margin-bottom: 4px;
+}
+
+.pageSubtitle { font-size: 14px; color: var(--text-muted); }
+
+/* ===== Stats row ===== */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.statCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.statCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statCardLabel { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+.statCardIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+}
+
+.statCardValue {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.statCardChange { font-size: 12px; color: var(--brand-emerald); font-weight: 600; }
+
+/* ===== Two-column layout ===== */
+.grid2 {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+
+/* ===== Section card ===== */
+.sectionCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.sectionTitle { font-size: 15px; font-weight: 700; }
+
+.badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 100px;
+  letter-spacing: .3px;
+}
+.badgeBlue    { background: #EEF2FF; color: #4F46E5; }
+.badgeGreen   { background: #ECFDF5; color: #059669; }
+.badgeAmber   { background: #FFFBEB; color: #B45309; }
+.badgeViolet  { background: #F5F3FF; color: #6D28D9; }
+
+/* ===== Skill mastery bars ===== */
+.skillList { display: flex; flex-direction: column; gap: 16px; }
+
+.skillRow {}
+
+.skillMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.skillName { font-size: 13px; font-weight: 600; }
+.skillPct  { font-size: 13px; font-weight: 700; }
+
+.barTrack {
+  height: 8px;
+  background: #F1F5F9;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width .6s ease;
+}
+
+/* ===== Gap skill hero ===== */
+.gapHero {
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  border-radius: var(--radius);
+  padding: 24px;
+  color: #fff;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gapHero::before {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: -30px;
+  width: 140px;
+  height: 140px;
+  background: rgba(255,255,255,.08);
+  border-radius: 50%;
+}
+
+.gapLabel { font-size: 11px; font-weight: 700; opacity: .75; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 8px; }
+.gapSkill { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+.gapDesc  { font-size: 13px; opacity: .8; margin-bottom: 16px; }
+
+.startBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  color: #4F46E5;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: opacity .15s;
+}
+.startBtn:hover { opacity: .9; }
+
+/* ===== Recent activity ===== */
+.activityList { display: flex; flex-direction: column; gap: 12px; }
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface-2);
+  border-radius: 8px;
+}
+
+.activityIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.activityBody { flex: 1; min-width: 0; }
+.activityTitle { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.activityMeta  { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+.scorePill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 100px;
+  flex-shrink: 0;
+}
+.scoreGreen  { background: #ECFDF5; color: #059669; }
+.scoreAmber  { background: #FFFBEB; color: #B45309; }
+.scoreRed    { background: #FFF1F2; color: #E11D48; }

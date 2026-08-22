@@ -1,0 +1,328 @@
+{
+  "worksheets": [
+    {
+      "id": "ws-parts-visual",
+      "skill_id": "math.4.fractions.parts",
+      "strategy": "visual",
+      "title": "Parts of a Whole — Picture It",
+      "items": [
+        {
+          "id": "ws-parts-visual-01",
+          "prompt": "A chocolate bar has 6 equal pieces. Color 2 pieces. Write the fraction that shows how many pieces are colored.",
+          "answer": "2/6",
+          "hint": "The number of colored pieces goes on top (numerator). The total pieces go on the bottom (denominator)."
+        },
+        {
+          "id": "ws-parts-visual-02",
+          "prompt": "Look at the circle below divided into 8 equal slices. If 3 slices are shaded, what fraction is shaded?",
+          "answer": "3/8",
+          "hint": "Count the shaded slices for the numerator and total slices for the denominator."
+        },
+        {
+          "id": "ws-parts-visual-03",
+          "prompt": "Draw a rectangle and divide it into 4 equal parts. Shade 1 part. What fraction did you shade?",
+          "answer": "1/4",
+          "hint": "You shaded 1 out of 4 total parts."
+        },
+        {
+          "id": "ws-parts-visual-04",
+          "prompt": "A strip of paper is cut into 5 equal sections. 4 sections are red. Write the fraction that represents the red part.",
+          "answer": "4/5",
+          "hint": "Red sections = numerator, total sections = denominator."
+        }
+      ]
+    },
+    {
+      "id": "ws-parts-story",
+      "skill_id": "math.4.fractions.parts",
+      "strategy": "story",
+      "title": "Parts of a Whole — Story Problems",
+      "items": [
+        {
+          "id": "ws-parts-story-01",
+          "prompt": "Zara baked a pie and cut it into 8 equal slices. She gave 3 slices to her neighbors. What fraction of the pie did she give away?",
+          "answer": "3/8",
+          "hint": "Think: how many slices did she give (top) out of how many total (bottom)?"
+        },
+        {
+          "id": "ws-parts-story-02",
+          "prompt": "A class has 10 students. 4 of them are wearing blue shirts. What fraction of the class is wearing blue shirts?",
+          "answer": "4/10",
+          "hint": "Students in blue shirts = numerator, total students = denominator."
+        },
+        {
+          "id": "ws-parts-story-03",
+          "prompt": "Marcus has a garden divided into 6 equal sections. He plants tomatoes in 2 sections. What fraction of the garden has tomatoes?",
+          "answer": "2/6",
+          "hint": "Tomato sections go on top, total sections go on bottom."
+        },
+        {
+          "id": "ws-parts-story-04",
+          "prompt": "A box holds 12 crayons. 7 of them are broken. What fraction of the crayons are broken?",
+          "answer": "7/12",
+          "hint": "Broken crayons = numerator, total crayons = denominator."
+        }
+      ]
+    },
+
+    {
+      "id": "ws-equiv-visual",
+      "skill_id": "math.4.fractions.equivalent",
+      "strategy": "visual",
+      "title": "Equivalent Fractions — See the Match",
+      "items": [
+        {
+          "id": "ws-equiv-visual-01",
+          "prompt": "Two bars are the same length. Bar A is divided into 2 parts with 1 shaded. Bar B is divided into 4 parts. How many parts of Bar B must be shaded to match Bar A?",
+          "answer": "2",
+          "hint": "1/2 = ?/4. Multiply numerator and denominator by 2."
+        },
+        {
+          "id": "ws-equiv-visual-02",
+          "prompt": "Fill in the blank to make an equivalent fraction: 1/3 = __/9",
+          "answer": "3",
+          "hint": "Multiply both top and bottom of 1/3 by 3."
+        },
+        {
+          "id": "ws-equiv-visual-03",
+          "prompt": "Which of these is equivalent to 2/4? Circle all that apply: 1/2, 3/6, 4/6, 4/8",
+          "answer": "1/2, 3/6, 4/8",
+          "hint": "Simplify 2/4 by dividing by 2. Then check each option."
+        },
+        {
+          "id": "ws-equiv-visual-04",
+          "prompt": "Fill in the blank: 3/4 = __/12",
+          "answer": "9",
+          "hint": "Multiply numerator and denominator of 3/4 by 3."
+        }
+      ]
+    },
+    {
+      "id": "ws-equiv-steps",
+      "skill_id": "math.4.fractions.equivalent",
+      "strategy": "steps",
+      "title": "Equivalent Fractions — Step by Step",
+      "items": [
+        {
+          "id": "ws-equiv-steps-01",
+          "prompt": "Step 1: Write 1/2. Step 2: Multiply top and bottom by 3. Step 3: Write your new fraction.",
+          "answer": "3/6",
+          "hint": "1×3=3 and 2×3=6, so the answer is 3/6."
+        },
+        {
+          "id": "ws-equiv-steps-02",
+          "prompt": "Is 4/10 equivalent to 2/5? Show your work: divide numerator and denominator of 4/10 by the same number.",
+          "answer": "Yes, 4÷2=2 and 10÷2=5",
+          "hint": "Divide both 4 and 10 by 2."
+        },
+        {
+          "id": "ws-equiv-steps-03",
+          "prompt": "Find the missing number: 5/6 = 10/__",
+          "answer": "12",
+          "hint": "5 was multiplied by 2 to get 10, so multiply 6 by 2 as well."
+        },
+        {
+          "id": "ws-equiv-steps-04",
+          "prompt": "Simplify 6/8 to its lowest terms.",
+          "answer": "3/4",
+          "hint": "Divide both 6 and 8 by their greatest common factor, which is 2."
+        }
+      ]
+    },
+
+    {
+      "id": "ws-compare-visual",
+      "skill_id": "math.5.fractions.compare",
+      "strategy": "visual",
+      "title": "Compare Fractions — Number Line",
+      "items": [
+        {
+          "id": "ws-compare-visual-01",
+          "prompt": "Plot 1/4 and 3/4 on a number line from 0 to 1. Which fraction is greater?",
+          "answer": "3/4",
+          "hint": "The fraction further to the right on the number line is greater."
+        },
+        {
+          "id": "ws-compare-visual-02",
+          "prompt": "Use the benchmark 1/2 to decide: is 3/8 greater than or less than 1/2?",
+          "answer": "3/8 < 1/2",
+          "hint": "1/2 = 4/8. Since 3 < 4, we know 3/8 < 4/8 = 1/2."
+        },
+        {
+          "id": "ws-compare-visual-03",
+          "prompt": "Two fraction bars of equal length: one shows 2/3 shaded, another shows 3/5 shaded. Which is greater?",
+          "answer": "2/3",
+          "hint": "Convert to a common denominator of 15: 2/3 = 10/15, 3/5 = 9/15. So 2/3 > 3/5."
+        },
+        {
+          "id": "ws-compare-visual-04",
+          "prompt": "Order these from least to greatest: 1/2, 2/5, 7/10",
+          "answer": "2/5, 1/2, 7/10",
+          "hint": "Convert all to tenths: 2/5=4/10, 1/2=5/10, 7/10=7/10."
+        }
+      ]
+    },
+    {
+      "id": "ws-compare-steps",
+      "skill_id": "math.5.fractions.compare",
+      "strategy": "steps",
+      "title": "Compare Fractions — Common Denominator Method",
+      "items": [
+        {
+          "id": "ws-compare-steps-01",
+          "prompt": "Compare 3/4 and 5/8. Step 1: Find a common denominator. Step 2: Convert both fractions. Step 3: Compare.",
+          "answer": "3/4 > 5/8",
+          "hint": "3/4 = 6/8. Now compare 6/8 and 5/8. Since 6 > 5, we get 3/4 > 5/8."
+        },
+        {
+          "id": "ws-compare-steps-02",
+          "prompt": "Use the cross-multiplication method to compare 2/3 and 3/4. Multiply 2×4 and 3×3. Which product is larger?",
+          "answer": "3/4 is greater (2×4=8, 3×3=9, so 9>8 means 3/4 > 2/3)",
+          "hint": "Cross multiply: left fraction numerator × right fraction denominator vs right fraction numerator × left fraction denominator."
+        },
+        {
+          "id": "ws-compare-steps-03",
+          "prompt": "Which is smaller: 7/12 or 5/8? Show your work using a common denominator.",
+          "answer": "7/12",
+          "hint": "LCD of 12 and 8 is 24. 7/12=14/24 and 5/8=15/24. Since 14 < 15, 7/12 < 5/8."
+        },
+        {
+          "id": "ws-compare-steps-04",
+          "prompt": "Put these in order from greatest to least: 3/5, 7/10, 1/2",
+          "answer": "7/10, 3/5, 1/2",
+          "hint": "Convert to tenths: 3/5=6/10, 7/10=7/10, 1/2=5/10. Order: 7/10 > 6/10 > 5/10."
+        }
+      ]
+    },
+
+    {
+      "id": "ws-addlike-steps",
+      "skill_id": "math.5.fractions.add-like",
+      "strategy": "steps",
+      "title": "Add Fractions — Like Denominators",
+      "items": [
+        {
+          "id": "ws-addlike-steps-01",
+          "prompt": "Calculate: 3/8 + 2/8. Remember: add only the numerators, keep the denominator.",
+          "answer": "5/8",
+          "hint": "3 + 2 = 5. Keep the denominator 8. Answer: 5/8."
+        },
+        {
+          "id": "ws-addlike-steps-02",
+          "prompt": "Calculate: 5/9 + 1/9. Simplify your answer if possible.",
+          "answer": "6/9 = 2/3",
+          "hint": "5 + 1 = 6. Answer is 6/9. Simplify by dividing by 3: 2/3."
+        },
+        {
+          "id": "ws-addlike-steps-03",
+          "prompt": "Jayla walked 2/6 of a mile to school and 3/6 of a mile to the park. How far did she walk in total?",
+          "answer": "5/6",
+          "hint": "2/6 + 3/6 = 5/6. Same denominator, just add the tops."
+        },
+        {
+          "id": "ws-addlike-steps-04",
+          "prompt": "Calculate: 4/7 + 6/7. Convert your answer to a mixed number.",
+          "answer": "1 and 3/7",
+          "hint": "4 + 6 = 10. So 10/7. Since 10 > 7, divide: 10 ÷ 7 = 1 remainder 3. Answer: 1 and 3/7."
+        }
+      ]
+    },
+    {
+      "id": "ws-addlike-story",
+      "skill_id": "math.5.fractions.add-like",
+      "strategy": "story",
+      "title": "Add Fractions — Real-World Problems",
+      "items": [
+        {
+          "id": "ws-addlike-story-01",
+          "prompt": "Theo finished 2/8 of his homework before dinner and 5/8 after dinner. What fraction of his homework is done?",
+          "answer": "7/8",
+          "hint": "Both fractions have denominator 8. Add the numerators: 2 + 5 = 7."
+        },
+        {
+          "id": "ws-addlike-story-02",
+          "prompt": "A water tank is filled 3/10 in the morning and another 4/10 in the afternoon. How full is the tank now?",
+          "answer": "7/10",
+          "hint": "3/10 + 4/10 = 7/10."
+        },
+        {
+          "id": "ws-addlike-story-03",
+          "prompt": "Two friends share a pizza divided into 12 slices. One ate 3/12, the other ate 4/12. What fraction did they eat together? How many slices is that?",
+          "answer": "7/12, which is 7 slices",
+          "hint": "3/12 + 4/12 = 7/12. Since each slice is 1/12 of the pizza, that's 7 slices."
+        },
+        {
+          "id": "ws-addlike-story-04",
+          "prompt": "Priya read 5/11 of a book on Saturday and 4/11 on Sunday. Did she finish the book? What fraction did she read in all?",
+          "answer": "9/11 — she did not finish the book",
+          "hint": "5/11 + 4/11 = 9/11. She still has 2/11 left."
+        }
+      ]
+    },
+
+    {
+      "id": "ws-ratios-steps",
+      "skill_id": "math.6.ratios.intro",
+      "strategy": "steps",
+      "title": "Ratio Concepts — Step by Step",
+      "items": [
+        {
+          "id": "ws-ratios-steps-01",
+          "prompt": "A smoothie recipe uses 3 bananas for every 2 cups of milk. Write this as a ratio in three ways: using ':', using 'to', and as a fraction.",
+          "answer": "3:2 / 3 to 2 / 3/2",
+          "hint": "Ratios can be written with a colon, the word 'to', or as a fraction."
+        },
+        {
+          "id": "ws-ratios-steps-02",
+          "prompt": "A class has 12 boys and 15 girls. Step 1: Write the ratio of boys to girls. Step 2: Simplify it.",
+          "answer": "4:5",
+          "hint": "12:15. Divide both by 3: 4:5."
+        },
+        {
+          "id": "ws-ratios-steps-03",
+          "prompt": "If the ratio of cats to dogs at a shelter is 2:5 and there are 10 dogs, how many cats are there?",
+          "answer": "4 cats",
+          "hint": "2:5 = ?:10. Multiply both parts by 2: 4:10. So there are 4 cats."
+        },
+        {
+          "id": "ws-ratios-steps-04",
+          "prompt": "Are the ratios 3:4 and 9:12 equivalent? Show your work.",
+          "answer": "Yes — 9:12 simplifies to 3:4 (divide by 3)",
+          "hint": "Divide 9 and 12 by their GCF (3) to get 3:4."
+        }
+      ]
+    },
+    {
+      "id": "ws-ratios-story",
+      "skill_id": "math.6.ratios.intro",
+      "strategy": "story",
+      "title": "Ratio Concepts — Real-World Stories",
+      "items": [
+        {
+          "id": "ws-ratios-story-01",
+          "prompt": "For every 2 apples in a fruit bowl there are 3 oranges. If there are 8 apples, how many oranges are there?",
+          "answer": "12 oranges",
+          "hint": "2:3 = 8:?. Multiply both sides by 4: 8:12."
+        },
+        {
+          "id": "ws-ratios-story-02",
+          "prompt": "A car travels 150 miles in 3 hours. What is the ratio of miles to hours? How far would it travel in 5 hours at the same speed?",
+          "answer": "50:1 (50 miles per hour); 250 miles in 5 hours",
+          "hint": "150 ÷ 3 = 50 miles per hour. 50 × 5 = 250 miles."
+        },
+        {
+          "id": "ws-ratios-story-03",
+          "prompt": "In a bag of mixed nuts, the ratio of almonds to cashews is 3:2. If there are 30 nuts total, how many are almonds?",
+          "answer": "18 almonds",
+          "hint": "3 + 2 = 5 parts total. 30 ÷ 5 = 6 nuts per part. Almonds = 3 × 6 = 18."
+        },
+        {
+          "id": "ws-ratios-story-04",
+          "prompt": "A lemonade stand mixes 1 cup of lemon juice with 4 cups of water. If they use 3 cups of lemon juice, how many cups of water do they need?",
+          "answer": "12 cups of water",
+          "hint": "1:4 = 3:?. Multiply both by 3: 3:12."
+        }
+      ]
+    }
+  ]
+}

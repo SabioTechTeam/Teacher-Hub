@@ -1,0 +1,347 @@
+{
+  "attempts": [
+
+    {
+      "id": "att-001",
+      "student_id": "stu-001",
+      "worksheet_id": "ws-parts-visual",
+      "skill_id": "math.4.fractions.parts",
+      "strategy": "visual",
+      "started_at": "2026-08-18T09:10:00Z",
+      "completed_at": "2026-08-18T09:22:00Z",
+      "score": 0.75,
+      "next_grade_level": 4,
+      "mastery_before": { "math.4.fractions.parts": 0.50 },
+      "mastery_after":  { "math.4.fractions.parts": 0.60 },
+      "answers": [
+        { "item_id": "ws-parts-visual-01", "student_answer": "2/6", "correct": true },
+        { "item_id": "ws-parts-visual-02", "student_answer": "3/8", "correct": true },
+        { "item_id": "ws-parts-visual-03", "student_answer": "1/3", "correct": false },
+        { "item_id": "ws-parts-visual-04", "student_answer": "4/5", "correct": true }
+      ]
+    },
+
+    {
+      "id": "att-002",
+      "student_id": "stu-001",
+      "worksheet_id": "ws-parts-story",
+      "skill_id": "math.4.fractions.parts",
+      "strategy": "story",
+      "started_at": "2026-08-19T10:05:00Z",
+      "completed_at": "2026-08-19T10:20:00Z",
+      "score": 1.0,
+      "next_grade_level": 4,
+      "mastery_before": { "math.4.fractions.parts": 0.60 },
+      "mastery_after":  { "math.4.fractions.parts": 0.68 },
+      "answers": [
+        { "item_id": "ws-parts-story-01", "student_answer": "3/8", "correct": true },
+        { "item_id": "ws-parts-story-02", "student_answer": "4/10", "correct": true },
+        { "item_id": "ws-parts-story-03", "student_answer": "2/6", "correct": true },
+        { "item_id": "ws-parts-story-04", "student_answer": "7/12", "correct": true }
+      ]
+    },
+
+    {
+      "id": "att-003",
+      "student_id": "stu-001",
+      "worksheet_id": "ws-equiv-visual",
+      "skill_id": "math.4.fractions.equivalent",
+      "strategy": "visual",
+      "started_at": "2026-08-20T09:30:00Z",
+      "completed_at": "2026-08-20T09:48:00Z",
+      "score": 0.50,
+      "next_grade_level": 4,
+      "mastery_before": { "math.4.fractions.equivalent": 0.50 },
+      "mastery_after":  { "math.4.fractions.equivalent": 0.50 },
+      "answers": [
+        { "item_id": "ws-equiv-visual-01", "student_answer": "2", "correct": true },
+        { "item_id": "ws-equiv-visual-02", "student_answer": "4", "correct": false },
+        { "item_id": "ws-equiv-visual-03", "student_answer": "1/2, 4/6, 4/8", "correct": false },
+        { "item_id": "ws-equiv-visual-04", "student_answer": "9", "correct": true }
+      ]
+    },
+
+    {
+      "id": "att-004",
+      "student_id": "stu-002",
+      "worksheet_id": "ws-compare-steps",
+      "skill_id": "math.5.fractions.compare",
+      "strategy": "steps",
+      "started_at": "2026-08-15T11:00:00Z",
+      "completed_at": "2026-08-15T11:18:00Z",
+      "score": 1.0,
+      "next_grade_level": 5,
+      "mastery_before": { "math.5.fractions.compare": 0.60 },
+      "mastery_after":  { "math.5.fractions.compare": 0.68 },
+      "answers": [
+        { "item_id": "ws-compare-steps-01", "student_answer": "3/4 > 5/8", "correct": true },
+        { "item_id": "ws-compare-steps-02", "student_answer": "3/4 is greater (2×4=8, 3×3=9, so 9>8 means 3/4 > 2/3)", "correct": true },
+        { "item_id": "ws-compare-steps-03", "student_answer": "7/12", "correct": true },
+        { "item_id": "ws-compare-steps-04", "student_answer": "7/10, 3/5, 1/2", "correct": true }
+      ]
+    },
+
+    {
+      "id": "att-005",
+      "student_id": "stu-002",
+      "worksheet_id": "ws-addlike-steps",
+      "skill_id": "math.5.fractions.add-like",
+      "strategy": "steps",
+      "started_at": "2026-08-17T14:00:00Z",
+      "completed_at": "2026-08-17T14:15:00Z",
+      "score": 0.50,
+      "next_grade_level": 5,
+      "mastery_before": { "math.5.fractions.add-like": 0.36 },
+      "mastery_after":  { "math.5.fractions.add-like": 0.39 },
+      "answers": [
+        { "item_id": "ws-addlike-steps-01", "student_answer": "5/8", "correct": true },
+        { "item_id": "ws-addlike-steps-02", "student_answer": "6/9", "correct": false },
+        { "item_id": "ws-addlike-steps-03", "student_answer": "5/6", "correct": true },
+        { "item_id": "ws-addlike-steps-04", "student_answer": "10/7", "correct": false }
+      ]
+    },
+
+    {
+      "id": "att-006",
+      "student_id": "stu-002",
+      "worksheet_id": "ws-addlike-story",
+      "skill_id": "math.5.fractions.add-like",
+      "strategy": "story",
+      "started_at": "2026-08-19T14:00:00Z",
+      "completed_at": "2026-08-19T14:18:00Z",
+      "score": 0.75,
+      "next_grade_level": 5,
+      "mastery_before": { "math.5.fractions.add-like": 0.39 },
+      "mastery_after":  { "math.5.fractions.add-like": 0.45 },
+      "answers": [
+        { "item_id": "ws-addlike-story-01", "student_answer": "7/8", "correct": true },
+        { "item_id": "ws-addlike-story-02", "student_answer": "7/10", "correct": true },
+        { "item_id": "ws-addlike-story-03", "student_answer": "7/12, 7 slices", "correct": true },
+        { "item_id": "ws-addlike-story-04", "student_answer": "9/11 — she did finish the book", "correct": false }
+      ]
+    },
+
+    {
+      "id": "att-007",
+      "student_id": "stu-003",
+      "worksheet_id": "ws-equiv-steps",
+      "skill_id": "math.4.fractions.equivalent",
+      "strategy": "steps",
+      "started_at": "2026-08-21T13:00:00Z",
+      "completed_at": "2026-08-21T13:20:00Z",
+      "score": 0.25,
+      "next_grade_level": 4,
+      "mastery_before": { "math.4.fractions.equivalent": 0.50 },
+      "mastery_after":  { "math.4.fractions.equivalent": 0.46 },
+      "answers": [
+        { "item_id": "ws-equiv-steps-01", "student_answer": "2/6", "correct": false },
+        { "item_id": "ws-equiv-steps-02", "student_answer": "Yes, 4÷2=2 and 10÷2=5", "correct": true },
+        { "item_id": "ws-equiv-steps-03", "student_answer": "11", "correct": false },
+        { "item_id": "ws-equiv-steps-04", "student_answer": "2/4", "correct": false }
+      ]
+    },
+
+    {
+      "id": "att-008",
+      "student_id": "stu-004",
+      "worksheet_id": "ws-ratios-steps",
+      "skill_id": "math.6.ratios.intro",
+      "strategy": "steps",
+      "started_at": "2026-08-20T08:45:00Z",
+      "completed_at": "2026-08-20T09:05:00Z",
+      "score": 0.75,
+      "next_grade_level": 6,
+      "mastery_before": { "math.6.ratios.intro": 0.50 },
+      "mastery_after":  { "math.6.ratios.intro": 0.50 },
+      "answers": [
+        { "item_id": "ws-ratios-steps-01", "student_answer": "3:2 / 3 to 2 / 3/2", "correct": true },
+        { "item_id": "ws-ratios-steps-02", "student_answer": "4:5", "correct": true },
+        { "item_id": "ws-ratios-steps-03", "student_answer": "4 cats", "correct": true },
+        { "item_id": "ws-ratios-steps-04", "student_answer": "No", "correct": false }
+      ]
+    },
+
+    {
+      "id": "att-009",
+      "student_id": "stu-004",
+      "worksheet_id": "ws-ratios-story",
+      "skill_id": "math.6.ratios.intro",
+      "strategy": "story",
+      "started_at": "2026-08-21T08:30:00Z",
+      "completed_at": "2026-08-21T08:52:00Z",
+      "score": 1.0,
+      "next_grade_level": 6,
+      "mastery_before": { "math.6.ratios.intro": 0.50 },
+      "mastery_after":  { "math.6.ratios.intro": 0.60 },
+      "answers": [
+        { "item_id": "ws-ratios-story-01", "student_answer": "12 oranges", "correct": true },
+        { "item_id": "ws-ratios-story-02", "student_answer": "50:1; 250 miles in 5 hours", "correct": true },
+        { "item_id": "ws-ratios-story-03", "student_answer": "18 almonds", "correct": true },
+        { "item_id": "ws-ratios-story-04", "student_answer": "12 cups of water", "correct": true }
+      ]
+    },
+
+    {
+      "id": "att-010",
+      "student_id": "stu-005",
+      "worksheet_id": "ws-parts-visual",
+      "skill_id": "math.4.fractions.parts",
+      "strategy": "visual",
+      "started_at": "2026-08-22T09:10:00Z",
+      "completed_at": "2026-08-22T09:30:00Z",
+      "score": 0.25,
+      "next_grade_level": 4,
+      "mastery_before": { "math.4.fractions.parts": 0.50 },
+      "mastery_after":  { "math.4.fractions.parts": 0.46 },
+      "answers": [
+        { "item_id": "ws-parts-visual-01", "student_answer": "2/4", "correct": false },
+        { "item_id": "ws-parts-visual-02", "student_answer": "3/8", "correct": true },
+        { "item_id": "ws-parts-visual-03", "student_answer": "2/4", "correct": false },
+        { "item_id": "ws-parts-visual-04", "student_answer": "3/5", "correct": false }
+      ]
+    }
+  ],
+
+  "session_history": [
+    {
+      "student_id": "stu-001",
+      "sessions": [
+        {
+          "date": "2026-08-18",
+          "assessment_id": null,
+          "attempt_ids": ["att-001"],
+          "mastery_snapshot": {
+            "math.4.fractions.parts": 0.60,
+            "math.4.fractions.equivalent": 0.50
+          }
+        },
+        {
+          "date": "2026-08-19",
+          "assessment_id": null,
+          "attempt_ids": ["att-002"],
+          "mastery_snapshot": {
+            "math.4.fractions.parts": 0.68,
+            "math.4.fractions.equivalent": 0.50
+          }
+        },
+        {
+          "date": "2026-08-20",
+          "assessment_id": "asmt-001",
+          "attempt_ids": ["att-003"],
+          "mastery_snapshot": {
+            "math.4.fractions.parts": 0.85,
+            "math.4.fractions.equivalent": 0.50,
+            "math.5.fractions.compare": 0.30
+          }
+        }
+      ]
+    },
+    {
+      "student_id": "stu-002",
+      "sessions": [
+        {
+          "date": "2026-08-15",
+          "assessment_id": null,
+          "attempt_ids": ["att-004"],
+          "mastery_snapshot": {
+            "math.5.fractions.compare": 0.68,
+            "math.5.fractions.add-like": 0.36
+          }
+        },
+        {
+          "date": "2026-08-17",
+          "assessment_id": null,
+          "attempt_ids": ["att-005"],
+          "mastery_snapshot": {
+            "math.5.fractions.compare": 0.68,
+            "math.5.fractions.add-like": 0.39
+          }
+        },
+        {
+          "date": "2026-08-19",
+          "assessment_id": null,
+          "attempt_ids": ["att-006"],
+          "mastery_snapshot": {
+            "math.5.fractions.compare": 0.72,
+            "math.5.fractions.add-like": 0.45
+          }
+        },
+        {
+          "date": "2026-08-21",
+          "assessment_id": "asmt-002",
+          "attempt_ids": [],
+          "mastery_snapshot": {
+            "math.4.fractions.parts": 0.95,
+            "math.4.fractions.equivalent": 0.88,
+            "math.5.fractions.compare": 0.72,
+            "math.5.fractions.add-like": 0.45,
+            "math.6.ratios.intro": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "student_id": "stu-003",
+      "sessions": [
+        {
+          "date": "2026-08-21",
+          "assessment_id": "asmt-003",
+          "attempt_ids": ["att-007"],
+          "mastery_snapshot": {
+            "math.4.fractions.parts": 0.70,
+            "math.4.fractions.equivalent": 0.46,
+            "math.5.fractions.compare": 0.20
+          }
+        }
+      ]
+    },
+    {
+      "student_id": "stu-004",
+      "sessions": [
+        {
+          "date": "2026-08-20",
+          "assessment_id": null,
+          "attempt_ids": ["att-008"],
+          "mastery_snapshot": {
+            "math.5.fractions.add-like": 0.82,
+            "math.6.ratios.intro": 0.50
+          }
+        },
+        {
+          "date": "2026-08-21",
+          "assessment_id": null,
+          "attempt_ids": ["att-009"],
+          "mastery_snapshot": {
+            "math.5.fractions.add-like": 0.82,
+            "math.6.ratios.intro": 0.60
+          }
+        },
+        {
+          "date": "2026-08-22",
+          "assessment_id": "asmt-004",
+          "attempt_ids": [],
+          "mastery_snapshot": {
+            "math.4.fractions.parts": 0.98,
+            "math.4.fractions.equivalent": 0.95,
+            "math.5.fractions.compare": 0.90,
+            "math.5.fractions.add-like": 0.82,
+            "math.6.ratios.intro": 0.55
+          }
+        }
+      ]
+    },
+    {
+      "student_id": "stu-005",
+      "sessions": [
+        {
+          "date": "2026-08-22",
+          "assessment_id": "asmt-005",
+          "attempt_ids": ["att-010"],
+          "mastery_snapshot": {
+            "math.4.fractions.parts": 0.46
+          }
+        }
+      ]
+    }
+  ]
+}
