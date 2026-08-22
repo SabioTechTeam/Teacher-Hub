@@ -18,6 +18,9 @@ export type Worksheet = {
   standards: string[];
   strategy: string;
   source: "llm" | "mock";
+  /** Human-readable provenance: what parent/teacher notes changed here. */
+  guidance_applied?: string[];
+  hints_up_front?: boolean;
   generated_at: string;
   items: Item[];
 };

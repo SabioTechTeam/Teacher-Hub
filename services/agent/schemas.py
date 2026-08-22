@@ -30,6 +30,10 @@ class Worksheet(BaseModel):
     strategy: str = "worked_example"
     items: list[WorksheetItem] = Field(default_factory=list)
     generated_at: str = ""
+    # Provenance: what parent/teacher notes changed about this set. Shown in the
+    # UI so an adjustment is never invisible.
+    guidance_applied: list[str] = Field(default_factory=list)
+    hints_up_front: bool = False
     source: Literal["llm", "mock"] = "mock"
 
 

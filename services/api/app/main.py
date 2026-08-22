@@ -30,6 +30,7 @@ from graphs.teacher_agent.nodes import select_strategy  # noqa: E402
 from graphs.teacher_agent.nodes import update_student as adapt_node  # noqa: E402
 from schemas import ItemGrade, Worksheet  # noqa: E402
 from curriculum import load_curriculum  # noqa: E402
+import notes as notes_mod  # noqa: E402
 
 from .store import STORE
 from . import diagnostic
@@ -62,6 +63,13 @@ class WorksheetIn(BaseModel):
     skill_id: Optional[str] = None
     grade_level: Optional[int] = None
     item_count: int = 6
+
+
+class NoteIn(BaseModel):
+    """An observation from a parent or teacher. Advisory input to the next set."""
+    author: str = "parent"                      # "parent" | "teacher"
+    text: str = ""
+    strategy_override: Optional[str] = None     # teacher dropdown only
 
 
 class AnswerItem(BaseModel):
@@ -186,12 +194,22 @@ def worksheets_generate(body: WorksheetIn):
     grade = body.grade_level or student.get("grade_level") or 5
     strategy = select_strategy.choose((student.get("mastery") or {}).get(skill_id, 0.5))
 
+    # Notes left by this child's parent and teacher shape how the set is taught.
+    stored = student.get("notes") or {}
+    guidance = notes_mod.derive(
+        parent_note=(stored.get("parent") or {}).get("text", ""),
+        teacher_note=(stored.get("teacher") or {}).get("text", ""),
+        strategy_override=(stored.get("teacher") or {}).get("strategy_override"),
+        default_items=max(1, min(body.item_count, 12)),
+    )
+
     ws = worksheet_node.build(
         student_id=body.student_id,
         target_skill=skill_id,
         grade_level=grade,
         strategy=strategy,
         count=max(1, min(body.item_count, 12)),
+        guidance=guidance,
     )
     payload = ws.model_dump()
     STORE.save_worksheet(payload)
@@ -246,3 +264,33 @@ def student_mastery(student_id: str):
         "target_skill": s.get("target_skill"),
         "grade_level": s.get("grade_level", 5)
     }
+
+
+@app.put("/students/{student_id}/notes")
+def student_note_put(student_id: str, body: NoteIn):
+    """Save a parent or teacher observation. Applies to the NEXT worksheet.
+
+    Notes are advisory. They can change strategy, set length and hint
+    generosity; they cannot change which skill is targeted, and they cannot
+    touch mastery or grading.
+    """
+    author = body.author if body.author in ("parent", "teacher") else "parent"
+    clean, filtered = notes_mod.sanitize(body.text)
+    student = STORE.student(student_id)
+    student.setdefault("notes", {})[author] = {
+        "text": clean,
+        "strategy_override": body.strategy_override,
+        "filtered": filtered,
+    }
+    preview = notes_mod.derive(
+        parent_note=(student["notes"].get("parent") or {}).get("text", ""),
+        teacher_note=(student["notes"].get("teacher") or {}).get("text", ""),
+        strategy_override=(student["notes"].get("teacher") or {}).get("strategy_override"),
+    )
+    return {"student_id": student_id, "author": author, "saved": clean,
+            "filtered": filtered, "will_apply": preview.applied}
+
+
+@app.get("/students/{student_id}/notes")
+def student_notes_get(student_id: str):
+    return {"student_id": student_id, "notes": STORE.student(student_id).get("notes", {})}
