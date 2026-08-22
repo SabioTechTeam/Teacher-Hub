@@ -1,0 +1,7 @@
+id: math.5.fractions.add-like
+grade: 5
+subject: mathematics
+name: Add Fractions (Like Denominators)
+prerequisites: ["math.5.fractions.compare"]
+standards: ["5.NF.A.1"]
+difficulty: 0.55
