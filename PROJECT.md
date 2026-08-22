@@ -53,22 +53,20 @@ All users and judges interact through **one single link**: `http://localhost:300
                               │     (Login / Role Switcher)      │
                               └────────────────┬─────────────────┘
                                                │
-                      ┌────────────────────────┴────────────────────────┐
-                      │                                                 │
-                      ▼                                                 ▼
-          [ Student Dashboard ]                               [ Teacher Dashboard ]
-          • Hi, Aiden 👋                                      • Class Overview & Heatmaps
-          • Overall Mastery (60%)                             • At-Risk Student Alerts
-          • Recommended Skill: Equivalent Fractions           • "Live Tutor Demo ⚡" button
-          • "Start Worksheet →" OR "Math Quiz 📝"             • "Sign out" (returns to Login)
-                      │                        ▲
-                      │                        │
-         ┌────────────┴───────────┐            │
-         ▼                        ▼            │ (Click "Done / Back to Dashboard")
-   [ 10-Min Quiz ]          [ Adaptive Tutor ]─┘
-   • 5-question test        • Live / Mock worksheet
-   • Diagnoses gap skill    • Grades math answers
-   • Auto-starts worksheet  • Adapts level up or down
+             ┌─────────────────────────────────┼─────────────────────────────────┐
+             ▼                                 ▼                                 ▼
+   [ Student Dashboard ]             [ Teacher Dashboard ]             [ Parent Learning Hub ]
+   • Hi, Aiden 👋                    • Class Overview & Heatmaps       • Aiden's Home Profile
+   • Overall Mastery (68%)           • At-Risk Student Alerts          • IEP Accommodations (PDF)
+   • Recommended: Equivalent Frac.   • "Live Tutor Demo ⚡" button     • Homework Photo Uploads
+   • "Start Worksheet →"             • "Sign out"                      • Gamification Hobbies (Space/Minecraft)
+             │          ▲                      │                                 │
+             │          │                      ▼                                 ▼
+   ┌─────────┴────────┐ └─────────────[ Adaptive Tutor ] ◄───────────────────────┘
+   ▼                  ▼               /tutor (Live Worksheet Engine)
+ [ 10-Min Quiz ]   [ Practice WS ]    • Personalizes by IEP + Hobbies
+ • 5 CCSS items    • Instant Grading  • Exact Fraction Math Checker
+ • Confetti + Pts  • Level Adapt      • Adapts Prerequisite Skills
 ```
 
 ---
@@ -78,13 +76,14 @@ All users and judges interact through **one single link**: `http://localhost:300
 | Connector # | Route / Component Link | Status | Flow Description |
 |:---|:---|:---|:---|
 | **C-01** | `Root (/)` $\rightarrow$ `LoginClient` | ✅ **Live** | Navigating to `http://localhost:3000` loads the Master Login Shell. |
-| **C-02** | `LoginClient` $\rightarrow$ `Dashboards` | ✅ **Live** | Select Student $\rightarrow$ `/student/dashboard`; Select Teacher $\rightarrow$ `/teacher/dashboard`. |
-| **C-03** | `Student Dashboard` $\rightarrow$ `Adaptive Tutor` | ✅ **Live** | "Start worksheet →" preloads recommended gap skill into `localStorage` session and routes to `/tutor`. |
+| **C-02** | `LoginClient` $\rightarrow$ `Dashboards` | ✅ **Live** | Student $\rightarrow$ `/student/dashboard`; Teacher $\rightarrow$ `/teacher/dashboard`; Parent $\rightarrow$ `/parent/dashboard`. |
+| **C-03** | `Student Dashboard` $\rightarrow$ `Adaptive Tutor` | ✅ **Live** | "Start worksheet →" preloads recommended gap skill into session and routes to `/tutor`. |
 | **C-04** | `Student Dashboard` $\rightarrow$ `Diagnostic Quiz` | ✅ **Live** | "Take Math Quiz 📝" routes to 5-question diagnostic test at `/student`. |
 | **C-05** | `Diagnostic Quiz` $\rightarrow$ `Adaptive Tutor` | ✅ **Live** | Answering incorrectly diagnoses prerequisite gap (e.g. *Equivalent Fractions*) and routes to `/tutor`. |
 | **C-06** | `Adaptive Tutor` $\rightarrow$ `Student Dashboard` | ✅ **Live** | "← Back to Student Dashboard" and "Done / Back to Dashboard" buttons restore dashboard view. |
 | **C-07** | `Teacher Dashboard` $\rightarrow$ `Live Tutor Demo` | ✅ **Live** | "Live Tutor Demo ⚡" button in nav allows teachers to preview student practice. |
-| **C-08** | `API (port 8000)` $\rightarrow$ `Next.js (port 3000)` | ✅ **Live** | Frontend fetches `/worksheets/generate` & `/worksheets/grade` with automatic mock fallback. |
+| **C-08** | `Parent Portal` $\rightarrow$ `Adaptive Tutor` | ✅ **Live** | "Test Child's Practice Session 🚀" synthesizes IEP accommodations + hobbies and launches `/tutor`. |
+| **C-09** | `API (port 8000)` $\rightarrow$ `Next.js (port 3000)` | ✅ **Live** | Frontend fetches `/worksheets/generate` & `/worksheets/grade` with automatic mock fallback. |
 
 ---
 

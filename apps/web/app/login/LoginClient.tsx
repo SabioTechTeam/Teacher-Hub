@@ -4,11 +4,12 @@ import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-type Role = "student" | "teacher";
+type Role = "student" | "teacher" | "parent";
 
 const ACCOUNTS = {
   student: { username: "student", password: "learn123" },
   teacher: { username: "teacher", password: "teach456" },
+  parent:  { username: "parent",  password: "parent789" },
 };
 
 export default function LoginClient() {
@@ -32,6 +33,8 @@ export default function LoginClient() {
     if (username === acct.username && password === acct.password) {
       if (role === "teacher") {
         router.push("/teacher/dashboard");
+      } else if (role === "parent") {
+        router.push("/parent/dashboard");
       } else if (isNewStudent) {
         // New student onboarding routes through the diagnostic assessment quiz
         router.push("/student");
@@ -90,7 +93,7 @@ export default function LoginClient() {
           <h2 className={styles.heading}>Welcome back</h2>
           <p className={styles.sub}>Sign in to continue your learning journey.</p>
 
-          {/* Role picker */}
+          {/* Role picker (Student, Teacher, Parent) */}
           <div className={styles.rolePicker}>
             <button
               type="button"
@@ -108,7 +111,16 @@ export default function LoginClient() {
             >
               <span className={styles.roleIcon}>📚</span>
               <span className={styles.roleLabel}>Teacher</span>
-              <span className={styles.roleHint}>Monitor students</span>
+              <span className={styles.roleHint}>Class overview</span>
+            </button>
+            <button
+              type="button"
+              className={`${styles.roleCard} ${role === "parent" ? styles.active : ""}`}
+              onClick={() => handleRoleSwitch("parent")}
+            >
+              <span className={styles.roleIcon}>👨‍👩‍👧</span>
+              <span className={styles.roleLabel}>Parent</span>
+              <span className={styles.roleHint}>IEP & Worksheets</span>
             </button>
           </div>
 
@@ -132,7 +144,7 @@ export default function LoginClient() {
                   transition: "all 0.15s ease",
                 }}
               >
-                ✨ New Student (Onboarding Quiz)
+                ✨ New Student (Quiz)
               </button>
               <button
                 type="button"
@@ -161,7 +173,9 @@ export default function LoginClient() {
             <div className={styles.hintTitle}>Demo credentials auto-filled ✓</div>
             {role === "student"
               ? "student / learn123"
-              : "teacher / teach456"}
+              : role === "teacher"
+              ? "teacher / teach456"
+              : "parent / parent789"}
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -206,6 +220,8 @@ export default function LoginClient() {
             <button type="submit" className={styles.btn}>
               {role === "teacher"
                 ? "Sign in as Teacher 📚"
+                : role === "parent"
+                ? "Sign in as Parent 👨‍👩‍👧"
                 : isNewStudent
                 ? "Start Onboarding Diagnostic 🎯"
                 : "Sign in to Dashboard 🎒"}
