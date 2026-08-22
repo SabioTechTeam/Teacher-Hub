@@ -110,20 +110,85 @@ def students_list():
     return list(seed.students.values()) or [STORE.student("demo")]
 
 
+from .store import STORE
+from . import seed
+from . import progress
+
+
 @app.post("/assessments/start")
 def assessment_start(student_id: str = "demo"):
-    STORE.student(student_id)
-    return {"assessment_id": "a1", "student_id": student_id, "status": "started"}
+    """Start an assessment; returns a real id and the first question batch."""
+    assessment_id = seed.next_id("asmt")
+    questions = seed.questions_by_skill.get(DEFAULT_START_SKILL, [])
+    return {
+        "assessment_id": assessment_id,
+        "student_id": student_id,
+        "status": "started",
+        "questions": [
+            {k: q[k] for k in ("id", "prompt", "choices") if k in q}
+            for q in questions
+        ],
+    }
 
 
 @app.post("/assessments/{assessment_id}/answer")
-def assessment_answer(assessment_id: str, body: AnswerIn):
-    return {"assessment_id": assessment_id, "recorded": body.model_dump()}
+def assessment_answer(assessment_id: str, body: AnswerIn, student_id: str = "demo"):
+    """Grade one answer, award gamification points, persist to the student's file."""
+    question = seed.questions.get(body.question_id)
+    if not question:
+        raise HTTPException(404, f"question not found: {body.question_id}")
+    return progress.record_answer(student_id, assessment_id, question, body.answer)
 
 
 @app.get("/assessments/{assessment_id}/results")
-def assessment_results(assessment_id: str):
-    return {"assessment_id": assessment_id, "grade_level": 5, "gap_skill": DEFAULT_START_SKILL}
+def assessment_results(assessment_id: str, student_id: str = "demo"):
+    """Score the recorded answers per skill, persist and return the result."""
+    answers = progress.assessment_answers(student_id, assessment_id)
+    if not answers:
+        raise HTTPException(404, f"no answers recorded for {assessment_id}")
+
+    scores: dict[str, list[int]] = {}
+    for a in answers:
+        scores.setdefault(a.get("skill_id") or "unknown", [0, 0])
+        scores[a["skill_id"]][1] += 1
+        if a["correct"]:
+            scores[a["skill_id"]][0] += 1
+
+    skill_scores = {
+        skill: round(correct / total, 2)
+        for skill, (correct, total) in scores.items()
+    }
+    gap_skill = min(skill_scores, key=skill_scores.get) if skill_scores else DEFAULT_START_SKILL
+
+    result = {
+        "assessment_id": assessment_id,
+        "scores": skill_scores,
+        "gap_skill": gap_skill,
+        "grade_level": seed.students.get(student_id, {}).get("grade_level", 5),
+    }
+    progress.finish_assessment(student_id, assessment_id, result)
+    p = progress.load_progress(student_id)
+    result["gamification"] = {
+        "total_points": p["points"],
+        "level": p["level"],
+        "best_streak": p["best_streak"],
+        "badges": p["badges"],
+    }
+    return result
+
+
+@app.get("/students/{student_id}/progress")
+def student_progress(student_id: str):
+    """Full gamified progress for one student (points, level, badges, history)."""
+    return progress.load_progress(student_id)
+
+
+@app.delete("/students/{student_id}/progress")
+def student_progress_reset(student_id: str):
+    path = progress._file(student_id)
+    if path.exists():
+        path.unlink()
+    return {"ok": True, "student_id": student_id, "reset": True}
 
 
 @app.post("/worksheets/generate")

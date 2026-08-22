@@ -12,3 +12,6 @@ __pycache__/
 .next/
 __MACOSX/
 *.zip
+
+# per-student progress files written at runtime
+data/progress/

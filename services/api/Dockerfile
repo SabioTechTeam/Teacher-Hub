@@ -5,6 +5,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY services/api/app ./services/api/app
 COPY services/agent ./services/agent
 COPY curriculum ./curriculum
+COPY data ./data
 ENV PYTHONPATH=/app
 EXPOSE 8000
 CMD ["uvicorn", "services.api.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
