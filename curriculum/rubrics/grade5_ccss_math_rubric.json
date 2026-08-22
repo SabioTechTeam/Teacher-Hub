@@ -1,0 +1,364 @@
+{
+  "metadata": {
+    "title": "Grade 5 Mathematics Evaluation Rubric",
+    "grade": 5,
+    "standards_framework": "Common Core State Standards (CCSS)",
+    "total_domains": 5,
+    "total_standards": 26,
+    "max_points_per_standard": 4,
+    "total_max_points": 104,
+    "proficiency_scale": {
+      "4": {
+        "label": "Exceeds Standard",
+        "description": "Demonstrates deep understanding; solves complex, multi-step problems accurately; explains reasoning clearly.",
+        "score_range": { "min": 92, "max": 104 },
+        "percentage_range": "88–100%",
+        "action": "Enrichment / extension tasks"
+      },
+      "3": {
+        "label": "Meets Standard",
+        "description": "Consistently applies grade-level concepts correctly with minor errors; meets all CCSS expectations.",
+        "score_range": { "min": 78, "max": 91 },
+        "percentage_range": "75–87%",
+        "action": "Continue current pace"
+      },
+      "2": {
+        "label": "Approaching Standard",
+        "description": "Partially applies concepts; makes procedural errors; inconsistent accuracy across question types.",
+        "score_range": { "min": 52, "max": 77 },
+        "percentage_range": "50–74%",
+        "action": "Targeted re-teaching"
+      },
+      "1": {
+        "label": "Below Standard",
+        "description": "Limited or no grasp of grade-level concepts; significant errors; unable to complete standard tasks independently.",
+        "score_range": { "min": 0, "max": 51 },
+        "percentage_range": "0–49%",
+        "action": "Intensive intervention"
+      }
+    }
+  },
+  "domains": [
+    {
+      "code": "OA",
+      "title": "Operations & Algebraic Thinking",
+      "max_points": 12,
+      "standards": [
+        {
+          "id": "5.OA.1",
+          "description": "Use parentheses, brackets, or braces in numerical expressions, and evaluate expressions with these symbols.",
+          "max_points": 4,
+          "levels": {
+            "4": "Correctly evaluates complex nested expressions with all three grouping symbols; explains order of operations at each step.",
+            "3": "Correctly evaluates expressions with parentheses and brackets using order of operations with ≤1 error.",
+            "2": "Evaluates expressions with parentheses correctly but makes errors with nested brackets or braces.",
+            "1": "Cannot correctly apply order of operations or grouping symbols."
+          }
+        },
+        {
+          "id": "5.OA.2",
+          "description": "Write simple expressions that record calculations with numbers, and interpret numerical expressions without evaluating them.",
+          "max_points": 4,
+          "levels": {
+            "4": "Writes and interprets complex expressions fluently; explains the meaning of an expression in context without computing.",
+            "3": "Correctly writes and interprets numerical expressions for given verbal descriptions with ≤1 error.",
+            "2": "Writes expressions correctly but struggles to interpret them in words, or vice versa.",
+            "1": "Cannot write or interpret numerical expressions accurately."
+          }
+        },
+        {
+          "id": "5.OA.3",
+          "description": "Generate two numerical patterns using two given rules; identify relationships between corresponding terms; form and graph ordered pairs.",
+          "max_points": 4,
+          "levels": {
+            "4": "Generates both patterns correctly; articulates the relationship between them; accurately forms and graphs all ordered pairs on a coordinate plane.",
+            "3": "Generates both patterns and identifies the relationship; graphs most ordered pairs correctly with ≤1 error.",
+            "2": "Generates one pattern correctly; struggles to identify the relationship or graph the ordered pairs.",
+            "1": "Cannot generate patterns from rules or form ordered pairs."
+          }
+        }
+      ]
+    },
+    {
+      "code": "NBT",
+      "title": "Number & Operations in Base Ten",
+      "max_points": 28,
+      "standards": [
+        {
+          "id": "5.NBT.1",
+          "description": "Recognize that in a multi-digit number, a digit in one place represents 10 times as much as in the place to its right and 1/10 as much as in the place to its left.",
+          "max_points": 4,
+          "levels": {
+            "4": "Explains the 10× and 1/10 relationship across both whole number and decimal place values; connects to multiplication and division by powers of 10.",
+            "3": "Correctly identifies the relationship in both directions (10× right, 1/10 left) for whole numbers and decimals with ≤1 error.",
+            "2": "Understands the 10× relationship for whole numbers but inconsistent with decimal place values or the 1/10 direction.",
+            "1": "Cannot describe place value relationships in multi-digit or decimal numbers."
+          }
+        },
+        {
+          "id": "5.NBT.2",
+          "description": "Explain patterns in the number of zeros when multiplying by powers of 10; use whole-number exponents to denote powers of 10.",
+          "max_points": 4,
+          "levels": {
+            "4": "Explains the pattern for both multiplication and division by powers of 10; uses exponent notation correctly; applies to decimal shifting.",
+            "3": "Correctly uses whole-number exponents for powers of 10 and explains the zero-pattern rule with ≤1 error.",
+            "2": "Applies the pattern for multiplication but makes errors with division or exponent notation.",
+            "1": "Cannot identify or apply patterns when multiplying or dividing by powers of 10."
+          }
+        },
+        {
+          "id": "5.NBT.3",
+          "description": "Read, write, and compare decimals to thousandths using base-ten numerals, number names, and expanded form.",
+          "max_points": 4,
+          "levels": {
+            "4": "Reads, writes, and compares decimals to thousandths in all three forms fluently; places decimals precisely on a number line.",
+            "3": "Correctly reads, writes, and compares decimals to thousandths with ≤1 error.",
+            "2": "Reads and writes decimals correctly but makes errors in comparison or expanded form at the thousandths level.",
+            "1": "Significant errors reading, writing, or comparing decimals to thousandths."
+          }
+        },
+        {
+          "id": "5.NBT.4",
+          "description": "Use place value understanding to round decimals to any place.",
+          "max_points": 4,
+          "levels": {
+            "4": "Rounds decimals accurately to any place; explains the decision process; applies rounding in real-world context problems.",
+            "3": "Rounds decimals to tenths and hundredths correctly with ≤1 error.",
+            "2": "Rounds whole numbers correctly but makes errors rounding to decimal places.",
+            "1": "Cannot reliably round decimals to any place."
+          }
+        },
+        {
+          "id": "5.NBT.5",
+          "description": "Fluently multiply multi-digit whole numbers using the standard algorithm.",
+          "max_points": 4,
+          "levels": {
+            "4": "Applies the standard algorithm fluently with zero errors; can identify errors in others' work and explain the algorithm conceptually.",
+            "3": "Correctly multiplies multi-digit numbers using the standard algorithm with ≤1 computational error.",
+            "2": "Uses the algorithm but makes regrouping or partial-product errors in ≥2 problems.",
+            "1": "Cannot apply the standard multiplication algorithm correctly."
+          }
+        },
+        {
+          "id": "5.NBT.6",
+          "description": "Find whole-number quotients and remainders with up to four-digit dividends and two-digit divisors using strategies based on place value.",
+          "max_points": 4,
+          "levels": {
+            "4": "Divides four-digit by two-digit numbers correctly using multiple strategies; interprets remainder in context; explains reasoning.",
+            "3": "Correctly finds quotients and remainders for four-digit ÷ two-digit problems with ≤1 error.",
+            "2": "Divides correctly with one-digit divisors; makes errors with two-digit divisors.",
+            "1": "Cannot reliably divide multi-digit numbers by two-digit divisors."
+          }
+        },
+        {
+          "id": "5.NBT.7",
+          "description": "Add, subtract, multiply, and divide decimals to hundredths using concrete models or drawings and strategies based on place value.",
+          "max_points": 4,
+          "levels": {
+            "4": "Performs all four decimal operations accurately to hundredths; explains strategy; connects to place value understanding.",
+            "3": "Correctly adds, subtracts, multiplies, and divides decimals to hundredths with ≤1 error.",
+            "2": "Correctly adds and subtracts decimals; makes errors multiplying or dividing decimals.",
+            "1": "Cannot reliably perform decimal operations to hundredths."
+          }
+        }
+      ]
+    },
+    {
+      "code": "NF",
+      "title": "Number & Operations — Fractions",
+      "max_points": 28,
+      "standards": [
+        {
+          "id": "5.NF.1",
+          "description": "Add and subtract fractions with unlike denominators by replacing given fractions with equivalent fractions.",
+          "max_points": 4,
+          "levels": {
+            "4": "Adds and subtracts fractions and mixed numbers with unlike denominators fluently; simplifies results; explains the equivalence strategy.",
+            "3": "Correctly adds and subtracts fractions with unlike denominators; finds LCD with ≤1 error.",
+            "2": "Adds/subtracts when one denominator is a multiple of the other; errors with unrelated denominators.",
+            "1": "Cannot add or subtract fractions with unlike denominators."
+          }
+        },
+        {
+          "id": "5.NF.2",
+          "description": "Solve word problems involving addition and subtraction of fractions with unlike denominators; use benchmark fractions to estimate.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves multi-step fraction word problems accurately; uses benchmark fractions to check reasonableness; explains solution.",
+            "3": "Correctly sets up and solves fraction addition/subtraction word problems with ≤1 error.",
+            "2": "Sets up problem correctly but makes computational errors; limited use of estimation.",
+            "1": "Cannot set up or solve fraction word problems with unlike denominators."
+          }
+        },
+        {
+          "id": "5.NF.3",
+          "description": "Interpret a fraction as division of the numerator by the denominator; solve word problems involving division of whole numbers leading to fractions or mixed numbers.",
+          "max_points": 4,
+          "levels": {
+            "4": "Interprets fractions as division in multiple contexts; solves and explains problems where whole-number division yields a fraction or mixed number.",
+            "3": "Correctly interprets a/b as a ÷ b and solves related word problems with ≤1 error.",
+            "2": "Understands the concept in simple cases but struggles to apply in word problem contexts.",
+            "1": "Cannot interpret a fraction as division or apply it to problem solving."
+          }
+        },
+        {
+          "id": "5.NF.4",
+          "description": "Apply and extend previous understandings of multiplication to multiply a fraction or whole number by a fraction; find the area of a rectangle with fractional side lengths.",
+          "max_points": 4,
+          "levels": {
+            "4": "Multiplies fractions and mixed numbers correctly; finds area of rectangles with fractional sides; connects to area model; explains scaling.",
+            "3": "Correctly multiplies a fraction by a fraction and a fraction by a whole number with ≤1 error.",
+            "2": "Multiplies simple fractions correctly; errors with mixed numbers or area model application.",
+            "1": "Cannot multiply fractions correctly."
+          }
+        },
+        {
+          "id": "5.NF.5",
+          "description": "Interpret multiplication as scaling (resizing); compare the size of a product to the size of one factor without performing multiplication.",
+          "max_points": 4,
+          "levels": {
+            "4": "Explains scaling for fractions greater than 1, equal to 1, and less than 1; predicts and justifies product size without computing.",
+            "3": "Correctly identifies whether a product is larger or smaller than a factor based on the multiplier with ≤1 error.",
+            "2": "Understands scaling for whole numbers but inconsistent with fractional multipliers less than 1.",
+            "1": "Cannot interpret multiplication as scaling or compare product and factor sizes."
+          }
+        },
+        {
+          "id": "5.NF.6",
+          "description": "Solve real-world problems involving multiplication of fractions and mixed numbers.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves multi-step real-world problems involving fractions and mixed numbers; labels units; checks reasonableness.",
+            "3": "Correctly solves fraction multiplication word problems with ≤1 error.",
+            "2": "Solves problems with unit fractions or simple proper fractions; errors with mixed numbers.",
+            "1": "Cannot set up or solve real-world fraction multiplication problems."
+          }
+        },
+        {
+          "id": "5.NF.7",
+          "description": "Apply and extend previous understandings of division to divide unit fractions by whole numbers and whole numbers by unit fractions.",
+          "max_points": 4,
+          "levels": {
+            "4": "Divides unit fractions by whole numbers and whole numbers by unit fractions accurately; creates and solves related word problems; explains with visual models.",
+            "3": "Correctly divides in both directions (unit fraction ÷ whole number and whole number ÷ unit fraction) with ≤1 error.",
+            "2": "Divides correctly in one direction; errors in the other, or cannot apply to word problems.",
+            "1": "Cannot divide involving unit fractions."
+          }
+        }
+      ]
+    },
+    {
+      "code": "MD",
+      "title": "Measurement & Data",
+      "max_points": 20,
+      "standards": [
+        {
+          "id": "5.MD.1",
+          "description": "Convert among different-sized standard measurement units within a given measurement system.",
+          "max_points": 4,
+          "levels": {
+            "4": "Converts fluently within and between metric and customary systems; applies multi-step conversions in context.",
+            "3": "Correctly converts within a measurement system across common units with ≤1 error.",
+            "2": "Converts simple, frequently practiced pairs; errors on multi-step or less familiar conversions.",
+            "1": "Cannot reliably convert between measurement units."
+          }
+        },
+        {
+          "id": "5.MD.2",
+          "description": "Make a line plot to display a data set of measurements in fractions of a unit; use operations on fractions to solve problems.",
+          "max_points": 4,
+          "levels": {
+            "4": "Creates an accurate line plot with fractional units; solves multi-step addition/subtraction problems from the data.",
+            "3": "Creates a correct line plot and answers fraction-based questions about the data with ≤1 error.",
+            "2": "Creates line plot with minor errors; answers basic reading questions but not multi-step analysis.",
+            "1": "Cannot create or interpret a line plot with fractional measurement data."
+          }
+        },
+        {
+          "id": "5.MD.3",
+          "description": "Recognize volume as an attribute of solid figures; understand that a unit cube has 1 cubic unit of volume.",
+          "max_points": 4,
+          "levels": {
+            "4": "Explains volume as the number of unit cubes needed to fill a solid; applies concept to non-rectangular prisms by decomposition.",
+            "3": "Correctly identifies volume as the count of unit cubes and applies the concept to standard figures.",
+            "2": "Understands the concept of volume but confuses it with area or surface area in some cases.",
+            "1": "Cannot explain or apply the concept of volume as counting unit cubes."
+          }
+        },
+        {
+          "id": "5.MD.4",
+          "description": "Measure volumes by counting unit cubes, using cubic cm, cubic in, cubic ft, and improvised units.",
+          "max_points": 4,
+          "levels": {
+            "4": "Counts unit cubes accurately for irregular arrangements; correctly labels units; estimates volume of real objects.",
+            "3": "Correctly counts unit cubes to find volume with ≤1 counting or labeling error.",
+            "2": "Counts visible unit cubes correctly but undercounts hidden layers; inconsistent labeling.",
+            "1": "Cannot correctly count unit cubes to determine volume."
+          }
+        },
+        {
+          "id": "5.MD.5",
+          "description": "Relate volume to multiplication and addition; find volumes of right rectangular prisms using formulas V = l × w × h and V = B × h; find volumes of composite figures.",
+          "max_points": 4,
+          "levels": {
+            "4": "Applies both volume formulas correctly; decomposes composite figures and adds volumes; explains the relationship between the formulas.",
+            "3": "Correctly calculates volume using V = l × w × h and V = B × h with ≤1 error.",
+            "2": "Applies one formula correctly but not both; struggles with composite figures.",
+            "1": "Cannot apply volume formulas correctly."
+          }
+        }
+      ]
+    },
+    {
+      "code": "G",
+      "title": "Geometry",
+      "max_points": 16,
+      "standards": [
+        {
+          "id": "5.G.1",
+          "description": "Use a pair of perpendicular number lines (axes) to define a coordinate system; understand that the first number in an ordered pair indicates horizontal distance and the second indicates vertical distance.",
+          "max_points": 4,
+          "levels": {
+            "4": "Correctly plots and reads points in all four quadrants of the coordinate plane; explains the meaning of each coordinate.",
+            "3": "Correctly plots and reads ordered pairs in the first quadrant with ≤1 error; labels axes.",
+            "2": "Plots points when given step-by-step guidance; reverses x and y coordinates in some cases.",
+            "1": "Cannot correctly plot or identify ordered pairs on a coordinate plane."
+          }
+        },
+        {
+          "id": "5.G.2",
+          "description": "Represent real-world and mathematical problems by graphing points in the first quadrant; interpret coordinate values in context.",
+          "max_points": 4,
+          "levels": {
+            "4": "Graphs points accurately and interprets coordinate values in complex real-world contexts; connects to patterns and relationships.",
+            "3": "Correctly graphs points and interprets their meaning in context with ≤1 error.",
+            "2": "Graphs points correctly but struggles to interpret what the coordinates represent in context.",
+            "1": "Cannot graph points or interpret coordinate values in real-world problems."
+          }
+        },
+        {
+          "id": "5.G.3",
+          "description": "Understand that attributes belonging to a category of two-dimensional figures also belong to all subcategories.",
+          "max_points": 4,
+          "levels": {
+            "4": "Accurately explains the hierarchy of 2D shapes; applies category attributes to all subcategories; provides examples and counterexamples.",
+            "3": "Correctly identifies that subcategory figures share all attributes of the parent category with ≤1 error.",
+            "2": "Understands some relationships (e.g., squares are rectangles) but cannot generalize across the full hierarchy.",
+            "1": "Cannot apply category attributes to subcategories of 2D figures."
+          }
+        },
+        {
+          "id": "5.G.4",
+          "description": "Classify two-dimensional figures in a hierarchy based on properties.",
+          "max_points": 4,
+          "levels": {
+            "4": "Correctly places all 2D figures in a complete hierarchy; justifies placement using precise geometric properties; identifies overlapping categories.",
+            "3": "Correctly classifies 2D figures in a hierarchy using relevant properties with ≤1 error.",
+            "2": "Classifies common shapes correctly; errors with less familiar shapes or overlapping categories.",
+            "1": "Cannot classify 2D figures using a hierarchy of properties."
+          }
+        }
+      ]
+    }
+  ]
+}

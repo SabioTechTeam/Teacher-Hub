@@ -1,0 +1,375 @@
+{
+  "metadata": {
+    "title": "Grade 4 Mathematics Evaluation Rubric",
+    "grade": 4,
+    "standards_framework": "Common Core State Standards (CCSS)",
+    "total_domains": 5,
+    "total_standards": 27,
+    "max_points_per_standard": 4,
+    "total_max_points": 108,
+    "proficiency_scale": {
+      "4": {
+        "label": "Exceeds Standard",
+        "description": "Demonstrates deep understanding; solves complex, multi-step problems accurately; explains reasoning clearly.",
+        "score_range": { "min": 95, "max": 108 },
+        "percentage_range": "88–100%",
+        "action": "Enrichment / extension tasks"
+      },
+      "3": {
+        "label": "Meets Standard",
+        "description": "Consistently applies grade-level concepts correctly with minor errors; meets all CCSS expectations.",
+        "score_range": { "min": 81, "max": 94 },
+        "percentage_range": "75–87%",
+        "action": "Continue current pace"
+      },
+      "2": {
+        "label": "Approaching Standard",
+        "description": "Partially applies concepts; makes procedural errors; inconsistent accuracy across question types.",
+        "score_range": { "min": 54, "max": 80 },
+        "percentage_range": "50–74%",
+        "action": "Targeted re-teaching"
+      },
+      "1": {
+        "label": "Below Standard",
+        "description": "Limited or no grasp of grade-level concepts; significant errors; unable to complete standard tasks independently.",
+        "score_range": { "min": 0, "max": 53 },
+        "percentage_range": "0–49%",
+        "action": "Intensive intervention"
+      }
+    }
+  },
+  "domains": [
+    {
+      "code": "OA",
+      "title": "Operations & Algebraic Thinking",
+      "max_points": 20,
+      "standards": [
+        {
+          "id": "4.OA.1",
+          "description": "Interpret a multiplication equation as a comparison (e.g., 35 = 5 × 7).",
+          "max_points": 4,
+          "levels": {
+            "4": "Correctly interprets and writes multiplicative comparison equations; explains both directions of the relationship.",
+            "3": "Correctly interprets multiplicative comparisons and writes matching equations with no more than 1 minor error.",
+            "2": "Partially interprets comparisons; confuses additive vs. multiplicative; inconsistent.",
+            "1": "Cannot interpret or write multiplicative comparison equations correctly."
+          }
+        },
+        {
+          "id": "4.OA.2",
+          "description": "Solve multiplicative comparison word problems using multiplication and division.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves multi-step comparison problems; shows clear equation setup and labels; no errors.",
+            "3": "Solves single-step comparison word problems correctly; may make minor computational errors.",
+            "2": "Sets up problem partially correctly; frequent computational or conceptual errors.",
+            "1": "Unable to set up or solve comparison word problems."
+          }
+        },
+        {
+          "id": "4.OA.3",
+          "description": "Solve multi-step word problems using the four operations; assess reasonableness using estimation.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves complex multi-step problems; uses estimation to verify; explains strategy.",
+            "3": "Solves most multi-step problems correctly; uses estimation at least once to check reasonableness.",
+            "2": "Solves single-step parts but struggles with multi-step sequencing; limited estimation use.",
+            "1": "Cannot solve multi-step problems; no evidence of estimation strategy."
+          }
+        },
+        {
+          "id": "4.OA.4",
+          "description": "Find factor pairs, determine whether a number is prime or composite (1–100).",
+          "max_points": 4,
+          "levels": {
+            "4": "Lists all factor pairs for any number 1–100; correctly classifies prime/composite; explains why 1 is neither.",
+            "3": "Finds most factor pairs; correctly identifies prime vs. composite numbers with ≤1 error.",
+            "2": "Finds some factors but misses pairs; makes errors classifying prime/composite.",
+            "1": "Cannot identify factor pairs or distinguish prime from composite."
+          }
+        },
+        {
+          "id": "4.OA.5",
+          "description": "Generate and analyze a number or shape pattern that follows a given rule.",
+          "max_points": 4,
+          "levels": {
+            "4": "Generates correct pattern; identifies multiple features not explicitly stated in the rule; explains with precision.",
+            "3": "Generates a correct pattern from a rule; identifies one non-obvious feature.",
+            "2": "Generates partially correct pattern; does not identify additional features.",
+            "1": "Cannot generate or analyze a pattern from a given rule."
+          }
+        }
+      ]
+    },
+    {
+      "code": "NBT",
+      "title": "Number & Operations in Base Ten",
+      "max_points": 24,
+      "standards": [
+        {
+          "id": "4.NBT.1",
+          "description": "Recognize that a digit in one place represents ten times the digit to the right.",
+          "max_points": 4,
+          "levels": {
+            "4": "Explains and applies the 10× relationship across multiple place values; connects to multiplication.",
+            "3": "Correctly identifies the 10× place value relationship in all standard examples.",
+            "2": "Understands the concept for tens/hundreds but inconsistent for larger place values.",
+            "1": "Cannot describe the relationship between place values."
+          }
+        },
+        {
+          "id": "4.NBT.2",
+          "description": "Read, write, and compare multi-digit whole numbers; use comparison symbols.",
+          "max_points": 4,
+          "levels": {
+            "4": "Reads, writes (standard, word, expanded form), and orders multiple large numbers with full accuracy.",
+            "3": "Correctly reads, writes, and compares multi-digit numbers using <, >, = with ≤1 error.",
+            "2": "Reads and writes numbers but makes errors in comparison or expanded form.",
+            "1": "Significant errors reading, writing, or comparing multi-digit numbers."
+          }
+        },
+        {
+          "id": "4.NBT.3",
+          "description": "Round multi-digit whole numbers to any place using place value understanding.",
+          "max_points": 4,
+          "levels": {
+            "4": "Rounds accurately to any place; explains decision process; applies rounding in context.",
+            "3": "Rounds to any specified place correctly with ≤1 error.",
+            "2": "Rounds to tens/hundreds correctly but struggles with larger places.",
+            "1": "Cannot reliably round to any place value."
+          }
+        },
+        {
+          "id": "4.NBT.4",
+          "description": "Fluently add and subtract multi-digit whole numbers using the standard algorithm.",
+          "max_points": 4,
+          "levels": {
+            "4": "Applies standard algorithm fluently; zero errors; can identify and correct others' errors.",
+            "3": "Correctly solves multi-digit addition/subtraction with ≤1 computational error.",
+            "2": "Uses algorithm but makes regrouping errors in ≥2 problems.",
+            "1": "Does not use or apply the standard algorithm correctly."
+          }
+        },
+        {
+          "id": "4.NBT.5",
+          "description": "Multiply a whole number up to four digits by a one-digit number, and two two-digit numbers.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves all multiplication types accurately; shows work; uses multiple strategies (area model, algorithm).",
+            "3": "Correctly multiplies 4-digit × 1-digit and 2-digit × 2-digit with ≤1 error.",
+            "2": "Correct for smaller numbers; makes errors with larger or two two-digit multiplications.",
+            "1": "Cannot reliably multiply multi-digit numbers."
+          }
+        },
+        {
+          "id": "4.NBT.6",
+          "description": "Find whole-number quotients and remainders with up to four-digit dividends and one-digit divisors.",
+          "max_points": 4,
+          "levels": {
+            "4": "Correctly divides with remainders; interprets remainder in context; uses multiple strategies.",
+            "3": "Correctly finds quotient and remainder for most problems with ≤1 error.",
+            "2": "Finds quotient but makes errors with remainders or larger dividends.",
+            "1": "Cannot perform multi-digit division or consistently find correct quotients."
+          }
+        }
+      ]
+    },
+    {
+      "code": "NF",
+      "title": "Number & Operations — Fractions",
+      "max_points": 28,
+      "standards": [
+        {
+          "id": "4.NF.1",
+          "description": "Explain why a/b = (n×a)/(n×b); recognize and generate equivalent fractions.",
+          "max_points": 4,
+          "levels": {
+            "4": "Generates multiple equivalent fractions; explains the multiplication/division reasoning; applies to simplification.",
+            "3": "Correctly generates equivalent fractions and explains the n×a/n×b relationship.",
+            "2": "Generates some equivalent fractions by procedure but cannot explain why they are equal.",
+            "1": "Cannot identify or generate equivalent fractions."
+          }
+        },
+        {
+          "id": "4.NF.2",
+          "description": "Compare fractions with different numerators and denominators using <, >, =; justify using benchmarks.",
+          "max_points": 4,
+          "levels": {
+            "4": "Compares fractions using multiple strategies (common denominator, benchmarks, cross-multiply); explains choice.",
+            "3": "Correctly compares fractions and provides valid justification with ≤1 error.",
+            "2": "Compares correctly when denominators are related; struggles with unrelated denominators.",
+            "1": "Cannot reliably compare fractions with unlike denominators."
+          }
+        },
+        {
+          "id": "4.NF.3",
+          "description": "Understand addition/subtraction of fractions as joining/separating parts of the same whole; add/subtract mixed numbers.",
+          "max_points": 4,
+          "levels": {
+            "4": "Adds and subtracts mixed numbers with regrouping; decomposes in multiple ways; no errors.",
+            "3": "Correctly adds and subtracts fractions and simple mixed numbers with like denominators.",
+            "2": "Adds/subtracts simple fractions correctly; errors when regrouping mixed numbers.",
+            "1": "Cannot add or subtract fractions correctly."
+          }
+        },
+        {
+          "id": "4.NF.4",
+          "description": "Apply understanding of multiplication to multiply a fraction by a whole number.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves fraction × whole number problems in multiple contexts; writes as repeated addition and as product.",
+            "3": "Correctly multiplies a fraction by a whole number; connects to repeated addition.",
+            "2": "Multiplies simple cases correctly but errors with larger whole numbers or mixed results.",
+            "1": "Cannot multiply a fraction by a whole number."
+          }
+        },
+        {
+          "id": "4.NF.5",
+          "description": "Express fractions with denominators 10 or 100; add fractions with denominators 10 and 100.",
+          "max_points": 4,
+          "levels": {
+            "4": "Converts fluently between tenths and hundredths; adds correctly; connects to decimal notation.",
+            "3": "Correctly expresses and adds fractions with denominators 10 and 100 with ≤1 error.",
+            "2": "Adds when denominators match; struggles converting tenths to hundredths.",
+            "1": "Cannot work with tenths/hundredths fractions."
+          }
+        },
+        {
+          "id": "4.NF.6",
+          "description": "Use decimal notation for fractions with denominators 10 or 100.",
+          "max_points": 4,
+          "levels": {
+            "4": "Converts fluently in both directions; places decimals on number line; explains place value connection.",
+            "3": "Correctly reads and writes decimals to hundredths; matches to equivalent fractions.",
+            "2": "Writes tenths as decimals correctly; errors with hundredths or fraction-decimal matching.",
+            "1": "Cannot convert between fraction and decimal notation."
+          }
+        },
+        {
+          "id": "4.NF.7",
+          "description": "Compare two decimals to hundredths using <, >, =; justify using place value.",
+          "max_points": 4,
+          "levels": {
+            "4": "Compares decimals accurately; explains place value reasoning; places decimals on number line.",
+            "3": "Correctly compares decimals to hundredths with valid place value justification.",
+            "2": "Compares decimals with same number of decimal places; errors with mixed tenths/hundredths.",
+            "1": "Cannot reliably compare decimals."
+          }
+        }
+      ]
+    },
+    {
+      "code": "MD",
+      "title": "Measurement & Data",
+      "max_points": 24,
+      "standards": [
+        {
+          "id": "4.MD.1",
+          "description": "Know relative sizes of measurement units within a system; convert larger to smaller units.",
+          "max_points": 4,
+          "levels": {
+            "4": "Converts within and across multiple unit systems; applies in multi-step problems.",
+            "3": "Correctly converts larger units to smaller units (e.g., km→m, hr→min) with ≤1 error.",
+            "2": "Converts simple, frequently practiced pairs; errors on less familiar conversions.",
+            "1": "Cannot reliably convert between measurement units."
+          }
+        },
+        {
+          "id": "4.MD.2",
+          "description": "Use the four operations to solve word problems involving distances, time, volume, and money.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves complex multi-step measurement word problems; labels units; checks reasonableness.",
+            "3": "Correctly sets up and solves measurement word problems with ≤1 computational error.",
+            "2": "Solves single-step measurement problems; struggles when unit conversion is embedded.",
+            "1": "Cannot set up or solve measurement word problems."
+          }
+        },
+        {
+          "id": "4.MD.3",
+          "description": "Apply area and perimeter formulas for rectangles in real-world and mathematical problems.",
+          "max_points": 4,
+          "levels": {
+            "4": "Applies formulas correctly; works backwards from area/perimeter to find missing dimensions; no errors.",
+            "3": "Correctly calculates area and perimeter using formulas with ≤1 error.",
+            "2": "Confuses area and perimeter; applies one formula correctly but not both.",
+            "1": "Cannot apply area or perimeter formulas correctly."
+          }
+        },
+        {
+          "id": "4.MD.4",
+          "description": "Make a line plot to display fractional data; solve problems involving information in the line plot.",
+          "max_points": 4,
+          "levels": {
+            "4": "Creates accurate line plot with labeled axes; solves addition/subtraction problems from plot.",
+            "3": "Creates correct line plot and answers questions about the data with ≤1 error.",
+            "2": "Creates line plot with minor errors; answers basic reading questions but not analysis.",
+            "1": "Cannot create or correctly interpret a line plot with fractional data."
+          }
+        },
+        {
+          "id": "4.MD.5-6",
+          "description": "Recognize angles as geometric shapes; measure angles with a protractor in whole-number degrees.",
+          "max_points": 4,
+          "levels": {
+            "4": "Measures all angles accurately (±2°); classifies correctly; draws angles to specification.",
+            "3": "Measures most angles correctly with ≤5° error; correctly classifies acute/right/obtuse/straight.",
+            "2": "Measures common angles (90°, 180°) correctly; inconsistent with non-standard angles.",
+            "1": "Cannot use protractor correctly or classify angles reliably."
+          }
+        },
+        {
+          "id": "4.MD.7",
+          "description": "Recognize angle measure as additive; find unknown angles using addition/subtraction.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves multi-step unknown angle problems; writes and solves equations; explains reasoning.",
+            "3": "Correctly finds unknown angles using additive reasoning in standard configurations.",
+            "2": "Finds unknown angles when one decomposition is given; struggles with two-step problems.",
+            "1": "Cannot apply additive angle reasoning to find unknown angles."
+          }
+        }
+      ]
+    },
+    {
+      "code": "G",
+      "title": "Geometry",
+      "max_points": 12,
+      "standards": [
+        {
+          "id": "4.G.1",
+          "description": "Draw and identify points, lines, line segments, rays, and angles (right, acute, obtuse).",
+          "max_points": 4,
+          "levels": {
+            "4": "Accurately draws and labels all geometric figures; identifies in complex diagrams without prompt.",
+            "3": "Correctly draws and labels all required figures with ≤1 error.",
+            "2": "Identifies most figures when labeled; struggles to draw from description.",
+            "1": "Cannot reliably draw or identify basic geometric figures."
+          }
+        },
+        {
+          "id": "4.G.2",
+          "description": "Classify 2D figures based on parallel/perpendicular lines and angle types.",
+          "max_points": 4,
+          "levels": {
+            "4": "Accurately classifies all 2D figures; explains hierarchy (e.g., square is a rectangle); uses correct terminology.",
+            "3": "Correctly classifies 2D shapes by lines and angles with ≤1 error.",
+            "2": "Classifies common shapes (square, rectangle); errors with less familiar shapes or overlapping categories.",
+            "1": "Cannot classify 2D shapes using parallel/perpendicular criteria."
+          }
+        },
+        {
+          "id": "4.G.3",
+          "description": "Recognize and draw lines of symmetry for 2D figures.",
+          "max_points": 4,
+          "levels": {
+            "4": "Identifies all lines of symmetry for any figure; draws them correctly; explains why asymmetric figures have none.",
+            "3": "Correctly identifies and draws lines of symmetry for standard shapes with ≤1 error.",
+            "2": "Identifies obvious symmetry (vertical axis); misses diagonal or multiple lines of symmetry.",
+            "1": "Cannot reliably identify or draw lines of symmetry."
+          }
+        }
+      ]
+    }
+  ]
+}

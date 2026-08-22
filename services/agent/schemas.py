@@ -58,3 +58,5 @@ class AttemptResult(BaseModel):
     next_target_skill: str = ""
     next_grade_level: int = 5
     rationale: str = ""
+    proficiency_level: int = 1
+    proficiency_label: str = ""

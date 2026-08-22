@@ -1,0 +1,397 @@
+{
+  "metadata": {
+    "title": "Grade 6 Mathematics Evaluation Rubric",
+    "grade": 6,
+    "standards_framework": "Common Core State Standards (CCSS)",
+    "total_domains": 5,
+    "total_standards": 29,
+    "max_points_per_standard": 4,
+    "total_max_points": 116,
+    "proficiency_scale": {
+      "4": {
+        "label": "Exceeds Standard",
+        "description": "Demonstrates deep understanding; solves complex, multi-step problems accurately; justifies reasoning with mathematical precision.",
+        "score_range": { "min": 102, "max": 116 },
+        "percentage_range": "88–100%",
+        "action": "Enrichment / extension tasks"
+      },
+      "3": {
+        "label": "Meets Standard",
+        "description": "Consistently applies grade-level concepts correctly with minor errors; meets all CCSS expectations.",
+        "score_range": { "min": 87, "max": 101 },
+        "percentage_range": "75–87%",
+        "action": "Continue current pace"
+      },
+      "2": {
+        "label": "Approaching Standard",
+        "description": "Partially applies concepts; makes procedural errors; inconsistent accuracy across question types.",
+        "score_range": { "min": 58, "max": 86 },
+        "percentage_range": "50–74%",
+        "action": "Targeted re-teaching"
+      },
+      "1": {
+        "label": "Below Standard",
+        "description": "Limited or no grasp of grade-level concepts; significant errors; unable to complete standard tasks independently.",
+        "score_range": { "min": 0, "max": 57 },
+        "percentage_range": "0–49%",
+        "action": "Intensive intervention"
+      }
+    }
+  },
+  "domains": [
+    {
+      "code": "RP",
+      "title": "Ratios & Proportional Relationships",
+      "max_points": 16,
+      "standards": [
+        {
+          "id": "6.RP.1",
+          "description": "Understand the concept of a ratio and use ratio language to describe a ratio relationship between two quantities.",
+          "max_points": 4,
+          "levels": {
+            "4": "Correctly describes ratios using part-to-part and part-to-whole language in multiple contexts; distinguishes ratio from fraction; explains in context.",
+            "3": "Correctly identifies and describes ratio relationships using ratio language with ≤1 error.",
+            "2": "Identifies a ratio but uses imprecise language or confuses part-to-part with part-to-whole.",
+            "1": "Cannot correctly identify or describe ratio relationships."
+          }
+        },
+        {
+          "id": "6.RP.2",
+          "description": "Understand the concept of a unit rate a/b associated with a ratio a:b with b ≠ 0; use rate language in the context of a ratio relationship.",
+          "max_points": 4,
+          "levels": {
+            "4": "Finds and interprets unit rates in varied contexts; explains the meaning of the unit rate; compares rates across problems.",
+            "3": "Correctly calculates unit rates and uses rate language accurately with ≤1 error.",
+            "2": "Calculates a rate but does not simplify to a unit rate or confuses rate language.",
+            "1": "Cannot calculate or interpret unit rates."
+          }
+        },
+        {
+          "id": "6.RP.3",
+          "description": "Use ratio and rate reasoning to solve real-world and mathematical problems (tables, tape diagrams, double number lines, equations, percent, unit conversion).",
+          "max_points": 4,
+          "levels": {
+            "4": "Uses multiple representations (table, double number line, equation) to solve ratio/rate problems; solves complex percent and conversion problems; justifies solutions.",
+            "3": "Correctly solves ratio and rate problems using at least one appropriate representation with ≤1 error.",
+            "2": "Solves simple ratio problems but makes errors with percent, unit conversion, or multi-step problems.",
+            "1": "Cannot apply ratio or rate reasoning to solve problems."
+          }
+        },
+        {
+          "id": "6.RP.3c",
+          "description": "Find a percent of a quantity as a rate per 100; solve problems involving finding the whole, given a part and the percent.",
+          "max_points": 4,
+          "levels": {
+            "4": "Finds percent of a quantity, the whole from a part and percent, and the percent given part and whole; applies in multi-step real-world problems.",
+            "3": "Correctly finds percent of a quantity and solves for the whole given part and percent with ≤1 error.",
+            "2": "Finds percent of a quantity correctly but struggles to find the whole or the percent itself.",
+            "1": "Cannot apply percent concepts to solve problems."
+          }
+        }
+      ]
+    },
+    {
+      "code": "NS",
+      "title": "The Number System",
+      "max_points": 32,
+      "standards": [
+        {
+          "id": "6.NS.1",
+          "description": "Interpret and compute quotients of fractions; solve word problems involving division of fractions by fractions.",
+          "max_points": 4,
+          "levels": {
+            "4": "Divides fractions by fractions fluently; interprets the quotient in context; creates and solves original word problems; uses visual models to explain.",
+            "3": "Correctly divides fractions by fractions using keep-change-flip and solves related word problems with ≤1 error.",
+            "2": "Applies the division procedure but makes errors with mixed numbers or cannot interpret the quotient in context.",
+            "1": "Cannot divide fractions by fractions or interpret fraction division."
+          }
+        },
+        {
+          "id": "6.NS.2",
+          "description": "Fluently divide multi-digit numbers using the standard algorithm.",
+          "max_points": 4,
+          "levels": {
+            "4": "Applies the standard algorithm fluently; zero errors; explains each step; identifies and corrects errors in others' work.",
+            "3": "Correctly divides multi-digit numbers using the standard algorithm with ≤1 computational error.",
+            "2": "Uses the algorithm but makes systematic errors with two-digit divisors or remainders.",
+            "1": "Cannot apply the standard long division algorithm correctly."
+          }
+        },
+        {
+          "id": "6.NS.3",
+          "description": "Fluently add, subtract, multiply, and divide multi-digit decimals using the standard algorithm for each operation.",
+          "max_points": 4,
+          "levels": {
+            "4": "Performs all four decimal operations fluently and accurately; explains the role of place value alignment; zero errors.",
+            "3": "Correctly performs multi-digit decimal operations with ≤1 computational error.",
+            "2": "Adds and subtracts decimals correctly; makes errors multiplying or dividing decimals (misplaces decimal point).",
+            "1": "Cannot reliably perform multi-digit decimal operations."
+          }
+        },
+        {
+          "id": "6.NS.4",
+          "description": "Find the greatest common factor (GCF) of two whole numbers ≤100 and the least common multiple (LCM) of two whole numbers ≤12; use the distributive property to express a sum as a product.",
+          "max_points": 4,
+          "levels": {
+            "4": "Finds GCF and LCM accurately; uses the distributive property to factor and expand expressions; applies GCF/LCM in context problems.",
+            "3": "Correctly finds GCF and LCM and applies the distributive property with ≤1 error.",
+            "2": "Finds GCF or LCM correctly but not both; limited application of distributive property.",
+            "1": "Cannot reliably find GCF or LCM."
+          }
+        },
+        {
+          "id": "6.NS.5",
+          "description": "Understand that positive and negative numbers describe quantities having opposite directions or values; use positive and negative numbers in real-world contexts.",
+          "max_points": 4,
+          "levels": {
+            "4": "Accurately interprets positive and negative numbers in diverse real-world contexts; explains what zero means in each context; compares signed quantities.",
+            "3": "Correctly interprets and uses positive and negative numbers in real-world contexts with ≤1 error.",
+            "2": "Identifies positive and negative in simple contexts (temperature, money) but struggles with less familiar applications.",
+            "1": "Cannot interpret or use positive and negative numbers in context."
+          }
+        },
+        {
+          "id": "6.NS.6",
+          "description": "Understand a rational number as a point on the number line; extend number line diagrams to include negative numbers; understand signs of numbers in ordered pairs.",
+          "max_points": 4,
+          "levels": {
+            "4": "Places all rational numbers (positive, negative, fractions, decimals) accurately on number lines and in all four quadrants of the coordinate plane; explains sign conventions.",
+            "3": "Correctly places positive and negative rational numbers on a number line and in the coordinate plane with ≤1 error.",
+            "2": "Places positive rational numbers correctly; errors placing negative fractions or decimals on the number line.",
+            "1": "Cannot reliably place rational numbers on a number line."
+          }
+        },
+        {
+          "id": "6.NS.7",
+          "description": "Understand ordering and absolute value of rational numbers; interpret statements of inequality; distinguish comparisons of absolute value from statements about order.",
+          "max_points": 4,
+          "levels": {
+            "4": "Orders rational numbers including negatives accurately; correctly uses and interprets absolute value; distinguishes absolute value from order in context.",
+            "3": "Correctly orders rational numbers and interprets absolute value with ≤1 error.",
+            "2": "Orders positive rational numbers correctly; errors ordering negatives or misinterprets absolute value.",
+            "1": "Cannot order rational numbers or apply absolute value correctly."
+          }
+        },
+        {
+          "id": "6.NS.8",
+          "description": "Solve real-world and mathematical problems by graphing points in all four quadrants of the coordinate plane; find distances between points sharing a coordinate.",
+          "max_points": 4,
+          "levels": {
+            "4": "Graphs points in all four quadrants accurately; calculates distances between points sharing a coordinate; applies to real-world problems involving perimeter or mapping.",
+            "3": "Correctly graphs points in all four quadrants and finds distances between same-coordinate points with ≤1 error.",
+            "2": "Graphs points in the first quadrant correctly; errors plotting in quadrants with negative values.",
+            "1": "Cannot graph points in all four quadrants or find coordinate-plane distances."
+          }
+        }
+      ]
+    },
+    {
+      "code": "EE",
+      "title": "Expressions & Equations",
+      "max_points": 32,
+      "standards": [
+        {
+          "id": "6.EE.1",
+          "description": "Write and evaluate numerical expressions involving whole-number exponents.",
+          "max_points": 4,
+          "levels": {
+            "4": "Writes and evaluates expressions with exponents fluently; distinguishes 2³ from 3² with explanation; applies in multi-step expressions.",
+            "3": "Correctly writes and evaluates numerical expressions with whole-number exponents with ≤1 error.",
+            "2": "Evaluates simple exponents correctly but confuses base and exponent, or errors with exponents greater than 3.",
+            "1": "Cannot write or evaluate expressions with exponents correctly."
+          }
+        },
+        {
+          "id": "6.EE.2",
+          "description": "Write, read, and evaluate expressions with letters standing for numbers; identify parts of an expression using mathematical terms.",
+          "max_points": 4,
+          "levels": {
+            "4": "Writes, reads, and evaluates algebraic expressions fluently; correctly names all parts (coefficient, term, factor, product, sum); substitutes values accurately.",
+            "3": "Correctly writes and evaluates algebraic expressions and identifies parts with ≤1 error.",
+            "2": "Evaluates expressions by substitution correctly but uses imprecise terminology or struggles to write expressions from verbal descriptions.",
+            "1": "Cannot correctly write or evaluate algebraic expressions."
+          }
+        },
+        {
+          "id": "6.EE.3",
+          "description": "Apply properties of operations to generate equivalent expressions.",
+          "max_points": 4,
+          "levels": {
+            "4": "Applies distributive, commutative, and associative properties fluently to simplify and generate equivalent expressions; explains each step.",
+            "3": "Correctly applies properties of operations to create equivalent expressions with ≤1 error.",
+            "2": "Applies the distributive property in simple cases; errors with factoring or combining like terms.",
+            "1": "Cannot apply properties of operations to generate equivalent expressions."
+          }
+        },
+        {
+          "id": "6.EE.4",
+          "description": "Identify when two expressions are equivalent; recognize that equivalent expressions yield the same value regardless of the substitution.",
+          "max_points": 4,
+          "levels": {
+            "4": "Identifies equivalence using multiple methods (substitution, simplification); proves equivalence and explains why; provides counterexamples for non-equivalent expressions.",
+            "3": "Correctly identifies equivalent expressions and verifies with substitution with ≤1 error.",
+            "2": "Identifies equivalence in simple cases; struggles to verify with varied substitution values.",
+            "1": "Cannot reliably identify equivalent expressions."
+          }
+        },
+        {
+          "id": "6.EE.5",
+          "description": "Understand solving an equation or inequality as a process of determining which values make it true; use substitution to check solutions.",
+          "max_points": 4,
+          "levels": {
+            "4": "Explains the solution process conceptually; verifies solutions by substitution; identifies the solution set for inequalities; applies to real-world constraints.",
+            "3": "Correctly identifies solutions by substitution for both equations and inequalities with ≤1 error.",
+            "2": "Substitutes to check equation solutions correctly; struggles with inequalities or solution sets.",
+            "1": "Cannot determine or verify solutions to equations or inequalities by substitution."
+          }
+        },
+        {
+          "id": "6.EE.6",
+          "description": "Use variables to represent numbers and write expressions when solving real-world and mathematical problems; understand that a variable can represent an unknown number.",
+          "max_points": 4,
+          "levels": {
+            "4": "Uses variables fluently in complex real-world contexts; writes expressions with multiple variables; explains what each variable represents.",
+            "3": "Correctly uses a variable to represent an unknown and writes a matching expression with ≤1 error.",
+            "2": "Writes expressions for simple situations; errors in multi-variable or multi-step problems.",
+            "1": "Cannot use variables to represent unknowns or write algebraic expressions."
+          }
+        },
+        {
+          "id": "6.EE.7",
+          "description": "Solve real-world and mathematical problems by writing and solving equations of the form x + p = q and px = q.",
+          "max_points": 4,
+          "levels": {
+            "4": "Writes and solves both equation forms accurately; interprets the solution in context; checks the solution; extends to two-step problems.",
+            "3": "Correctly writes and solves x + p = q and px = q with ≤1 error.",
+            "2": "Solves one equation form correctly but not the other, or cannot write the equation from context.",
+            "1": "Cannot write or solve basic one-step equations."
+          }
+        },
+        {
+          "id": "6.EE.8",
+          "description": "Write an inequality of the form x > c or x < c to represent a constraint; recognize that these have infinitely many solutions; represent solutions on a number line.",
+          "max_points": 4,
+          "levels": {
+            "4": "Writes inequalities from context; graphs solution sets with open/closed circles correctly; explains that inequalities have infinite solutions; identifies boundary conditions.",
+            "3": "Correctly writes and graphs inequalities of the form x > c or x < c with ≤1 error.",
+            "2": "Writes inequalities correctly but makes errors graphing solution sets or confuses > and < symbols.",
+            "1": "Cannot write or graph simple inequalities."
+          }
+        }
+      ]
+    },
+    {
+      "code": "G",
+      "title": "Geometry",
+      "max_points": 20,
+      "standards": [
+        {
+          "id": "6.G.1",
+          "description": "Find the area of right triangles, other triangles, special quadrilaterals, and polygons by composing or decomposing into rectangles and triangles.",
+          "max_points": 4,
+          "levels": {
+            "4": "Finds area of all polygon types accurately; decomposes complex polygons into triangles and rectangles; explains strategy; applies to real-world contexts.",
+            "3": "Correctly finds area of triangles and special quadrilaterals by composing/decomposing with ≤1 error.",
+            "2": "Finds area of rectangles and right triangles correctly; errors with non-right triangles or composite figures.",
+            "1": "Cannot reliably find areas of triangles or composite polygons."
+          }
+        },
+        {
+          "id": "6.G.2",
+          "description": "Find the volume of a right rectangular prism with fractional edge lengths by packing it with unit cubes; apply the formulas V = l × w × h and V = B × h.",
+          "max_points": 4,
+          "levels": {
+            "4": "Calculates volume with fractional edge lengths accurately; explains the unit cube model; applies both formulas; connects to fraction multiplication.",
+            "3": "Correctly calculates volume of right rectangular prisms with fractional edges using the formula with ≤1 error.",
+            "2": "Applies the volume formula with whole-number edges correctly; errors with fractional edge lengths.",
+            "1": "Cannot apply volume formulas, especially with fractional dimensions."
+          }
+        },
+        {
+          "id": "6.G.3",
+          "description": "Draw polygons in the coordinate plane given coordinates for the vertices; use coordinates to find side lengths.",
+          "max_points": 4,
+          "levels": {
+            "4": "Draws polygons accurately in all four quadrants; finds all side lengths including those crossing axes; applies to perimeter/area calculations.",
+            "3": "Correctly draws polygons from coordinates and finds side lengths between same-axis points with ≤1 error.",
+            "2": "Draws polygons correctly in the first quadrant; errors with negative coordinates or finding distances.",
+            "1": "Cannot draw polygons in the coordinate plane or find coordinate-based side lengths."
+          }
+        },
+        {
+          "id": "6.G.4",
+          "description": "Represent three-dimensional figures using nets made of rectangles and triangles; use nets to find surface area.",
+          "max_points": 4,
+          "levels": {
+            "4": "Draws correct nets for multiple 3D figures; calculates surface area accurately; connects net faces to the formula; solves real-world surface area problems.",
+            "3": "Correctly draws nets and calculates surface area for rectangular prisms and triangular prisms with ≤1 error.",
+            "2": "Identifies a correct net but makes errors calculating surface area or misidentifies face dimensions.",
+            "1": "Cannot draw nets or calculate surface area of 3D figures."
+          }
+        },
+        {
+          "id": "6.G.5",
+          "description": "Solve real-world and mathematical problems involving area, surface area, and volume.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves complex multi-step real-world problems involving area, surface area, and volume; selects the correct formula; labels units correctly.",
+            "3": "Correctly solves standard real-world area, surface area, and volume problems with ≤1 error.",
+            "2": "Solves area problems correctly; struggles with surface area or volume in applied contexts.",
+            "1": "Cannot solve real-world measurement problems involving area, surface area, or volume."
+          }
+        }
+      ]
+    },
+    {
+      "code": "SP",
+      "title": "Statistics & Probability",
+      "max_points": 16,
+      "standards": [
+        {
+          "id": "6.SP.1",
+          "description": "Recognize a statistical question as one that anticipates variability in the data; understand that statistical questions produce data with variability.",
+          "max_points": 4,
+          "levels": {
+            "4": "Distinguishes statistical from non-statistical questions; explains the concept of variability; gives original examples in context.",
+            "3": "Correctly identifies statistical questions and explains why they anticipate variability with ≤1 error.",
+            "2": "Identifies obvious statistical questions but struggles with borderline cases or cannot explain variability.",
+            "1": "Cannot distinguish statistical from non-statistical questions."
+          }
+        },
+        {
+          "id": "6.SP.2",
+          "description": "Understand that a set of data collected to answer a statistical question has a distribution described by its center, spread, and overall shape.",
+          "max_points": 4,
+          "levels": {
+            "4": "Accurately describes a data distribution using center, spread, and shape; connects these to the statistical question; uses formal vocabulary (symmetric, skewed, clustered).",
+            "3": "Correctly describes a distribution using center, spread, and overall shape with ≤1 error.",
+            "2": "Describes center or spread but not both; does not address shape or uses informal language only.",
+            "1": "Cannot describe a data distribution meaningfully."
+          }
+        },
+        {
+          "id": "6.SP.3",
+          "description": "Recognize that a measure of center summarizes all values with a single number; a measure of variation describes how values vary.",
+          "max_points": 4,
+          "levels": {
+            "4": "Explains the role of mean, median, and MAD with precision; chooses the appropriate measure for a given context; interprets each in context.",
+            "3": "Correctly calculates mean, median, and explains their role as measures of center and variation with ≤1 error.",
+            "2": "Calculates mean or median correctly but not both; limited understanding of variation.",
+            "1": "Cannot calculate or interpret measures of center or variation."
+          }
+        },
+        {
+          "id": "6.SP.4",
+          "description": "Display numerical data in plots on a number line, including dot plots, histograms, and box plots.",
+          "max_points": 4,
+          "levels": {
+            "4": "Creates accurate dot plots, histograms, and box plots; labels all components; chooses appropriate display for the data type.",
+            "3": "Correctly constructs at least two of the three plot types with ≤1 error.",
+            "2": "Creates a dot plot correctly; makes errors constructing histograms or box plots.",
+            "1": "Cannot correctly construct statistical plots."
+          }
+        }
+      ]
+    }
+  ]
+}

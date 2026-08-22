@@ -19,7 +19,10 @@ except ImportError:  # pragma: no cover
 def _repo_root() -> str:
     here = os.path.abspath(os.path.dirname(__file__))
     for _ in range(6):
-        if os.path.isdir(os.path.join(here, "curriculum")):
+        # Probe curriculum/skills, not curriculum: this file lives in a package
+        # also named "curriculum", which otherwise matches first and makes the
+        # loader silently fall back to _FALLBACK_SKILLS instead of reading YAML.
+        if os.path.isdir(os.path.join(here, "curriculum", "skills")):
             return here
         here = os.path.dirname(here)
     return os.getcwd()

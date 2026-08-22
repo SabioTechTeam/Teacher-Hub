@@ -17,7 +17,7 @@ _AGENT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."
 if _AGENT_ROOT not in sys.path:
     sys.path.insert(0, _AGENT_ROOT)
 
-from curriculum import load_curriculum  # noqa: E402
+from curriculum import grounding, load_curriculum  # noqa: E402
 from mathcheck import safe_eval, verify_item  # noqa: E402
 from schemas import Worksheet, WorksheetItem  # noqa: E402
 import llm  # noqa: E402
@@ -25,6 +25,18 @@ import llm  # noqa: E402
 from ..state import AgentState
 
 DEFAULT_ITEM_COUNT = 6
+
+# Models answer "easy"/"moderate"/"hard" for difficulty however the prompt is
+# worded. Coerce instead of dropping the item -- difficulty is cosmetic, and a
+# rejected item costs a real question.
+_DIFFICULTY_WORDS = {"easy": 0.3, "medium": 0.5, "moderate": 0.5, "hard": 0.8, "challenging": 0.8}
+
+
+def _difficulty(value, default: float) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return _DIFFICULTY_WORDS.get(str(value).strip().lower(), default)
 
 _SYSTEM = """You are a Grades 4-6 mathematics item writer.
 Return JSON only: {"items": [...]}
@@ -34,16 +46,22 @@ Rules:
   to exactly the value in "answer". Example: answer "23/20", check "3/4 + 2/5".
 - "answer" is a bare number or fraction like "3/4" or "7". No words, no units.
 - "type" is one of: fraction, numeric, multiple_choice.
+- "difficulty" is a NUMBER between 0 and 1, not a word.
 - Reading level must match the grade. Keep prompts under 25 words.
 - No names of real people. No topics outside mathematics.
 """
 
 
-def _prompt(skill_name: str, grade: int, standards: list[str], strategy: str, n: int) -> str:
+def _prompt(
+    skill_name: str, grade: int, standards: list[str], strategy: str, n: int, skill_id: str = ""
+) -> str:
+    # The CCSS rubric carries the standard's text and its level criteria. Falls
+    # back to the bare id list when the skill maps to no rubric standard.
+    ccss = grounding(skill_id) if skill_id else ""
     return (
         f"Write {n} practice items for grade {grade}.\n"
         f"Skill: {skill_name}\n"
-        f"Standards: {', '.join(standards) or 'n/a'}\n"
+        + (ccss or f"Standards: {', '.join(standards) or 'n/a'}\n") +
         f"Teaching strategy to reflect in wording: {strategy}\n"
         f"Vary difficulty from easy to moderate. Return JSON only."
     )
@@ -115,7 +133,8 @@ def build(
 
     if llm.enabled():
         raw = llm.complete_json(
-            _SYSTEM, _prompt(skill.name, skill.grade, skill.standards, strategy, count)
+            _SYSTEM,
+            _prompt(skill.name, skill.grade, skill.standards, strategy, count, skill.id),
         )
         for d in (raw or {}).get("items", []) or []:
             try:
@@ -127,7 +146,7 @@ def build(
                     choices=d.get("choices"),
                     answer=str(d.get("answer", "")).strip(),
                     check=str(d.get("check") or "").strip() or None,
-                    difficulty=float(d.get("difficulty", skill.difficulty)),
+                    difficulty=_difficulty(d.get("difficulty"), skill.difficulty),
                     hint=d.get("hint"),
                     explanation=d.get("explanation"),
                 )
