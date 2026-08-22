@@ -1,0 +1,77 @@
+[
+  {
+    "id": "stu-001",
+    "name": "Aiden Torres",
+    "grade_level": 4,
+    "mastery": {
+      "math.4.fractions.parts": 0.85,
+      "math.4.fractions.equivalent": 0.60,
+      "math.5.fractions.compare": 0.30,
+      "math.5.fractions.add-like": 0.10,
+      "math.6.ratios.intro": 0.0
+    },
+    "gap_skill": "math.4.fractions.equivalent",
+    "strategy": "visual",
+    "sessions_completed": 3
+  },
+  {
+    "id": "stu-002",
+    "name": "Maya Patel",
+    "grade_level": 5,
+    "mastery": {
+      "math.4.fractions.parts": 0.95,
+      "math.4.fractions.equivalent": 0.88,
+      "math.5.fractions.compare": 0.72,
+      "math.5.fractions.add-like": 0.45,
+      "math.6.ratios.intro": 0.15
+    },
+    "gap_skill": "math.5.fractions.add-like",
+    "strategy": "steps",
+    "sessions_completed": 7
+  },
+  {
+    "id": "stu-003",
+    "name": "Liam Nguyen",
+    "grade_level": 5,
+    "mastery": {
+      "math.4.fractions.parts": 0.70,
+      "math.4.fractions.equivalent": 0.50,
+      "math.5.fractions.compare": 0.20,
+      "math.5.fractions.add-like": 0.0,
+      "math.6.ratios.intro": 0.0
+    },
+    "gap_skill": "math.4.fractions.equivalent",
+    "strategy": "story",
+    "sessions_completed": 2
+  },
+  {
+    "id": "stu-004",
+    "name": "Sofia Chen",
+    "grade_level": 6,
+    "mastery": {
+      "math.4.fractions.parts": 0.98,
+      "math.4.fractions.equivalent": 0.95,
+      "math.5.fractions.compare": 0.90,
+      "math.5.fractions.add-like": 0.82,
+      "math.6.ratios.intro": 0.55
+    },
+    "gap_skill": "math.6.ratios.intro",
+    "strategy": "steps",
+    "sessions_completed": 12
+  },
+  {
+    "id": "stu-005",
+    "name": "Ethan Williams",
+    "grade_level": 4,
+    "mastery": {
+      "math.4.fractions.parts": 0.40,
+      "math.4.fractions.equivalent": 0.20,
+      "math.5.fractions.compare": 0.0,
+      "math.5.fractions.add-like": 0.0,
+      "math.6.ratios.intro": 0.0
+    },
+    "gap_skill": "math.4.fractions.parts",
+    "strategy": "visual",
+    "sessions_completed": 1
+  }
+]

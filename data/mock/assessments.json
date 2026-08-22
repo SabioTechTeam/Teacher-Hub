@@ -1,0 +1,249 @@
+{
+  "assessments": [
+    {
+      "id": "asmt-001",
+      "student_id": "stu-001",
+      "status": "completed",
+      "started_at": "2026-08-20T09:05:00Z",
+      "completed_at": "2026-08-20T09:12:00Z"
+    },
+    {
+      "id": "asmt-002",
+      "student_id": "stu-002",
+      "status": "completed",
+      "started_at": "2026-08-21T10:00:00Z",
+      "completed_at": "2026-08-21T10:09:00Z"
+    },
+    {
+      "id": "asmt-003",
+      "student_id": "stu-003",
+      "status": "completed",
+      "started_at": "2026-08-21T11:15:00Z",
+      "completed_at": "2026-08-21T11:21:00Z"
+    },
+    {
+      "id": "asmt-004",
+      "student_id": "stu-004",
+      "status": "completed",
+      "started_at": "2026-08-22T08:30:00Z",
+      "completed_at": "2026-08-22T08:39:00Z"
+    },
+    {
+      "id": "asmt-005",
+      "student_id": "stu-005",
+      "status": "in_progress",
+      "started_at": "2026-08-22T09:00:00Z",
+      "completed_at": null
+    }
+  ],
+
+  "questions": [
+    {
+      "id": "q-parts-01",
+      "skill_id": "math.4.fractions.parts",
+      "prompt": "A pizza is cut into 4 equal slices. You eat 1 slice. What fraction of the pizza did you eat?",
+      "choices": ["1/2", "1/4", "2/4", "3/4"],
+      "correct_index": 1
+    },
+    {
+      "id": "q-parts-02",
+      "skill_id": "math.4.fractions.parts",
+      "prompt": "Which picture shows 3/8 of a shape shaded?",
+      "choices": [
+        "A rectangle divided into 8 parts with 5 shaded",
+        "A rectangle divided into 8 parts with 3 shaded",
+        "A rectangle divided into 3 parts with 1 shaded",
+        "A rectangle divided into 8 parts with 8 shaded"
+      ],
+      "correct_index": 1
+    },
+    {
+      "id": "q-parts-03",
+      "skill_id": "math.4.fractions.parts",
+      "prompt": "What is the denominator in the fraction 5/6?",
+      "choices": ["5", "6", "1", "11"],
+      "correct_index": 1
+    },
+
+    {
+      "id": "q-equiv-01",
+      "skill_id": "math.4.fractions.equivalent",
+      "prompt": "Which fraction is equivalent to 1/2?",
+      "choices": ["2/6", "3/6", "4/6", "2/8"],
+      "correct_index": 1
+    },
+    {
+      "id": "q-equiv-02",
+      "skill_id": "math.4.fractions.equivalent",
+      "prompt": "Fill in the blank: 2/3 = __/9",
+      "choices": ["3", "4", "5", "6"],
+      "correct_index": 3
+    },
+    {
+      "id": "q-equiv-03",
+      "skill_id": "math.4.fractions.equivalent",
+      "prompt": "Are 4/8 and 1/2 equivalent fractions?",
+      "choices": ["Yes, because 4÷4=1 and 8÷4=2", "No, they are different fractions", "Yes, but only on a number line", "No, because the numerators differ"],
+      "correct_index": 0
+    },
+
+    {
+      "id": "q-compare-01",
+      "skill_id": "math.5.fractions.compare",
+      "prompt": "Which fraction is greater: 3/4 or 2/3?",
+      "choices": ["2/3", "3/4", "They are equal", "Cannot be determined"],
+      "correct_index": 1
+    },
+    {
+      "id": "q-compare-02",
+      "skill_id": "math.5.fractions.compare",
+      "prompt": "Order these fractions from least to greatest: 1/2, 3/8, 5/6",
+      "choices": [
+        "1/2, 3/8, 5/6",
+        "3/8, 5/6, 1/2",
+        "3/8, 1/2, 5/6",
+        "5/6, 1/2, 3/8"
+      ],
+      "correct_index": 2
+    },
+    {
+      "id": "q-compare-03",
+      "skill_id": "math.5.fractions.compare",
+      "prompt": "Use <, >, or = to compare: 5/8 ___ 7/12",
+      "choices": ["5/8 < 7/12", "5/8 > 7/12", "5/8 = 7/12", "Cannot compare without a common denominator"],
+      "correct_index": 1
+    },
+
+    {
+      "id": "q-addlike-01",
+      "skill_id": "math.5.fractions.add-like",
+      "prompt": "What is 2/7 + 3/7?",
+      "choices": ["5/14", "5/7", "6/7", "1/7"],
+      "correct_index": 1
+    },
+    {
+      "id": "q-addlike-02",
+      "skill_id": "math.5.fractions.add-like",
+      "prompt": "Maria ate 1/5 of a cake on Monday and 2/5 on Tuesday. How much did she eat in total?",
+      "choices": ["2/10", "3/5", "3/10", "1/2"],
+      "correct_index": 1
+    },
+    {
+      "id": "q-addlike-03",
+      "skill_id": "math.5.fractions.add-like",
+      "prompt": "What is 4/9 + 4/9?",
+      "choices": ["8/18", "8/9", "1", "4/9"],
+      "correct_index": 1
+    },
+
+    {
+      "id": "q-ratios-01",
+      "skill_id": "math.6.ratios.intro",
+      "prompt": "In a bag there are 3 red marbles and 5 blue marbles. What is the ratio of red to blue?",
+      "choices": ["5:3", "3:8", "3:5", "8:3"],
+      "correct_index": 2
+    },
+    {
+      "id": "q-ratios-02",
+      "skill_id": "math.6.ratios.intro",
+      "prompt": "A recipe uses 2 cups of flour for every 1 cup of sugar. If you use 6 cups of flour, how many cups of sugar do you need?",
+      "choices": ["2", "3", "4", "6"],
+      "correct_index": 1
+    },
+    {
+      "id": "q-ratios-03",
+      "skill_id": "math.6.ratios.intro",
+      "prompt": "Which ratio is equivalent to 4:6?",
+      "choices": ["1:2", "2:3", "3:4", "6:4"],
+      "correct_index": 1
+    }
+  ],
+
+  "results": {
+    "asmt-001": {
+      "assessment_id": "asmt-001",
+      "scores": {
+        "math.4.fractions.parts": 0.85,
+        "math.4.fractions.equivalent": 0.60,
+        "math.5.fractions.compare": 0.30
+      },
+      "gap_skill": "math.4.fractions.equivalent",
+      "grade_level": 4
+    },
+    "asmt-002": {
+      "assessment_id": "asmt-002",
+      "scores": {
+        "math.4.fractions.parts": 0.95,
+        "math.4.fractions.equivalent": 0.88,
+        "math.5.fractions.compare": 0.72,
+        "math.5.fractions.add-like": 0.45
+      },
+      "gap_skill": "math.5.fractions.add-like",
+      "grade_level": 5
+    },
+    "asmt-003": {
+      "assessment_id": "asmt-003",
+      "scores": {
+        "math.4.fractions.parts": 0.70,
+        "math.4.fractions.equivalent": 0.50,
+        "math.5.fractions.compare": 0.20
+      },
+      "gap_skill": "math.4.fractions.equivalent",
+      "grade_level": 5
+    },
+    "asmt-004": {
+      "assessment_id": "asmt-004",
+      "scores": {
+        "math.4.fractions.parts": 0.98,
+        "math.4.fractions.equivalent": 0.95,
+        "math.5.fractions.compare": 0.90,
+        "math.5.fractions.add-like": 0.82,
+        "math.6.ratios.intro": 0.55
+      },
+      "gap_skill": "math.6.ratios.intro",
+      "grade_level": 6
+    }
+  },
+
+  "answers": {
+    "asmt-001": [
+      { "question_id": "q-parts-01",  "answer": "1/4",    "correct": true },
+      { "question_id": "q-parts-02",  "answer": "A rectangle divided into 8 parts with 3 shaded", "correct": true },
+      { "question_id": "q-parts-03",  "answer": "6",      "correct": true },
+      { "question_id": "q-equiv-01",  "answer": "3/6",    "correct": true },
+      { "question_id": "q-equiv-02",  "answer": "5",      "correct": false },
+      { "question_id": "q-equiv-03",  "answer": "No, they are different fractions", "correct": false },
+      { "question_id": "q-compare-01","answer": "They are equal", "correct": false }
+    ],
+    "asmt-002": [
+      { "question_id": "q-equiv-01",  "answer": "3/6",    "correct": true },
+      { "question_id": "q-equiv-02",  "answer": "6",      "correct": true },
+      { "question_id": "q-equiv-03",  "answer": "Yes, because 4÷4=1 and 8÷4=2", "correct": true },
+      { "question_id": "q-compare-01","answer": "3/4",    "correct": true },
+      { "question_id": "q-compare-02","answer": "3/8, 1/2, 5/6", "correct": true },
+      { "question_id": "q-compare-03","answer": "5/8 > 7/12", "correct": true },
+      { "question_id": "q-addlike-01","answer": "5/14",   "correct": false },
+      { "question_id": "q-addlike-02","answer": "3/5",    "correct": true },
+      { "question_id": "q-addlike-03","answer": "8/18",   "correct": false }
+    ],
+    "asmt-003": [
+      { "question_id": "q-parts-01",  "answer": "1/4",    "correct": true },
+      { "question_id": "q-parts-02",  "answer": "A rectangle divided into 8 parts with 5 shaded", "correct": false },
+      { "question_id": "q-parts-03",  "answer": "6",      "correct": true },
+      { "question_id": "q-equiv-01",  "answer": "2/6",    "correct": false },
+      { "question_id": "q-equiv-02",  "answer": "3",      "correct": false },
+      { "question_id": "q-compare-01","answer": "2/3",    "correct": false }
+    ],
+    "asmt-004": [
+      { "question_id": "q-compare-01","answer": "3/4",    "correct": true },
+      { "question_id": "q-compare-02","answer": "3/8, 1/2, 5/6", "correct": true },
+      { "question_id": "q-compare-03","answer": "5/8 > 7/12", "correct": true },
+      { "question_id": "q-addlike-01","answer": "5/7",    "correct": true },
+      { "question_id": "q-addlike-02","answer": "3/5",    "correct": true },
+      { "question_id": "q-addlike-03","answer": "8/9",    "correct": true },
+      { "question_id": "q-ratios-01", "answer": "3:5",    "correct": true },
+      { "question_id": "q-ratios-02", "answer": "3",      "correct": true },
+      { "question_id": "q-ratios-03", "answer": "3:4",    "correct": false }
+    ]
+  }
+}
