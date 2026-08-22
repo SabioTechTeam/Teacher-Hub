@@ -32,6 +32,13 @@ from schemas import ItemGrade, Worksheet  # noqa: E402
 from curriculum import load_curriculum  # noqa: E402
 
 from .store import STORE
+from . import seed
+
+# Populate mock fixtures on startup
+try:
+    seed.load()
+except Exception as exc:
+    print(f"[seed] note: fixture load skipped or failed: {exc}")
 
 app = FastAPI(title="Teacher-Hub API", version="0.2.0")
 app.add_middleware(
@@ -78,7 +85,11 @@ def _strip_keys(ws: dict[str, Any]) -> dict[str, Any]:
 
 @app.get("/health")
 def health():
-    return {"ok": True, "llm": bool(os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY"))}
+    return {
+        "ok": True,
+        "llm": bool(os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")),
+        "students_loaded": len(seed.students),
+    }
 
 
 @app.get("/curriculum/skills")
@@ -92,6 +103,11 @@ def curriculum_skills():
         ],
         "edges": [{"from": a, "to": b} for a, b in cur.edges],
     }
+
+
+@app.get("/students")
+def students_list():
+    return list(seed.students.values()) or [STORE.student("demo")]
 
 
 @app.post("/assessments/start")
@@ -166,11 +182,15 @@ def worksheets_grade(body: GradeIn):
 
 @app.get("/students/{student_id}")
 def student_get(student_id: str):
-    return STORE.student(student_id)
+    return seed.students.get(student_id) or STORE.student(student_id)
 
 
 @app.get("/students/{student_id}/mastery")
 def student_mastery(student_id: str):
-    s = STORE.student(student_id)
-    return {"student_id": student_id, "mastery": s.get("mastery", {}),
-            "target_skill": s.get("target_skill"), "grade_level": s.get("grade_level")}
+    s = seed.students.get(student_id) or STORE.student(student_id)
+    return {
+        "student_id": student_id,
+        "mastery": s.get("mastery", {}),
+        "target_skill": s.get("target_skill"),
+        "grade_level": s.get("grade_level", 5)
+    }

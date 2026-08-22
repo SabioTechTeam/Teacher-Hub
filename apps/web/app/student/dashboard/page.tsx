@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import { getSession, setSession } from "@/lib/session";
 
 const SKILL_LABELS: Record<string, string> = {
   "math.4.fractions.parts":      "Parts of a Whole (Gr 4)",
@@ -15,52 +17,95 @@ const SKILL_COLORS = [
   "#4F46E5", "#7C3AED", "#EC4899", "#F59E0B", "#10B981",
 ];
 
-const student = {
-  name: "Aiden Torres",
-  gradeLevel: 4,
-  sessionsCompleted: 3,
-  gapSkill: "math.4.fractions.equivalent",
-  mastery: {
-    "math.4.fractions.parts":      0.85,
-    "math.4.fractions.equivalent": 0.60,
-    "math.5.fractions.compare":    0.30,
-    "math.5.fractions.add-like":   0.10,
-    "math.6.ratios.intro":         0.00,
-  },
-};
-
-const recentActivity = [
-  { id: 1, icon: "📝", bg: "#EEF2FF", title: "Completed: Parts of a Whole — Story Problems", date: "Aug 19", score: 1.0 },
-  { id: 2, icon: "📊", bg: "#F0FDF4", title: "Assessment taken — Grade 4 Math", date: "Aug 20", score: null },
-  { id: 3, icon: "📝", bg: "#FFF7ED", title: "Attempted: Equivalent Fractions — See the Match", date: "Aug 20", score: 0.50 },
-];
-
-function scoreClass(s: number) {
-  if (s >= 0.8) return styles.scoreGreen;
-  if (s >= 0.5) return styles.scoreAmber;
-  return styles.scoreRed;
-}
-
 export default function StudentDashboard() {
   const router = useRouter();
+  const [gapSkill, setGapSkill] = useState("math.4.fractions.equivalent");
+  const [gradeLevel, setGradeLevel] = useState<4 | 5 | 6>(4);
+
+  const [studentState, setStudentState] = useState({
+    name: "Aiden Torres",
+    gradeLevel: 4,
+    sessionsCompleted: 3,
+    gapSkill: "math.4.fractions.equivalent",
+    mastery: {
+      "math.4.fractions.parts":      0.85,
+      "math.4.fractions.equivalent": 0.60,
+      "math.5.fractions.compare":    0.30,
+      "math.5.fractions.add-like":   0.10,
+      "math.6.ratios.intro":         0.00,
+    } as Record<string, number>,
+  });
+
+  useEffect(() => {
+    const s = getSession();
+    if (s.gapSkill) {
+      setGapSkill(s.gapSkill);
+      setStudentState((prev) => ({
+        ...prev,
+        gapSkill: s.gapSkill || prev.gapSkill,
+        gradeLevel: s.gradeLevel || prev.gradeLevel,
+      }));
+    }
+    if (s.gradeLevel) {
+      setGradeLevel(s.gradeLevel);
+    }
+  }, []);
+
+  const recentActivity = [
+    { id: 1, icon: "📝", bg: "#EEF2FF", title: "Completed: Parts of a Whole — Story Problems", date: "Aug 19", score: 1.0 },
+    { id: 2, icon: "📊", bg: "#F0FDF4", title: "Assessment taken — Grade 4 Math", date: "Aug 20", score: null },
+    { id: 3, icon: "📝", bg: "#FFF7ED", title: "Attempted: Equivalent Fractions — See the Match", date: "Aug 20", score: 0.50 },
+  ];
+
+  function scoreClass(s: number) {
+    if (s >= 0.8) return styles.scoreGreen;
+    if (s >= 0.5) return styles.scoreAmber;
+    return styles.scoreRed;
+  }
 
   const avgMastery = Math.round(
-    (Object.values(student.mastery).reduce((a, b) => a + b, 0) /
-      Object.values(student.mastery).length) * 100
+    (Object.values(studentState.mastery).reduce((a, b) => a + b, 0) /
+      Object.values(studentState.mastery).length) * 100
   );
 
-  const skillsDone = Object.values(student.mastery).filter((m) => m >= 0.8).length;
+  const skillsDone = Object.values(studentState.mastery).filter((m) => m >= 0.8).length;
+
+  const handleStartWorksheet = () => {
+    setSession({
+      studentId: "stu-001",
+      gradeLevel: gradeLevel,
+      gapSkill: gapSkill,
+      strategy: "worked_example",
+    });
+    router.push("/tutor");
+  };
 
   return (
     <div className={styles.shell}>
       {/* ── Nav ── */}
       <nav className={styles.nav}>
-        <div className={styles.navBrand}>
+        <div className={styles.navBrand} onClick={() => router.push("/")} style={{ cursor: "pointer" }}>
           <div className={styles.navMark}>🎓</div>
           Teacher-Hub
         </div>
         <div className={styles.navRight}>
-          <span className={styles.navGreet}>Hi, {student.name.split(" ")[0]} 👋</span>
+          <button
+            onClick={() => router.push("/student")}
+            style={{
+              padding: "6px 12px",
+              background: "#EEF2FF",
+              color: "#4338CA",
+              border: "none",
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: "pointer",
+              marginRight: 8,
+            }}
+          >
+            Take Math Quiz 📝
+          </button>
+          <span className={styles.navGreet}>Hi, {studentState.name.split(" ")[0]} 👋</span>
           <button className={styles.logoutBtn} onClick={() => router.push("/login")}>
             Sign out
           </button>
@@ -71,7 +116,7 @@ export default function StudentDashboard() {
       <main className={styles.main}>
         <div className={styles.pageHeader}>
           <h1 className={styles.pageTitle}>My Learning Dashboard</h1>
-          <p className={styles.pageSubtitle}>Grade {student.gradeLevel} · Math · Keep it up!</p>
+          <p className={styles.pageSubtitle}>Grade {studentState.gradeLevel} · Math · Keep it up!</p>
         </div>
 
         {/* Stats row */}
@@ -90,7 +135,7 @@ export default function StudentDashboard() {
               <span className={styles.statCardLabel}>Sessions Done</span>
               <div className={styles.statCardIcon} style={{ background: "#ECFDF5" }}>✅</div>
             </div>
-            <div className={styles.statCardValue} style={{ color: "#059669" }}>{student.sessionsCompleted}</div>
+            <div className={styles.statCardValue} style={{ color: "#059669" }}>{studentState.sessionsCompleted}</div>
             <span className={styles.statCardChange}>this week</span>
           </div>
 
@@ -108,7 +153,7 @@ export default function StudentDashboard() {
               <span className={styles.statCardLabel}>Grade Level</span>
               <div className={styles.statCardIcon} style={{ background: "#F5F3FF" }}>🎓</div>
             </div>
-            <div className={styles.statCardValue} style={{ color: "#7C3AED" }}>{student.gradeLevel}</div>
+            <div className={styles.statCardValue} style={{ color: "#7C3AED" }}>{studentState.gradeLevel}</div>
             <span className={styles.statCardChange}>Math focus</span>
           </div>
         </div>
@@ -120,13 +165,30 @@ export default function StudentDashboard() {
             {/* Gap skill call-to-action */}
             <div className={styles.gapHero}>
               <p className={styles.gapLabel}>Recommended next skill</p>
-              <p className={styles.gapSkill}>{SKILL_LABELS[student.gapSkill]}</p>
+              <p className={styles.gapSkill}>{SKILL_LABELS[gapSkill] || gapSkill}</p>
               <p className={styles.gapDesc}>
                 Your AI tutor has prepared a worksheet tailored to your learning style.
               </p>
-              <button className={styles.startBtn}>
-                Start worksheet →
-              </button>
+              <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+                <button className={styles.startBtn} onClick={handleStartWorksheet}>
+                  Start worksheet →
+                </button>
+                <button
+                  onClick={() => router.push("/student")}
+                  style={{
+                    padding: "10px 16px",
+                    background: "rgba(255,255,255,0.2)",
+                    color: "#ffffff",
+                    border: "1px solid rgba(255,255,255,0.4)",
+                    borderRadius: 10,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    fontSize: 14,
+                  }}
+                >
+                  Diagnostic Quiz 🎯
+                </button>
+              </div>
             </div>
 
             {/* Mastery bars */}
@@ -136,18 +198,18 @@ export default function StudentDashboard() {
                 <span className={`${styles.badge} ${styles.badgeBlue}`}>5 skills</span>
               </div>
               <div className={styles.skillList}>
-                {Object.entries(student.mastery).map(([skillId, pct], i) => (
+                {Object.entries(studentState.mastery).map(([skillId, pct], i) => (
                   <div key={skillId} className={styles.skillRow}>
                     <div className={styles.skillMeta}>
-                      <span className={styles.skillName}>{SKILL_LABELS[skillId]}</span>
-                      <span className={styles.skillPct} style={{ color: SKILL_COLORS[i] }}>
+                      <span className={styles.skillName}>{SKILL_LABELS[skillId] || skillId}</span>
+                      <span className={styles.skillPct} style={{ color: SKILL_COLORS[i] || "#4F46E5" }}>
                         {Math.round(pct * 100)}%
                       </span>
                     </div>
                     <div className={styles.barTrack}>
                       <div
                         className={styles.barFill}
-                        style={{ width: `${pct * 100}%`, background: SKILL_COLORS[i] }}
+                        style={{ width: `${pct * 100}%`, background: SKILL_COLORS[i] || "#4F46E5" }}
                       />
                     </div>
                   </div>
