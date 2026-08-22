@@ -57,15 +57,16 @@ Proof metric: UC-1 in under ~5 minutes.
 
 ---
 
-## Slide 7 — Ask / next
+## Slide 7 — Ask / next ✅ LOCKED
 Shipping the student loop now.  
 Next: teacher view + a small pilot.  
-We personalize practice — we don’t diagnose disabilities. Teachers stay in control.
+
+**On-slide safety line:** We personalize practice — we don’t diagnose disabilities. Teachers stay in control.
 
 ---
 
 ## Open questions (we’re discussing)
 - [x] Title: B + loop (right practice / diagnose→generate→grade→adapt)
 - [x] Problem slide: A+B locked (kitchen table + one worksheet for 28)
-- [ ] Include neurodiversity line on slide 7 or keep verbal only?
-- [ ] Team slide? (hackathons sometimes want it — maybe skip to save time)
+- [x] Neurodiversity/safety line ON slide 7
+- [x] Skip separate team slide (mention names verbally if asked)
