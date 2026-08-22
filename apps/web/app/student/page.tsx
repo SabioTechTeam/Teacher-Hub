@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { setSession } from "@/lib/session";
+import Confetti from "./Confetti";
 
 interface DiagnosticQuestion {
   id: string;
@@ -83,41 +84,78 @@ export default function StudentDiagnosticPage() {
   const [finished, setFinished] = useState(false);
   const [diagnosedGap, setDiagnosedGap] = useState<DiagnosticQuestion | null>(null);
   const [scoreCount, setScoreCount] = useState(0);
+  const [points, setPoints] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [confettiTrigger, setConfettiTrigger] = useState(0);
+  const [feedback, setFeedback] = useState<{ correct: boolean; message: string } | null>(null);
 
   const q = DIAGNOSTIC_QUESTIONS[currentIdx];
 
-  const handleNext = () => {
-    if (selectedOpt === null) return;
-    const newAnswers = { ...answers, [q.id]: selectedOpt };
-    setAnswers(newAnswers);
+  const encourage = (streakVal: number) => {
+    if (streakVal >= 3) {
+      return ["\ud83d\udd25 Unstoppable!", "\ud83d\ude80 You're on fire!", "\u2b50 Amazing streak!"][streakVal % 3];
+    }
+    return ["\ud83c\udf89 Great job!", "\ud83d\udcaa Well done!", "\u2705 Correct!", "\ud83c\udf1f You got it!"][streakVal % 4];
+  };
+
+  /** Move to the next question, or finish and compute the CCSS rubric result. */
+  const advance = (newAnswers: Record<string, number>) => {
     setSelectedOpt(null);
 
     if (currentIdx + 1 < DIAGNOSTIC_QUESTIONS.length) {
       setCurrentIdx(currentIdx + 1);
-    } else {
-      // Calculate score and gap skill
-      let correct = 0;
-      let gap = DIAGNOSTIC_QUESTIONS[1]; // default fallback
-      let foundGap = false;
+      return;
+    }
 
-      for (const item of DIAGNOSTIC_QUESTIONS) {
-        if (newAnswers[item.id] === item.correctIndex) {
-          correct += 1;
-        } else if (!foundGap) {
-          gap = item;
-          foundGap = true;
-        }
+    // Calculate score and gap skill
+    let correct = 0;
+    let gap = DIAGNOSTIC_QUESTIONS[1]; // default fallback
+    let foundGap = false;
+
+    for (const item of DIAGNOSTIC_QUESTIONS) {
+      if (newAnswers[item.id] === item.correctIndex) {
+        correct += 1;
+      } else if (!foundGap) {
+        gap = item;
+        foundGap = true;
       }
+    }
 
-      setScoreCount(correct);
-      setDiagnosedGap(gap);
-      setSession({
-        studentId: "stu-001",
-        gradeLevel: gap.grade,
-        gapSkill: gap.skillId,
-        strategy: "worked_example",
-      });
-      setFinished(true);
+    setScoreCount(correct);
+    setDiagnosedGap(gap);
+    setSession({
+      studentId: "stu-001",
+      gradeLevel: gap.grade,
+      gapSkill: gap.skillId,
+      strategy: "worked_example",
+    });
+    setConfettiTrigger((t) => t + 1);
+    setFeedback(null);
+    setFinished(true);
+  };
+
+  const handleNext = () => {
+    // A wrong answer pauses on the question; the next click continues.
+    if (feedback && !feedback.correct) {
+      setFeedback(null);
+      advance(answers);
+      return;
+    }
+
+    if (selectedOpt === null) return;
+    const newAnswers = { ...answers, [q.id]: selectedOpt };
+    setAnswers(newAnswers);
+
+    if (selectedOpt === q.correctIndex) {
+      const newStreak = streak + 1;
+      setStreak(newStreak);
+      setPoints(points + 10 + Math.min(newStreak - 1, 5) * 2);
+      setConfettiTrigger((t) => t + 1);
+      setFeedback({ correct: true, message: encourage(newStreak) });
+      advance(newAnswers);
+    } else {
+      setStreak(0);
+      setFeedback({ correct: false, message: "Not quite \u2014 keep going, you've got this! \ud83d\udc99" });
     }
   };
 
@@ -143,6 +181,34 @@ export default function StudentDiagnosticPage() {
           10-Minute Math Diagnostic
         </span>
       </header>
+
+      <Confetti trigger={confettiTrigger} />
+
+      {!finished && (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 12, padding: "10px 16px", marginBottom: 16 }}>
+          <span style={{ fontSize: 13, color: "#475569", fontWeight: 600 }}>
+            Points <strong style={{ color: "#4F46E5", fontSize: 16 }}>{points}</strong>
+          </span>
+          <span style={{ fontSize: 13, color: streak >= 3 ? "#C2410C" : "#64748b", fontWeight: 600 }}>
+            {streak > 0 ? `${"\ud83d\udd25".repeat(Math.min(streak, 3))} ${streak} in a row` : "Build a streak!"}
+          </span>
+        </div>
+      )}
+
+      {feedback && !finished && (
+        <div
+          role="status"
+          style={{
+            background: feedback.correct ? "#F0FDF4" : "#FFF7ED",
+            border: `1px solid ${feedback.correct ? "#BBF7D0" : "#FED7AA"}`,
+            color: feedback.correct ? "#166534" : "#9A3412",
+            borderRadius: 12, padding: "10px 16px", marginBottom: 16,
+            fontWeight: 600, fontSize: 14, textAlign: "center",
+          }}
+        >
+          {feedback.message}
+        </div>
+      )}
 
       {!finished ? (
         <section style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 32, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
@@ -189,20 +255,24 @@ export default function StudentDiagnosticPage() {
 
           <button
             onClick={handleNext}
-            disabled={selectedOpt === null}
+            disabled={selectedOpt === null && !(feedback && !feedback.correct)}
             style={{
               width: "100%",
               padding: "14px 20px",
-              background: selectedOpt === null ? "#cbd5e1" : "#4F46E5",
+              background: selectedOpt === null && !(feedback && !feedback.correct) ? "#cbd5e1" : "#4F46E5",
               color: "#ffffff",
               border: "none",
               borderRadius: 12,
               fontWeight: 700,
               fontSize: 16,
-              cursor: selectedOpt === null ? "not-allowed" : "pointer",
+              cursor: selectedOpt === null && !(feedback && !feedback.correct) ? "not-allowed" : "pointer",
             }}
           >
-            {currentIdx + 1 === DIAGNOSTIC_QUESTIONS.length ? "Complete Assessment & Evaluate Rubric" : "Next Question →"}
+            {feedback && !feedback.correct
+              ? "Continue \u2192"
+              : currentIdx + 1 === DIAGNOSTIC_QUESTIONS.length
+              ? "Complete Assessment & Evaluate Rubric"
+              : "Next Question \u2192"}
           </button>
         </section>
       ) : (
@@ -222,7 +292,7 @@ export default function StudentDiagnosticPage() {
           {/* Performance & Rubric Banner */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
             <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 12, padding: 18, textAlign: "center" }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "#64748B", textTransform: "uppercase" }}>Overall Score</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: "#64748B", textTransform: "uppercase" }}>Overall Score \u00b7 {points} pts</div>
               <div style={{ fontSize: 28, fontWeight: 800, color: "#1E293B", marginTop: 4 }}>
                 {scoreCount}/{DIAGNOSTIC_QUESTIONS.length} <span style={{ fontSize: 18, color: "#64748B" }}>({percentage}%)</span>
               </div>

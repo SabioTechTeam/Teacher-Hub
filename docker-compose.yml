@@ -5,6 +5,9 @@ services:
       dockerfile: services/api/Dockerfile
     ports: ["8000:8000"]
     env_file: [.env]
+    volumes:
+      # persist per-student progress files across container restarts
+      - ./data:/app/data
   web:
     build: ./apps/web
     ports: ["3000:3000"]
