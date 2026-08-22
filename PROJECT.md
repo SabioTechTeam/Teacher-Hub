@@ -57,6 +57,7 @@ Everyone imports the same shapes from `packages/types` (and mirrors in Python sc
 UI talks to API only. API calls agent + OpenRouter. No prompts in the frontend.
 
 ## Git workflow
+- **No direct pushes to `main`** — use a `feat/...` branch + Pull Request; Person 1 merges
 - `main` must stay demoable
 - Work on `feat/...` branches; open PRs; Person 1 merges
 - Small PRs often; no force-push to main
