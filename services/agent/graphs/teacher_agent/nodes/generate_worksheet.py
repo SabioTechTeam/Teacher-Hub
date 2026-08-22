@@ -44,10 +44,22 @@ Each item: {"prompt", "answer", "check", "type", "difficulty", "hint", "explanat
 Rules:
 - "check" MUST be a plain arithmetic expression using only digits and + - * / ( ) that evaluates
   to exactly the value in "answer". Example: answer "23/20", check "3/4 + 2/5".
+- "check" must evaluate to the ANSWER, never to an intermediate counting step.
+  When the item just asks the student to NAME a fraction, the check is that
+  fraction: "2 of 6 parts are shaded" -> answer "1/3", check "2/6". Writing
+  check "2 + 4" or "6 - 2" is wrong -- those evaluate to 6 and 4, not to 1/3.
 - "answer" is a bare number or fraction like "3/4" or "7". No words, no units.
 - "type" is one of: fraction, numeric, multiple_choice.
 - "difficulty" is a NUMBER between 0 and 1, not a word.
 - Reading level must match the grade. Keep prompts under 25 words.
+- Every item must be answerable from its own text alone. There are no pictures.
+  Never write "the circle shown", "the shaded figure", or "the diagram below".
+  Say "3 out of 8 equal parts are shaded" instead of "the shape shown".
+- Vary the items. Reusing one sentence pattern with different numbers is one
+  item, not six. Give each item a DIFFERENT real-world context -- drawn from
+  shapes, food, money, a class of students, marbles, a journey, a length of
+  ribbon, a bag of fruit. No two items in a worksheet may share an opening
+  phrase.
 - No names of real people. No topics outside mathematics.
 """
 

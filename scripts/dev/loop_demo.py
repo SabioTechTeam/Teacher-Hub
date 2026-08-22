@@ -52,7 +52,34 @@ def main() -> None:
     st = AgentState(student_id="kid-c", grade_level=5, gap_skill="math.5.fractions.compare")
     st = turn(st, 0.5, 1)
     print(f"\n  mastery: {st.mastery}")
-    print("\nAll answer keys verified. Loop OK.")
+    # --- proficiency label must describe THIS attempt, and agree with routing ---
+    # Regression: proficiency once read the EMA mastery, so a student who aced
+    # their first worksheet sat at 0.625 and was labelled "Approaching Standard".
+    from graphs.teacher_agent.nodes.update_student import ADVANCE_AT, apply
+    from schemas import ItemGrade
+
+    def attempt(skill: str, score: float, n_ok: int, n: int = 5):
+        grades = [
+            ItemGrade(item_id=f"i{i}", skill_id=skill, correct=i < n_ok,
+                      expected="1/2", got="1/2" if i < n_ok else "x")
+            for i in range(n)
+        ]
+        return apply("w", f"probe-{score}", skill, score, grades, {})
+
+    perfect = attempt("math.5.fractions.compare", 1.0, 5)
+    assert perfect.proficiency_label == "Exceeds Standard", perfect.proficiency_label
+    zero = attempt("math.5.fractions.compare", 0.0, 0)
+    assert zero.proficiency_label == "Below Standard", zero.proficiency_label
+
+    # the label and the adapt decision are driven by the same number
+    at_cut = attempt("math.5.fractions.compare", ADVANCE_AT, 4)
+    assert at_cut.proficiency_label == "Meets Standard", at_cut.proficiency_label
+    assert at_cut.decision == "advance", at_cut.decision
+    below = attempt("math.5.fractions.compare", ADVANCE_AT - 0.2, 3)
+    assert below.proficiency_label != "Meets Standard", below.proficiency_label
+    assert below.decision != "advance", below.decision
+
+    print("\nAll answer keys verified. Proficiency tracks the attempt. Loop OK.")
 
 
 if __name__ == "__main__":

@@ -139,8 +139,6 @@ export default function WorksheetFlow() {
         {ws && (
           <p style={{ margin: "4px 0 0", color: "#666", fontSize: 14 }}>
             Grade {ws.grade_level} · {ws.items.length} items
-            <span style={pill}>{ws.strategy}</span>
-            <span style={pill}>{ws.source}</span>
           </p>
         )}
       </header>
@@ -264,13 +262,4 @@ const card: React.CSSProperties = {
   margin: "20px 0",
   background: "#ffffff",
   boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-};
-const pill: React.CSSProperties = {
-  marginLeft: 8,
-  padding: "3px 10px",
-  borderRadius: 999,
-  background: "#f1f5f9",
-  color: "#475569",
-  fontSize: 12,
-  fontWeight: 600,
 };
