@@ -1,0 +1,460 @@
+/* ===== Shell ===== */
+.shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 64px 1fr;
+  background: var(--surface-2, #F8FAFC);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ===== Nav ===== */
+.nav {
+  background: #ffffff;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.navBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 17px;
+  color: #1E293B;
+  cursor: pointer;
+}
+
+.navMark {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #7C3AED, #EC4899);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  color: #fff;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navGreet {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.demoBtn {
+  padding: 6px 14px;
+  background: #EEF2FF;
+  color: #4338CA;
+  border: 1px solid #C7D2FE;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.demoBtn:hover {
+  background: #E0E7FF;
+}
+
+.logoutBtn {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748B;
+  background: none;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.logoutBtn:hover {
+  border-color: #EF4444;
+  color: #EF4444;
+}
+
+/* ===== Main ===== */
+.main {
+  padding: 32px 28px;
+  max-width: 1240px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #1E293B;
+  margin: 0 0 4px;
+}
+
+.pageSubtitle {
+  font-size: 14px;
+  color: #64748B;
+  margin: 0;
+}
+
+/* ===== Stats ===== */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.statCard {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.statTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.statIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.statValue {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.statSub {
+  font-size: 12px;
+  color: #64748B;
+}
+
+/* ===== Layout Grid ===== */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 24px;
+}
+@media (max-width: 990px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Cards ===== */
+.card {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1E293B;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.badgePurple {
+  background: #F5F3FF;
+  color: #7C3AED;
+}
+.badgeGreen {
+  background: #ECFDF5;
+  color: #059669;
+}
+.badgeBlue {
+  background: #EEF2FF;
+  color: #4F46E5;
+}
+
+/* ===== Upload Area ===== */
+.uploadDropzone {
+  border: 2px dashed #CBD5E1;
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  background: #F8FAFC;
+  transition: all 0.15s ease;
+  margin-bottom: 18px;
+}
+.uploadDropzone:hover {
+  border-color: #7C3AED;
+  background: #FAF5FF;
+}
+
+.uploadIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.uploadTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+.uploadSubtitle {
+  font-size: 12px;
+  color: #64748B;
+  margin-bottom: 12px;
+}
+
+.uploadButtons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.presetBtn {
+  padding: 6px 12px;
+  background: #ffffff;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.presetBtn:hover {
+  background: #F1F5F9;
+  border-color: #94A3B8;
+}
+
+/* ===== File Item List ===== */
+.fileList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fileItem {
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fileItemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fileMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fileIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+}
+
+.fileName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.fileDate {
+  font-size: 11px;
+  color: #94A3B8;
+}
+
+.fileInsight {
+  background: #F8FAFC;
+  border-left: 3px solid #7C3AED;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.4;
+}
+
+/* ===== Interest Chips ===== */
+.tagGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tagChip {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid #E2E8F0;
+  background: #ffffff;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.tagChip.active {
+  background: #FAF5FF;
+  border-color: #7C3AED;
+  color: #6D28D9;
+}
+
+/* ===== AI Action Plan Hero ===== */
+.actionHero {
+  background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+  border-radius: 16px;
+  padding: 24px;
+  color: #ffffff;
+  margin-bottom: 24px;
+}
+
+.actionHeroTitle {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  color: #F8FAFC;
+}
+
+.actionHeroDesc {
+  font-size: 13px;
+  color: #C7D2FE;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.actionPills {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.actionPill {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #EEF2FF;
+}
+
+.actionBtn {
+  width: 100%;
+  padding: 12px 18px;
+  background: #059669;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+  transition: all 0.15s ease;
+}
+.actionBtn:hover {
+  background: #047857;
+}
+
+/* ===== Skill Bars ===== */
+.skillList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skillRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skillMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.skillName {
+  font-weight: 600;
+  color: #334155;
+}
+
+.skillPct {
+  font-weight: 700;
+}
+
+.barTrack {
+  height: 8px;
+  background: #F1F5F9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
