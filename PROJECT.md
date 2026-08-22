@@ -5,6 +5,17 @@
 **LLM:** OpenRouter (`OPENROUTER_API_KEY` on the API only, with automatic mock fallback)  
 **Main App URL:** `http://localhost:3000` (One single entrance for all flows)  
 
+---
+
+> [!IMPORTANT]
+> ### 🛑 CRITICAL POLICY: LOCAL TESTING & EXPLICIT APPROVAL FIRST
+> **DO NOT automatically push branches, create PRs, or merge changes to GitHub.**
+> 1. **Implement and Test Locally First:** Every change must be run, tested, and validated locally at `http://localhost:3000` (frontend) and `http://localhost:8000` (backend).
+> 2. **User & Team Verification:** The user will test the local browser flow to verify that the UX, connectors, and workflow make sense.
+> 3. **Explicit Approval Required:** Only push, open PRs, or merge to GitHub when the user explicitly instructs to do so.
+
+---
+
 ## One-liner
 AI tutor that quizzes a student, estimates level, generates a worksheet, grades it, and adapts level.
 
