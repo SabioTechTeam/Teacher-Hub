@@ -1,94 +1,104 @@
 # Teacher-Hub — Project Brief (Hackathon)
 
-**Repo:** https://github.com/SabioTechTeam/Teacher-Hub
-**Subject:** Grades 4–6 Math
-**LLM:** OpenRouter (`OPENROUTER_API_KEY` on the API only)
+**Repo:** https://github.com/SabioTechTeam/Teacher-Hub  
+**Subject:** Grades 4–6 Math  
+**LLM:** OpenRouter (`OPENROUTER_API_KEY` on the API only, with automatic mock fallback)  
 
 ## One-liner
 AI tutor that quizzes a student, estimates level, generates a worksheet, grades it, and adapts level.
 
-## Core loop (build this)
-1. Onboarding
-2. Math quiz
-3. LLM + curriculum standards/skills → grade level + gap skill
-4. Generate worksheet (homework)
-5. Student answers
-6. Grade → update level → next worksheet easier/harder
+## Core Loop Status
+1. **Onboarding & Math Quiz** 🟡 *(In Progress - `feat/quiz-ui`)*
+2. **Level & Gap Diagnosis** 🟡 *(In Progress - `feat/curriculum` + `services/agent/graphs/.../diagnose.py`)*
+3. **Generate Worksheet (LLM + Verified Items)** ✅ *(Completed - PR #7 & PR #9)*
+4. **Student Answers (Worksheet UI)** ✅ *(Completed - PR #9)*
+5. **Grade & Adapt Level / Skill** ✅ *(Completed - PR #9)*
+6. **End-to-End Demo Rehearsal** ⏳ *(Next Up - `docs/product/demo-script.md`)*
 
-## Not in scope for this hackathon
-- Full K–12 OS, parent app, Neo4j, Kafka, mobile
-- Permanently labeling learning styles (track strategies that work instead)
-- Committing API keys to git
+---
 
-## Stack
-| Layer | Choice |
-|-------|--------|
-| Web | Next.js (`apps/web`) |
-| API | FastAPI (`services/api`) |
-| Agent | Stubs in `services/agent` (diagnose → worksheet → evaluate) |
-| Curriculum | YAML in `curriculum/skills/math/` |
-| Prompts | `ai/prompts/` |
-| Types | `packages/types` |
-| Secrets | Local `.env` from `.env.example` — never commit |
+## 🚦 Live Progress & Team Ownership
 
-## OpenRouter key
-- Needed only on the machine (or deploy) running **services/api**.
-- Frontend never gets the key.
-- Best: one shared API; others set `NEXT_PUBLIC_API_URL` to it.
-- Hackathon key expires in ~7 days; share out-of-band, not in the repo.
+| # | Role | GitHub Branch | Current Status | What Was Completed / Next Up |
+|---|------|---------------|----------------|------------------------------|
+| **1** | **Integrator / Shell** | `feat/shell` | 🟡 In Progress | Protected `main` branch; merged PRs #7-#10; Next: Connect Quiz finish $\rightarrow$ Worksheet route |
+| **2** | **Quiz UI** | `feat/quiz-ui` | 🟡 In Progress | Onboarding screen & 10-minute diagnostic math questions (`apps/web/app/student/page.tsx`) |
+| **3** | **Curriculum + Assess** | `feat/curriculum` | 🟡 In Progress | Grade 4–6 YAML skills & prerequisite graph live; Next: Diagnostic question items & scoring |
+| **4** | **Agent + LLM** | `feat/agent` | ✅ **Merged (PR #7)** | OpenRouter LLM generation (`services/agent/llm.py`), mock fallback, system prompts |
+| **5** | **Worksheet UI** | `feat/worksheet-ui` | ✅ **Merged (PR #9)** | Interactive `WorksheetFlow.tsx`, deterministic fraction math grader (`mathcheck.py`), prerequisite graph traversal |
+| **6** | **Evaluate + Demo** | `feat/evaluate-demo` | 🟡 In Progress | Offline runner `loop_demo.py` live; Next: Rehearse 2-minute pitch via `docs/product/demo-script.md` |
 
-## Team of 6 — ownership
-| # | Role | Owns | Branch idea |
-|---|------|------|-------------|
-| 1 | Integrator / shell | Repo glue, routing, Profile/session, merges | `feat/shell` |
-| 2 | Quiz UI | Onboarding + math quiz screens | `feat/quiz-ui` |
-| 3 | Curriculum + assess | YAML skills, diagnose path, gap/level | `feat/curriculum` |
-| 4 | Agent + LLM | Agent graph, prompts, OpenRouter wiring | `feat/agent` |
-| 5 | Worksheet UI | Worksheet render + answer entry | `feat/worksheet-ui` |
-| 6 | Evaluate + demo | Grade loop, level update, demo script/QA | `feat/evaluate-demo` |
+---
 
-## Shared contracts
+## 🛠️ Stack & Architecture
+| Layer | Choice | Location |
+|-------|--------|----------|
+| **Web** | Next.js 14 App Router, Tailwind, TypeScript | `apps/web/` |
+| **API** | FastAPI (`/worksheets/generate`, `/worksheets/grade`) | `services/api/` |
+| **Agent** | LangGraph Node Loop (Diagnose $\rightarrow$ Strategy $\rightarrow$ Worksheet $\rightarrow$ Grade $\rightarrow$ Adapt) | `services/agent/` |
+| **Curriculum** | Prerequisite DAG (`math.yaml`) + Grade 4-6 skills | `curriculum/skills/math/` |
+| **Math Engine** | Deterministic exact fraction parser & evaluator | `services/agent/mathcheck.py` |
+| **Prompts** | Versioned Markdown templates | `ai/prompts/` |
+| **Contracts** | Shared TypeScript interfaces | `packages/types/` |
+| **Judge Assets** | Pitch cheat card, Use-cases, Loop docs | `docs/product/` |
+
+---
+
+## 🔒 Shared Data Contracts
 Everyone imports the same shapes from `packages/types` (and mirrors in Python schemas):
-- `StudentSession` — studentId, gradeLevel, gapSkill, strategy
-- `QuizResult` — scores, gapSkill, gradeLevel
-- `Worksheet` / `WorksheetItem`
-- `AttemptResult` — score, nextGradeLevel
+- `StudentSession` — `studentId`, `gradeLevel`, `gapSkill`, `strategy`
+- `QuizResult` — `scores`, `gapSkill`, `gradeLevel`
+- `Worksheet` / `WorksheetItem` — `worksheetId`, `items`, `target_skill`, `source`
+- `AttemptResult` — `score`, `next_action`, `next_skill`, `mastery`
 
-UI talks to API only. API calls agent + OpenRouter. No prompts in the frontend.
+> **Note:** Answer keys are stripped by the API before reaching the browser (`_strip_keys`) to keep evaluations tamper-proof.
 
-## Git workflow
-- **No direct pushes to `main`** — use a `feat/...` branch + Pull Request; Person 1 merges
-- `main` must stay demoable
-- Work on `feat/...` branches; open PRs; Person 1 merges
-- Small PRs often; no force-push to main
-- Hourly sync: what merged, what’s blocked, what to cut
+---
 
-## Integration order
-1. Shell + mocks
-2. Quiz UI writes session
-3. Curriculum/diagnose sets level + gap
-4. Worksheet UI on mock payload
-5. Agent/OpenRouter behind API
-6. Evaluate + adapt level + demo rehearsal
+## ⚡ How to Run and Test Locally
 
-## Demo win (2 minutes)
-Kid A quizzes → gets a level/gap → worksheet → answers → level adjusts.
-Optional: second kid shows a different gap/strategy.
+### 1. Test the Adaptive Math Engine Offline (0 dependencies, no server needed)
+```bash
+python3 scripts/dev/loop_demo.py
+```
 
-## Cut line (T−2h)
-Protect: quiz → level/gap → worksheet → grade.
-Cut first: extra skills, fancy UI, speech-to-text, teacher dashboard.
+### 2. Run the Next.js Frontend
+```bash
+cd apps/web
+npm install
+npm run dev
+# Visit http://localhost:3000/worksheet or http://localhost:3000/tutor
+```
 
-## Fill in names
-| # | GitHub | Name |
-|---|--------|------|
-| 1 | | |
-| 2 | | |
-| 3 | | |
-| 4 | | |
-| 5 | | |
-| 6 | RickyResQ (example) | |
+### 3. Run the FastAPI Backend
+```bash
+uvicorn services.api.app.main:app --reload --port 8000
+```
 
-## Links
-- Repo: https://github.com/SabioTechTeam/Teacher-Hub
-- Architecture notes may live under `docs/` as we add them
+---
+
+## 🌿 Git Workflow Rules
+- **No direct pushes to `main`** — Protected branch requiring PRs.
+- `main` must remain demoable at all times.
+- Work in your assigned `feat/<role>` branch.
+- Open PRs early; Person 1 (Integrator) merges after approvals.
+- Hourly sync: what merged, what’s blocked, what to cut.
+
+---
+
+## 🎯 Demo Win (2-Minute Script)
+1. **Kid A (Struggling)**: Quizzes $\rightarrow$ Diagnosed with *Grade 4 Equivalent Fractions gap* $\rightarrow$ Gets visual fraction worksheet $\rightarrow$ Grades $\rightarrow$ Difficulty remediates to prerequisite.
+2. **Kid B (Advanced)**: Starts on Grade 5 Addition $\rightarrow$ Scores 100% $\rightarrow$ Engine accelerates to Grade 6 Ratios.
+3. **Judge Pitch**: *"Khan chooses from a static library. Teacher-Hub diagnoses the specific misconception and writes the next problem from a live student model."* (See [`docs/product/JUDGE_CHEAT_CARD.md`](docs/product/JUDGE_CHEAT_CARD.md)).
+
+---
+
+## 👥 Team Roster
+| # | Role | GitHub Username | Name |
+|---|------|-----------------|------|
+| 1 | Integrator / Shell | SabioTechTeam | |
+| 2 | Quiz UI | | |
+| 3 | Curriculum + Assess | | |
+| 4 | Agent + LLM | RickyResQ | |
+| 5 | Worksheet UI | alphawolf13 | |
+| 6 | Evaluate + Demo | RickyResQ | |
