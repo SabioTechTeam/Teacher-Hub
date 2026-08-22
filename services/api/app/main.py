@@ -40,7 +40,7 @@ try:
 except Exception as exc:
     print(f"[seed] note: fixture load skipped or failed: {exc}")
 
-app = FastAPI(title="Teacher-Hub API", version="0.2.0")
+app = FastAPI(title="UnStuck API", version="0.2.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

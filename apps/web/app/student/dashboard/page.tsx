@@ -85,8 +85,8 @@ export default function StudentDashboard() {
       {/* ── Nav ── */}
       <nav className={styles.nav}>
         <div className={styles.navBrand} onClick={() => router.push("/")} style={{ cursor: "pointer" }}>
-          <div className={styles.navMark}>🎓</div>
-          Teacher-Hub
+          <div className={styles.navMark}>🎯</div>
+          UnStuck
         </div>
         <div className={styles.navRight}>
           <button

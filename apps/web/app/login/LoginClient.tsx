@@ -62,7 +62,7 @@ export default function LoginClient() {
             Every student<br />learns differently.
           </h1>
           <p className={styles.heroSubtitle}>
-            Teacher-Hub adapts to each student's skill gaps in real time —
+            UnStuck adapts to each student's skill gaps in real time —
             delivering the right worksheet, at the right level, right now.
           </p>
           <div className={styles.heroStats}>
@@ -86,8 +86,8 @@ export default function LoginClient() {
       <div className={styles.panel}>
         <div className={styles.card}>
           <div className={styles.logo}>
-            <div className={styles.logoMark}>🎓</div>
-            <span className={styles.logoText}>Teacher-Hub</span>
+            <div className={styles.logoMark}>🎯</div>
+            <span className={styles.logoText}>UnStuck</span>
           </div>
 
           <h2 className={styles.heading}>Welcome back</h2>

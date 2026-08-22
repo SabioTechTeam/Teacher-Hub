@@ -1,4 +1,4 @@
-# Teacher-Hub
+# UnStuck
 
 Hackathon MVP: Grades 4-6 Math.
 Loop: Quiz -> level -> worksheet -> grade -> adapt.

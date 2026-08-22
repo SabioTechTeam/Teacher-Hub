@@ -1,4 +1,4 @@
-# Teacher-Hub — Project Brief (Hackathon)
+# UnStuck — Project Brief (Hackathon)
 
 **Repo:** https://github.com/SabioTechTeam/Teacher-Hub  
 **Subject:** Grades 4–6 Math  
@@ -112,7 +112,7 @@ python3 scripts/dev/loop_demo.py
 ## 🎯 Demo Win (2-Minute Script)
 1. **Kid A (Struggling)**: Quizzes $\rightarrow$ Diagnosed with *Grade 4 Equivalent Fractions gap* $\rightarrow$ Gets visual fraction worksheet $\rightarrow$ Grades $\rightarrow$ Difficulty remediates to prerequisite.
 2. **Kid B (Advanced)**: Starts on Grade 5 Addition $\rightarrow$ Scores 100% $\rightarrow$ Engine accelerates to Grade 6 Ratios.
-3. **Judge Pitch**: *"Khan chooses from a static library. Teacher-Hub diagnoses the specific misconception and writes the next problem from a live student model."* (See [`docs/product/JUDGE_CHEAT_CARD.md`](docs/product/JUDGE_CHEAT_CARD.md)).
+3. **Judge Pitch**: *"Khan chooses from a static library. UnStuck diagnoses the specific misconception and writes the next problem from a live student model."* (See [`docs/product/JUDGE_CHEAT_CARD.md`](docs/product/JUDGE_CHEAT_CARD.md)).
 
 ---
 
