@@ -41,12 +41,12 @@ We **write** the next problem from a live student model.
 
 ---
 
-## Slide 5 — Who buys / who benefits
+## Slide 5 — Who buys / who benefits ✅ LOCKED (C)
 **This weekend:** student experience (parents feel the pain).  
 **Next:** teachers (differentiation / “why is Sarah stuck?”).  
 **Later:** schools (outcomes + less prep cost).
 
-*Speaker note:* Don’t list three equal buyers. Beachhead first.
+*Speaker note:* Beachhead first — not three equal buyers. For VC-judges: clear wedge, then expansion.
 
 ---
 
