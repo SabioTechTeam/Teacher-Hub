@@ -122,6 +122,14 @@ export default function ParentDashboard() {
   };
 
   const handleSaveNote = () => {
+    // Notes shape the NEXT worksheet: strategy, length, hint generosity.
+    // They never change which skill is targeted, and never touch grading.
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    fetch(`${api}/students/stu-001/notes`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ author: "parent", text: parentNote }),
+    }).catch(() => { /* mocks mode: nothing to sync to */ });
     setNoteSaved(true);
     setTimeout(() => setNoteSaved(false), 2500);
   };

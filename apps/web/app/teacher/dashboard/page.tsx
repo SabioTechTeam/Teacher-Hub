@@ -227,6 +227,18 @@ export default function TeacherDashboard() {
 
   const handleSaveTeacherNote = () => {
     if (!selectedStudent) return;
+    // Advisory guidance for the next worksheet. The strategy dropdown is
+    // structured input and wins over anything inferred from the free text.
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    fetch(`${api}/students/${selectedStudent.id}/notes`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        author: "teacher",
+        text: customTeacherNote,
+        strategy_override: strategyOverride,
+      }),
+    }).catch(() => { /* mocks mode */ });
     setStudents((prev) =>
       prev.map((s) =>
         s.id === selectedStudent.id

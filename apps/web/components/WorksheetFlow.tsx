@@ -141,6 +141,13 @@ export default function WorksheetFlow() {
             Grade {ws.grade_level} · {ws.items.length} items
           </p>
         )}
+        {ws && (ws.guidance_applied ?? []).length > 0 && (
+          /* An adjustment made on a child's behalf should never be invisible. */
+          <p style={{ margin: "8px 0 0", fontSize: 13, color: "#3730A3", background: "#EEF2FF",
+                      border: "1px solid #C7D2FE", borderRadius: 8, padding: "8px 12px" }}>
+            ✏️ Adjusted from your teacher and family: {(ws.guidance_applied ?? []).join(" · ")}
+          </p>
+        )}
       </header>
 
       {note && (
