@@ -1,0 +1,7 @@
+id: math.4.fractions.equivalent
+grade: 4
+subject: mathematics
+name: Equivalent Fractions
+prerequisites: ["math.4.fractions.parts"]
+standards: ["4.NF.A.1"]
+difficulty: 0.45
