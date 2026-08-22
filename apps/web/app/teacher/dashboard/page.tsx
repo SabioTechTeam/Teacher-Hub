@@ -74,6 +74,22 @@ export default function TeacherDashboard() {
           Teacher-Hub
         </div>
         <div className={styles.navRight}>
+          <button
+            onClick={() => router.push("/tutor")}
+            style={{
+              padding: "6px 12px",
+              background: "#EEF2FF",
+              color: "#4338CA",
+              border: "none",
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: "pointer",
+              marginRight: 8,
+            }}
+          >
+            Live Tutor Demo ⚡
+          </button>
           <span className={styles.navGreet}>Welcome, Teacher 👋</span>
           <button className={styles.logoutBtn} onClick={() => router.push("/login")}>
             Sign out
