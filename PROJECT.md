@@ -24,7 +24,7 @@ AI tutor that quizzes a student, estimates level, generates a worksheet, grades 
 |---|------|---------------|----------------|------------------------------|
 | **1** | **Integrator / Shell** | `feat/shell` | ✅ **Merged (PR #12)** | Master login shell (`/`), Student & Teacher dashboards, seed fixture loader (`seed.py`) |
 | **2** | **Quiz UI** | `feat/quiz-ui` | ✅ **Merged (PR #13)** | 5-question math diagnostic quiz with automated gap detection (`apps/web/app/student/page.tsx`) |
-| **3** | **Curriculum + Assess** | `feat/curriculum` | 🟡 In Progress | Grade 4–6 YAML skills & prerequisite graph live (`math.yaml`); Next: Richer question banks |
+| **3** | **Curriculum + Assess** | `feat/curriculum` | ✅ **Merged (PR #16)** | CCSS Rubrics (Gr 4-6), prompt grounding, proficiency grading scale, evaluation guardrails |
 | **4** | **Agent + LLM** | `feat/agent` | ✅ **Merged (PR #7)** | OpenRouter LLM generation (`services/agent/llm.py`), mock fallback, system prompts |
 | **5** | **Worksheet UI** | `feat/worksheet-ui` | ✅ **Merged (PR #9)** | Interactive `WorksheetFlow.tsx`, deterministic fraction math grader (`mathcheck.py`), prerequisite graph traversal |
 | **6** | **Evaluate + Demo** | `feat/evaluate-demo` | 🟡 In Progress | Offline runner `loop_demo.py` live; Next: 2-minute pitch rehearsal via `docs/product/demo-script.md` |
