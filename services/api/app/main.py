@@ -31,6 +31,7 @@ from graphs.teacher_agent.nodes import update_student as adapt_node  # noqa: E40
 from schemas import ItemGrade, Worksheet  # noqa: E402
 from curriculum import load_curriculum  # noqa: E402
 import notes as notes_mod  # noqa: E402
+import themes as themes_mod  # noqa: E402
 
 from .store import STORE
 from . import diagnostic
@@ -63,6 +64,13 @@ class WorksheetIn(BaseModel):
     skill_id: Optional[str] = None
     grade_level: Optional[int] = None
     item_count: int = 6
+    # Interest theme ids chosen by the parent in /parent/dashboard. Omit to reuse
+    # whatever is already stored for this student.
+    themes: Optional[list[str]] = None
+
+
+class InterestsIn(BaseModel):
+    themes: list[str] = []
 
 
 class NoteIn(BaseModel):
@@ -202,6 +210,10 @@ def worksheets_generate(body: WorksheetIn):
         strategy_override=(stored.get("teacher") or {}).get("strategy_override"),
         default_items=max(1, min(body.item_count, 12)),
     )
+    # Parent-selected interests: use what was posted, else what we already hold.
+    theme_ids = body.themes if body.themes is not None else student.get("themes") or []
+    if body.themes is not None:
+        student["themes"] = body.themes
 
     ws = worksheet_node.build(
         student_id=body.student_id,
@@ -210,6 +222,7 @@ def worksheets_generate(body: WorksheetIn):
         strategy=strategy,
         count=max(1, min(body.item_count, 12)),
         guidance=guidance,
+        theme_ids=theme_ids or None,
     )
     payload = ws.model_dump()
     STORE.save_worksheet(payload)
@@ -294,3 +307,23 @@ def student_note_put(student_id: str, body: NoteIn):
 @app.get("/students/{student_id}/notes")
 def student_notes_get(student_id: str):
     return {"student_id": student_id, "notes": STORE.student(student_id).get("notes", {})}
+@app.get("/students/{student_id}/interests")
+def student_interests_get(student_id: str):
+    """Interest themes the parent selected. Drives worksheet word-problem context."""
+    return {"student_id": student_id, "themes": STORE.student(student_id).get("themes", [])}
+
+
+@app.put("/students/{student_id}/interests")
+def student_interests_put(student_id: str, body: InterestsIn):
+    known = set(themes_mod.THEMES)
+    themes = [t for t in body.themes if t in known]
+    STORE.student(student_id)["themes"] = themes
+    return {"student_id": student_id, "themes": themes,
+            "ignored": [t for t in body.themes if t not in known]}
+
+
+@app.get("/themes")
+def themes_list():
+    """The interest themes the parent hub can offer."""
+    return {"themes": [{"id": t.id, "label": t.label, "emoji": t.emoji}
+                       for t in themes_mod.THEMES.values()]}

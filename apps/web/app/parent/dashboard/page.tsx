@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import { setSession } from "@/lib/session";
+import { getSession, setSession } from "@/lib/session";
 
 interface UploadedRecord {
   id: string;
@@ -70,16 +70,42 @@ export default function ParentDashboard() {
   const router = useRouter();
   const [records, setRecords] = useState<UploadedRecord[]>(INITIAL_RECORDS);
   const [hobbies, setHobbies] = useState(HOBBY_OPTIONS);
+  const [saved, setSaved] = useState(false);
+
+  // Push the selected interests to the shared session (and the API when it is up)
+  // so /worksheets/generate writes word problems in these contexts. Without this
+  // the chips are decorative.
+  const persistInterests = (next: typeof HOBBY_OPTIONS) => {
+    const ids = next.filter((h) => h.active).map((h) => h.id);
+    setSession({ interests: ids });
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const s = getSession();
+    fetch(`${api}/students/${s.studentId}/interests`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ themes: ids }),
+    }).catch(() => { /* mocks mode: session alone is enough */ });
+    setSaved(true);
+    window.setTimeout(() => setSaved(false), 1600);
+  };
   const [parentNote, setParentNote] = useState(
     "Aiden gets frustrated when fraction problems are purely abstract. He loves visual models and anything related to building in Minecraft or space exploration."
   );
   const [noteSaved, setNoteSaved] = useState(false);
 
   const toggleHobby = (id: string) => {
-    setHobbies(prev =>
-      prev.map(h => (h.id === id ? { ...h, active: !h.active } : h))
-    );
+    setHobbies(prev => {
+      const next = prev.map(h => (h.id === id ? { ...h, active: !h.active } : h));
+      persistInterests(next);
+      return next;
+    });
   };
+
+  // Seed the session from whatever is already ticked, so a parent who changes
+  // nothing still gets themed worksheets.
+  useEffect(() => {
+    setSession({ interests: HOBBY_OPTIONS.filter(h => h.active).map(h => h.id) });
+  }, []);
 
   const handleAddSampleRecord = (type: "iep" | "worksheet" | "report") => {
     if (type === "iep") {
@@ -209,7 +235,11 @@ export default function ParentDashboard() {
               <span className={styles.statLabel}>AI Gamification</span>
               <div className={styles.statIcon} style={{ background: "#FFF7ED", color: "#EA580C" }}>🎮</div>
             </div>
-            <div className={styles.statValue} style={{ color: "#EA580C", fontSize: 20 }}>Space &amp; Minecraft</div>
+            <div className={styles.statValue} style={{ color: "#EA580C", fontSize: 20 }}>
+              {hobbies.filter(h => h.active).length
+                ? hobbies.filter(h => h.active).map(h => h.label.replace(/^\S+\s/, "")).slice(0, 2).join(", ")
+                : "Everyday"}
+            </div>
             <div className={styles.statSub}>{hobbies.filter(h => h.active).length} interest themes active</div>
           </div>
         </div>
@@ -294,6 +324,14 @@ export default function ParentDashboard() {
                   </button>
                 ))}
               </div>
+
+              <div style={{ fontSize: 12, color: saved ? "#059669" : "#94A3B8", marginTop: 10, fontWeight: 600, transition: "color .2s" }}>
+                {saved
+                  ? "✓ Saved — Aiden's next worksheet will use these"
+                  : hobbies.some(h => h.active)
+                  ? `Active: ${hobbies.filter(h => h.active).map(h => h.label).join(", ")}`
+                  : "No themes selected — worksheets will use everyday contexts."}
+              </div>
             </div>
 
             {/* Parent Observations Notes */}
@@ -370,7 +408,12 @@ export default function ParentDashboard() {
                   <strong>🎯 Gap Target:</strong> Equivalent Fractions (CCSS 4.NF.1) — remediating common denominator mistakes.
                 </div>
                 <div className={styles.actionPill}>
-                  <strong>🚀 Theme:</strong> Space rockets &amp; Minecraft building block word problems.
+                  {/* Read the live selection — this panel claimed a theme the
+                      worksheet wasn't actually using. */}
+                  <strong>🎨 Theme:</strong>{" "}
+                  {hobbies.some(h => h.active)
+                    ? `${hobbies.filter(h => h.active).map(h => h.label.replace(/^\S+\s/, "")).join(", ")} word problems.`
+                    : "Everyday contexts — pick an interest below to personalize."}
                 </div>
               </div>
 

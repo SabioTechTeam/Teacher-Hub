@@ -1,4 +1,12 @@
 /** Local mirror of packages/types for the web app. Keep in sync. */
+export type VisualBar = { num: number | null; den: number; label?: string };
+
+/** Scaffold the UI draws before the abstract arithmetic.
+ *  Never contains the answer — see _strip_keys in services/api. */
+export type Visual =
+  | { kind: "shaded_whole" | "equivalence" | "compare" | "sum"; bars: VisualBar[] }
+  | { kind: "ratio"; counts: { n: number; label: string }[] };
+
 export type Item = {
   id: string;
   skill_id: string;
@@ -7,6 +15,8 @@ export type Item = {
   choices?: string[] | null;
   difficulty?: number;
   hint?: string;
+  visual?: Visual | null;
+  theme?: string | null;
 };
 
 export type Worksheet = {
@@ -17,6 +27,7 @@ export type Worksheet = {
   skill_name: string;
   standards: string[];
   strategy: string;
+  themes?: string[];
   source: "llm" | "mock";
   /** Human-readable provenance: what parent/teacher notes changed here. */
   guidance_applied?: string[];
