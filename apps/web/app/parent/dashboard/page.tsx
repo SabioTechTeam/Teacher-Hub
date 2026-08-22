@@ -142,7 +142,7 @@ export default function ParentDashboard() {
       <nav className={styles.nav}>
         <div className={styles.navBrand} onClick={() => router.push("/")}>
           <div className={styles.navMark}>👨‍👩‍👧</div>
-          Teacher-Hub Parent Portal
+          UnStuck Parent Portal
         </div>
         <div className={styles.navRight}>
           <button className={styles.demoBtn} onClick={handleLaunchChildSession}>

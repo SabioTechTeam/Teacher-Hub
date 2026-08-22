@@ -128,7 +128,7 @@ export default function WorksheetFlow() {
           ← Back to Student Dashboard
         </button>
         <span style={{ fontSize: 13, color: "#888", fontWeight: 500 }}>
-          Teacher-Hub Adaptive Tutor
+          UnStuck Adaptive Tutor
         </span>
       </div>
 

@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Teacher-Hub — AI Math Tutor",
+  title: "UnStuck — AI Math Tutor",
   description: "Adaptive math tutoring for grades 4–6",
 };
 
