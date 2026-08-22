@@ -7,16 +7,17 @@ import styles from "./page.module.css";
 type Role = "student" | "teacher";
 
 const ACCOUNTS = {
-  student: { username: "student", password: "learn123", redirect: "/student/dashboard" },
-  teacher: { username: "teacher", password: "teach456", redirect: "/teacher/dashboard" },
+  student: { username: "student", password: "learn123" },
+  teacher: { username: "teacher", password: "teach456" },
 };
 
 export default function LoginClient() {
   const router = useRouter();
-  const [role, setRole]       = useState<Role>("student");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError]     = useState("");
+  const [role, setRole] = useState<Role>("student");
+  const [isNewStudent, setIsNewStudent] = useState(true);
+  const [username, setUsername] = useState("student");
+  const [password, setPassword] = useState("learn123");
+  const [error, setError] = useState("");
 
   function handleRoleSwitch(r: Role) {
     setRole(r);
@@ -29,7 +30,14 @@ export default function LoginClient() {
     e.preventDefault();
     const acct = ACCOUNTS[role];
     if (username === acct.username && password === acct.password) {
-      router.push(acct.redirect);
+      if (role === "teacher") {
+        router.push("/teacher/dashboard");
+      } else if (isNewStudent) {
+        // New student onboarding routes through the diagnostic assessment quiz
+        router.push("/student");
+      } else {
+        router.push("/student/dashboard");
+      }
     } else {
       setError("Incorrect username or password.");
     }
@@ -104,6 +112,50 @@ export default function LoginClient() {
             </button>
           </div>
 
+          {/* Student Mode Selector (New Onboarding vs Returning) */}
+          {role === "student" && (
+            <div style={{ background: "#F1F5F9", borderRadius: 10, padding: 4, display: "flex", marginBottom: 16 }}>
+              <button
+                type="button"
+                onClick={() => setIsNewStudent(true)}
+                style={{
+                  flex: 1,
+                  padding: "8px 10px",
+                  borderRadius: 8,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  border: "none",
+                  cursor: "pointer",
+                  background: isNewStudent ? "#FFFFFF" : "transparent",
+                  color: isNewStudent ? "#4F46E5" : "#64748B",
+                  boxShadow: isNewStudent ? "0 1px 4px rgba(0,0,0,0.08)" : "none",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                ✨ New Student (Onboarding Quiz)
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsNewStudent(false)}
+                style={{
+                  flex: 1,
+                  padding: "8px 10px",
+                  borderRadius: 8,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  border: "none",
+                  cursor: "pointer",
+                  background: !isNewStudent ? "#FFFFFF" : "transparent",
+                  color: !isNewStudent ? "#4F46E5" : "#64748B",
+                  boxShadow: !isNewStudent ? "0 1px 4px rgba(0,0,0,0.08)" : "none",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                📊 Returning (Dashboard)
+              </button>
+            </div>
+          )}
+
           {/* Static account hint */}
           <div className={styles.hint}>
             <div className={styles.hintTitle}>Demo credentials auto-filled ✓</div>
@@ -152,7 +204,11 @@ export default function LoginClient() {
             {error && <p className={styles.error}>{error}</p>}
 
             <button type="submit" className={styles.btn}>
-              Sign in as {role === "student" ? "Student 🎒" : "Teacher 📚"}
+              {role === "teacher"
+                ? "Sign in as Teacher 📚"
+                : isNewStudent
+                ? "Start Onboarding Diagnostic 🎯"
+                : "Sign in to Dashboard 🎒"}
             </button>
           </form>
 
