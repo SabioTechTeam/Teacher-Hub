@@ -15,12 +15,11 @@ Diagnose → generate → grade → adapt
 
 ---
 
-## Slide 2 — Problem
-One worksheet for 28 kids.  
-Stuck students wait for help.  
-Content libraries don’t write practice for *this* gap *tonight*.
+## Slide 2 — Problem ✅ LOCKED (A+B)
+Stuck kid tonight — still no practice written for *their* gap.  
+And the system still runs on **one worksheet for 28 students**.
 
-*Speaker note:* Make it human — “kid at the kitchen table still stuck.”
+*Speaker note:* Lead with the human (kitchen table), then the system failure (classroom differentiation). VCs-as-judges hear both pain and scale.
 
 ---
 
@@ -66,6 +65,6 @@ We personalize practice — we don’t diagnose disabilities. Teachers stay in c
 
 ## Open questions (we’re discussing)
 - [ ] Exact title subtitle?
-- [ ] Problem slide: kitchen table vs classroom first?
+- [x] Problem slide: A+B locked (kitchen table + one worksheet for 28)
 - [ ] Include neurodiversity line on slide 7 or keep verbal only?
 - [ ] Team slide? (hackathons sometimes want it — maybe skip to save time)
