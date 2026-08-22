@@ -57,6 +57,34 @@ State is in-memory (`services/api/app/store.py`). Calling `/worksheets/generate`
 with only `student_id` picks up wherever the last attempt left the student — that
 is the loop.
 
+## Mock mode (Role 5 / unblocks Person 1)
+
+The worksheet UI runs with **no API and no LLM**:
+
+```bash
+cd apps/web
+echo "NEXT_PUBLIC_USE_MOCKS=true" >> .env.local
+npm install && npm run dev
+# http://localhost:3000/tutor  (or /worksheet)
+```
+
+`lib/mockWorksheet.ts` returns the exact shapes `services/api` returns, so
+turning mocks off is a flag flip, not a rewrite. Answer keys live client-side
+**only** in mock mode; the real API strips them.
+
+Three run modes, in order of preference:
+1. `NEXT_PUBLIC_USE_MOCKS=true` -> local mock payload
+2. live API -> real generation + grading
+3. API unreachable -> auto-falls back to mocks with a visible banner
+
+Mode 3 is deliberate. The demo must never show a dead screen.
+
+Session state lives in `localStorage` under `teacherhub.session` via
+`lib/session.ts` (Role 1's object -- swap the implementation, keep the shape).
+After grading, the flow writes `gapSkill` and `gradeLevel` back to the session,
+so "Next worksheet" picks up where the last one left off. That is the loop,
+visible in the UI.
+
 ## Run it
 ```bash
 # no server, no key — proves the loop
