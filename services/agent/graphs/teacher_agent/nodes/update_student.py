@@ -15,7 +15,7 @@ _AGENT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."
 if _AGENT_ROOT not in sys.path:
     sys.path.insert(0, _AGENT_ROOT)
 
-from curriculum import load_curriculum  # noqa: E402
+from curriculum import load_curriculum, proficiency  # noqa: E402
 from schemas import AttemptResult, ItemGrade  # noqa: E402
 
 from ..state import AgentState
@@ -78,6 +78,11 @@ def apply(
     before = dict(mastery)
     after = update_mastery(before, grades)
     decision, next_skill, next_grade, rationale = decide_next(target_skill, score, after)
+    # Report proficiency on the skill just attempted, against its own grade rubric.
+    attempted = load_curriculum().get(target_skill)
+    prof_level, prof_label = proficiency(
+        after.get(target_skill, score), attempted.grade if attempted else next_grade
+    )
     return AttemptResult(
         worksheet_id=worksheet_id,
         student_id=student_id,
@@ -89,6 +94,8 @@ def apply(
         next_target_skill=next_skill,
         next_grade_level=next_grade,
         rationale=rationale,
+        proficiency_level=prof_level,
+        proficiency_label=prof_label,
     )
 
 

@@ -3,5 +3,5 @@ grade: 5
 subject: mathematics
 name: Add Fractions (Like Denominators)
 prerequisites: ["math.5.fractions.compare"]
-standards: ["5.NF.A.1"]
+standards: ["4.NF.B.3"]
 difficulty: 0.55
