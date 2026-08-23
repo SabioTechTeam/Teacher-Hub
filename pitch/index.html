@@ -7,9 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --cream:#FDFDF5; --ink:#0B1220; --muted:#4B5565;
-  --blue:#6284E4; --lavender:#E5DFF2; --sage:#DFEAD5; --yellow:#F2F294;
-  --peach:#F7E0D6; --white:#fff;
+  /* Matched to Teacher-Hub apps/web/app/globals.css */
+  --cream:#F8FAFC; --ink:#0F172A; --muted:#64748B;
+  --blue:#4F46E5; --lavender:#EEF2FF; --sage:#ECFDF5; --yellow:#FEF3C7;
+  --peach:#FFF1F2; --white:#fff;
   --pad-x: 40px;
   --shadow: 0 14px 30px rgba(15,23,42,.08);
 }
@@ -19,26 +20,26 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .nav button{border:0;border-radius:8px;cursor:pointer;background:var(--blue);color:#fff;font:600 13px Inter,system-ui,sans-serif;padding:7px 11px}
 .nav button.ghost{background:transparent;border:1px solid rgba(255,255,255,.35)}
 #counter{margin-left:auto;font-size:12px;opacity:.85}
-.nav-logo{height:34px;width:auto;background:transparent;padding:0;border-radius:8px;object-fit:contain}
+.nav-logo{height:34px;width:auto;background:#fff;padding:3px;border-radius:8px;object-fit:contain}
 
 .slide{display:none;min-height:calc(100vh - 48px);background:var(--cream);position:relative;overflow:hidden}
 .slide.active{display:flex;flex-direction:column}
 
-.topbar{background:var(--blue);color:#fff;padding:22px var(--pad-x) 20px;position:relative;overflow:hidden}
+.topbar{background:var(--blue);color:#fff;padding:26px var(--pad-x) 24px;position:relative;overflow:hidden}
 .topbar:after{content:"";position:absolute;right:-36px;top:-46px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12)}
 .topbar-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;position:relative;z-index:1}
 .topbar-copy{flex:1;min-width:0}
 .brand-lockup{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.hero-brand{display:flex;align-items:center;gap:12px;margin:0 0 96px !important}
-.hero-brand img{height:118px;width:auto;max-width:min(720px,90vw);object-fit:contain;background:transparent;box-shadow:none;border-radius:0;display:block}
-.brand-lockup img{height:64px;width:auto;display:block;background:transparent;padding:0;box-shadow:none;border-radius:14px;object-fit:contain}
+.hero-brand{display:flex;align-items:center;gap:12px;margin:0 0 168px !important}
+.hero-brand img{height:104px;width:auto;max-width:min(640px,86vw);object-fit:contain;background:transparent;box-shadow:none;border-radius:0;display:block}
+.brand-lockup img{height:64px;width:auto;display:block;background:#fff;padding:8px;box-shadow:none;border-radius:16px;object-fit:contain}
 
 
 .hero-brand span{font-weight:800;font-size:22px;letter-spacing:-.03em}
 .close-brand{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .close-brand img{height:72px;width:auto;background:transparent;padding:0;box-shadow:none;border-radius:14px;object-fit:contain}
 .topbar h1{margin:0;font-size:clamp(36px,4.8vw,54px);font-weight:800;letter-spacing:-.045em;line-height:1.02;position:relative}
-.topbar p{margin:8px 0 0;font-size:clamp(16px,1.7vw,20px);font-weight:550;opacity:.95;position:relative;max-width:40em;line-height:1.3}
+.topbar p{margin:12px 0 0;font-size:clamp(16px,1.7vw,20px);font-weight:550;opacity:.95;position:relative;max-width:38em;line-height:1.35}
 
 .body{flex:1;padding:22px var(--pad-x) 24px;position:relative;display:flex;flex-direction:column;justify-content:center}
 .blob-tr,.blob-bl{position:absolute;pointer-events:none;z-index:0;filter:blur(1px);opacity:.45}
@@ -79,29 +80,215 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .cta.soft{background:#fff;color:var(--ink);border:1px solid rgba(15,23,42,.08)}
 .foot{margin-top:16px;font-weight:700;font-size:14px;opacity:.78}
 
-.problem-grid{display:grid;grid-template-columns:1.45fr .95fr;gap:16px;align-items:stretch}
+
+@media (max-width:980px){}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.problem-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch;margin-top:4px}
 @media (max-width:980px){.problem-grid{grid-template-columns:1fr}}
-.shock{border-radius:26px;padding:24px 24px 22px;background:var(--yellow);box-shadow:var(--shadow);position:relative;overflow:hidden;min-height:320px;display:flex;flex-direction:column;justify-content:center}
-.shock:after{content:"";position:absolute;right:-28px;bottom:-36px;width:140px;height:140px;border-radius:34px;background:rgba(255,255,255,.35);transform:rotate(18deg)}
-.shock .eyebrow{position:relative;z-index:1;background:rgba(11,18,32,.08)}
-.shock .big{position:relative;z-index:1;margin:12px 0 4px;font-size:clamp(72px,9vw,104px);font-weight:800;letter-spacing:-.07em;line-height:.9}
-.shock h3{position:relative;z-index:1;margin:0 0 12px;font-size:clamp(24px,2.8vw,32px);font-weight:800;letter-spacing:-.03em;max-width:14em;line-height:1.12}
-.pair{position:relative;z-index:1;display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
-.pair b{display:inline-block;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.8);font-size:15px;font-weight:800}
-.pair b.bad{background:var(--ink);color:#fff}
-.nat-box{position:relative;z-index:1;margin:0 0 10px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.78);border:1px solid rgba(11,18,32,.06)}
-.nat-box .nat-k{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.nat-box .nat-v{font-size:clamp(17px,1.8vw,21px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
-.nat-box .nat-v em{font-style:normal;color:var(--blue)}
-.az-line{position:relative;z-index:1;margin:0;font-size:15px;font-weight:650;color:rgba(11,18,32,.8);line-height:1.4}
-.side-stack{display:flex;flex-direction:column;gap:14px}
-.side{flex:1;border-radius:22px;padding:20px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center;min-height:150px}
-.side.l{background:var(--lavender)}.side.s{background:var(--sage)}
-.side .n{font-size:clamp(48px,5.5vw,64px);font-weight:800;letter-spacing:-.05em;line-height:1;margin:6px 0 6px}
-.side h3{margin:0 0 6px;font-size:20px;font-weight:800;letter-spacing:-.02em}
-.side p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.75);line-height:1.35}
-.problem-foot{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
-.problem-foot span{padding:10px 14px;border-radius:999px;background:#fff;border:1px solid rgba(15,23,42,.06);font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(15,23,42,.04)}
+.stat-card{border-radius:24px;padding:22px 22px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden;min-height:280px;display:flex;flex-direction:column}
+.stat-card .tag{display:inline-block;align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:rgba(11,18,32,.08);margin-bottom:10px}
+.stat-card .n{font-size:clamp(56px,6.5vw,84px);font-weight:800;letter-spacing:-.07em;line-height:.92;margin:4px 0 8px}
+.stat-card h3{margin:0 0 10px;font-size:clamp(18px,1.9vw,22px);font-weight:800;letter-spacing:-.025em;line-height:1.15}
+.stat-card p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.78);line-height:1.4;margin-top:auto}
+.stat-card.primary{background:var(--yellow)}
+.stat-card.primary:after{content:"";position:absolute;right:-24px;bottom:-30px;width:120px;height:120px;border-radius:28px;background:rgba(255,255,255,.35);transform:rotate(18deg)}
+.stat-card.primary .n,.stat-card.primary h3,.stat-card.primary p,.stat-card.primary .tag{position:relative;z-index:1}
+.stat-card.lav{background:var(--lavender)}
+.stat-card.sage{background:var(--sage)}
+.receipt-strip{margin-top:16px;display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+@media (max-width:900px){.receipt-strip{grid-template-columns:1fr}}
+.receipt{border-radius:16px;padding:14px 16px;background:rgba(255,255,255,.85);border:1px solid rgba(11,18,32,.06);box-shadow:0 8px 20px rgba(15,23,42,.04)}
+.receipt .k{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.receipt .v{font-size:15px;font-weight:700;letter-spacing:-.015em;line-height:1.35}
+.receipt .v em{font-style:normal;color:var(--blue);font-weight:800}
+.problem-foot{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.problem-foot span{display:inline-flex;align-items:center;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid rgba(11,18,32,.08);font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(15,23,42,.05)}
+
+
+/* Slide 3 — Clay-style how-it-works cards */
+.step-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:8px}
+@media (max-width:980px){.step-grid{grid-template-columns:1fr 1fr}}
+.step-card{background:#fff;border-radius:22px;padding:22px 18px 20px;box-shadow:var(--shadow);min-height:240px;display:flex;flex-direction:column;border:1px solid rgba(11,18,32,.05)}
+.step-card .num{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.step-card .swatch{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:18px;margin-bottom:16px;box-shadow:0 8px 16px rgba(15,23,42,.08)}
+.step-card h4{margin:0 0 8px;font-size:clamp(17px,1.8vw,20px);font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.step-card p{margin:0;font-size:14px;font-weight:550;color:rgba(11,18,32,.72);line-height:1.4;margin-top:auto}
+.loop-banner{margin-top:18px;text-align:center;font-weight:800;font-size:clamp(15px,1.6vw,18px);letter-spacing:-.02em;padding:14px 18px;border-radius:999px;background:rgba(79,70,229,.12);color:var(--ink);border:1px solid rgba(79,70,229,.18)}
+
+/* Slide 4 — demo split polish */
+.demo-split{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center}
+@media (max-width:980px){.demo-split{grid-template-columns:1fr}}
+.demo-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.demo-flow .f{border-radius:16px;padding:14px 12px;font-weight:800;font-size:14px;letter-spacing:-.02em;line-height:1.15;box-shadow:var(--shadow)}
+.demo-flow .f span{display:block;margin-top:6px;font-size:12px;font-weight:600;opacity:.75}
+.demo-callout{border-radius:18px;padding:18px 18px;background:#fff;border:1px solid rgba(11,18,32,.06);box-shadow:var(--shadow);font-size:clamp(15px,1.55vw,17px);font-weight:600;line-height:1.45;letter-spacing:-.015em}
+.demo-callout strong{font-weight:800}
+
+/* Slide 5 — beachhead */
+.beach-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:28px;align-items:center}
+@media (max-width:980px){.beach-grid{grid-template-columns:1fr}}
+.beach-card{display:flex;gap:14px;padding:16px 16px;border-radius:18px;background:#fff;border:1px solid rgba(11,18,32,.06);box-shadow:var(--shadow);margin-bottom:12px}
+.beach-card:last-child{margin-bottom:0}
+.beach-card i{width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.beach-card h4{margin:0 0 4px;font-size:16px;font-weight:800;letter-spacing:-.02em}
+.beach-card p{margin:0;font-size:14px;font-weight:550;color:rgba(11,18,32,.75);line-height:1.4}
+
+/* Slide 6 — close breathing room */
+.close-brand{margin:0 0 28px}
+.close-brand img{height:88px;width:auto}
+.close .pills{margin:0 0 36px;display:flex;flex-wrap:wrap;gap:10px}
+.close h1{margin:0 0 18px;max-width:16em}
+.close .sig{margin-top:8px}
+
+/* Slide 7 — optional future cards */
+.future-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:6px}
+@media (max-width:980px){.future-grid{grid-template-columns:1fr 1fr}}
+.future-card{border-radius:20px;padding:20px 16px;min-height:220px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.future-card .num{width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;margin-bottom:14px;box-shadow:0 6px 12px rgba(15,23,42,.1)}
+.future-card h4{margin:0 0 8px;font-size:17px;font-weight:800;letter-spacing:-.02em}
+.future-card p{margin:0;font-size:14px;font-weight:550;line-height:1.4;color:rgba(11,18,32,.78);margin-top:auto}
+.skip-note{margin-top:16px;text-align:center;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+
+
+/* === DISTINCT SLIDE SYSTEMS (designer reset) === */
+.slide-plain .body{background:var(--cream)}
+.hiw{padding:4px 0 0}
+.hiw-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:10px}
+.hiw-head h2{margin:0;font-size:clamp(30px,3.6vw,44px);font-weight:800;letter-spacing:-.045em;line-height:1.05;max-width:14em}
+.hiw-head .mark{height:48px;width:auto;background:#fff;padding:6px;border-radius:12px;object-fit:contain}
+.cycle-stage{position:relative;width:min(1080px,100%);height:600px;margin:0 auto}
+.cycle{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:440px;aspect-ratio:1}
+.cycle-svg{position:absolute;inset:12%;width:76%;height:76%}
+.cycle-svg circle{fill:none;stroke:var(--blue);stroke-width:5}
+.cycle-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120px;height:120px;border-radius:50%;background:var(--ink);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:var(--shadow);z-index:2}
+.cycle-core b{font-size:12px;letter-spacing:.14em;font-weight:800}
+.cycle-core span{font-size:20px;font-weight:800;letter-spacing:-.03em}
+.cycle-node{position:absolute;width:150px;padding:14px 12px;border-radius:18px;background:#fff;border:2px solid var(--blue);box-shadow:var(--shadow);text-align:center;z-index:3}
+.cycle-node .n{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+.cycle-node h3{margin:0;font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+.cycle-node.quiz{top:0;left:50%;transform:translateX(-50%)}
+.cycle-node.gen{top:50%;right:0;transform:translateY(-50%)}
+.cycle-node.grade{bottom:0;left:50%;transform:translateX(-50%)}
+.cycle-node.adapt{top:50%;left:0;transform:translateY(-50%)}
+.cycle-note{position:absolute;width:210px;background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:16px;padding:14px 14px;box-shadow:var(--shadow);font-size:14px;font-weight:600;line-height:1.35;letter-spacing:-.015em;color:rgba(15,23,42,.8);z-index:5}
+.cycle-note .who{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.cycle-note .ptr{position:absolute;top:50%;height:3px;background:var(--blue);transform:translateY(-50%);display:block;width:88px}
+.cycle-note .ptr:after{content:"";position:absolute;top:50%;width:0;height:0;border-style:solid;transform:translateY(-50%)}
+/* Quiz note: above-left of quiz card, arrow right into quiz */
+.cycle-note[data-for="quiz"]{left:calc(50% - 430px);top:28px}
+.cycle-note[data-for="quiz"] .ptr{left:100%;margin-left:6px;width:100px}
+.cycle-note[data-for="quiz"] .ptr:after{right:-10px;border-width:7px 0 7px 12px;border-color:transparent transparent transparent var(--blue)}
+/* Generate: right of gen card */
+.cycle-note[data-for="gen"]{right:8px;top:50%;transform:translateY(-50%)}
+.cycle-note[data-for="gen"] .ptr{right:100%;margin-right:6px;width:96px}
+.cycle-note[data-for="gen"] .ptr:after{left:-10px;border-width:7px 12px 7px 0;border-color:transparent var(--blue) transparent transparent}
+/* Grade: below-right of grade card */
+.cycle-note[data-for="grade"]{right:calc(50% - 430px);bottom:28px}
+.cycle-note[data-for="grade"] .ptr{right:100%;margin-right:6px;width:100px}
+.cycle-note[data-for="grade"] .ptr:after{left:-10px;border-width:7px 12px 7px 0;border-color:transparent var(--blue) transparent transparent}
+/* Adapt: left of adapt card */
+.cycle-note[data-for="adapt"]{left:8px;top:50%;transform:translateY(-50%)}
+.cycle-note[data-for="adapt"] .ptr{left:100%;margin-left:6px;width:96px}
+.cycle-note[data-for="adapt"] .ptr:after{right:-10px;border-width:7px 0 7px 12px;border-color:transparent transparent transparent var(--blue)}
+@media (max-width:980px){.cycle-stage{height:auto;min-height:720px}.cycle-note .ptr{display:none}}
+
+.demo-hero{display:flex;flex-direction:column;align-items:center;gap:22px;padding-top:6px}
+.demo-hero .kicker{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.demo-hero h2{margin:0;text-align:center;font-size:clamp(34px,4.2vw,48px);font-weight:800;letter-spacing:-.04em;line-height:1.12;max-width:16em}
+.demo-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.demo-tabs span{padding:10px 14px;border-radius:999px;font-size:13px;font-weight:800;background:#fff;border:1px solid rgba(11,18,32,.08);box-shadow:0 4px 12px rgba(15,23,42,.05)}
+.demo-tabs span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.demo-stage{display:grid;grid-template-columns:1fr 280px 1fr;gap:20px;align-items:center;width:100%;max-width:1100px}
+.demo-stage .side-note{font-size:clamp(15px,1.6vw,18px);font-weight:650;line-height:1.45;letter-spacing:-.02em;padding:18px;border-radius:18px;background:rgba(255,255,255,.85);border:1px solid rgba(11,18,32,.06)}
+.demo-stage .side-note strong{font-weight:800}
+@media (max-width:980px){.demo-stage{grid-template-columns:1fr}.demo-stage .phone-wrap{justify-self:center}}
+
+.beach-full{display:flex;flex-direction:column;gap:14px;padding-top:4px}
+.beach-row{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start;padding:22px 24px;border-radius:20px;background:#fff;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.05)}
+.beach-row .label{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:8px}
+.beach-row .title{font-size:clamp(22px,2.4vw,28px);font-weight:800;letter-spacing:-.03em;margin:0 0 6px}
+.beach-row p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.75);line-height:1.4;max-width:44em}
+.beach-row.exists{background:#fff}
+.beach-row.focus{background:var(--yellow)}
+.beach-row.focus .label{color:rgba(11,18,32,.55)}
+.beach-row.start{background:var(--blue);color:#fff}
+.beach-row.start .label{color:rgba(255,255,255,.75)}
+.beach-row.start p{color:rgba(255,255,255,.9)}
+.beach-row.start .title{color:#fff}
+
+/* Slide 4 — wedge hero */
+.wedge-v2{min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:center;padding:28px var(--pad-x) 36px;gap:22px;background:
+  radial-gradient(1200px 500px at 85% -10%, rgba(79,70,229,.18), transparent 55%),
+  radial-gradient(900px 420px at 0% 110%, rgba(254,243,199,.7), transparent 50%),
+  var(--cream)}
+.wedge-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+.wedge-mark{height:64px;width:auto;background:#fff;padding:8px;border-radius:16px;object-fit:contain;flex-shrink:0}
+.wedge-v2 .kicker{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.wedge-v2 .headline{margin:0;font-size:clamp(42px,6vw,72px);font-weight:800;letter-spacing:-.05em;line-height:1.02;max-width:12em;color:var(--ink)}
+.wedge-v2 .headline em{font-style:normal;color:var(--blue)}
+.wedge-exists{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:4px;position:relative;z-index:2}
+.wedge-exists .lbl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.wedge-exists .pill{position:static;transform:none;width:auto;height:auto;display:inline-flex;align-items:center;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid rgba(15,23,42,.08);font-size:14px;font-weight:700;color:rgba(15,23,42,.55);text-decoration:line-through;text-decoration-color:rgba(15,23,42,.25);left:auto;top:auto}
+.wedge-hero{position:relative;z-index:1;display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center;padding:28px 30px;border-radius:28px;background:var(--yellow);box-shadow:0 24px 50px rgba(15,23,42,.12);border:1px solid rgba(15,23,42,.06)}
+.wedge-hero .tag{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(15,23,42,.55)}
+.wedge-hero h3{margin:0 0 10px;font-size:clamp(28px,3.4vw,40px);font-weight:800;letter-spacing:-.04em;line-height:1.08}
+.wedge-hero p{margin:0;font-size:clamp(16px,1.7vw,19px);font-weight:600;line-height:1.4;color:rgba(15,23,42,.78);max-width:34em}
+.wedge-hero .neg{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.wedge-hero .neg span{padding:8px 12px;border-radius:999px;background:rgba(15,23,42,.06);font-size:13px;font-weight:750;color:rgba(15,23,42,.7)}
+.wedge-who{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-radius:22px;background:var(--ink);color:#fff}
+.wedge-who .who-copy h4{margin:0 0 4px;font-size:clamp(20px,2.2vw,26px);font-weight:800;letter-spacing:-.03em}
+.wedge-who .who-copy p{margin:0;font-size:14px;font-weight:550;color:rgba(255,255,255,.75)}
+.wedge-who .people{display:flex;flex-wrap:wrap;gap:8px}
+.wedge-who .people span{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);font-size:14px;font-weight:750}
+@media (max-width:900px){.wedge-hero{grid-template-columns:1fr}}
+
+.close-v2{min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:center;padding:48px var(--pad-x) 56px;background:var(--ink);color:#fff;position:relative}
+.close-v2 .close-brand{display:inline-flex;align-items:center;padding:14px 18px;border-radius:18px;background:#fff;margin-bottom:36px;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.close-v2 .close-brand img{height:64px;width:auto;max-width:min(380px,70vw);object-fit:contain;display:block}
+.close-v2 .tiny{height:64px;width:auto;object-fit:contain;display:block;margin-bottom:36px}
+.close-v2 .trust{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
+.close-v2 .trust span{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.28);font-size:14px;font-weight:700;color:rgba(255,255,255,.9)}
+.close-v2 h1{margin:0 0 20px;font-size:clamp(40px,5.5vw,64px);font-weight:800;letter-spacing:-.045em;line-height:1.05;max-width:14em}
+.close-v2 .sig{font-size:clamp(22px,2.4vw,28px);font-weight:800;color:var(--yellow);margin-top:4px}
+.close-v2 .close-gap{margin:14px 0 0;max-width:30em;font-size:clamp(16px,1.7vw,19px);font-weight:600;line-height:1.4;color:rgba(255,255,255,.78)}
+.close-v2 .close-gap strong{color:var(--yellow);font-weight:800}
+
+.future-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 16px}
+.future-bar .fb{background:#fff;border-radius:18px;padding:16px 14px;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.06);text-align:center}
+.future-bar .fb .v{font-size:clamp(28px,3vw,36px);font-weight:800;letter-spacing:-.04em;color:var(--blue);line-height:1}
+.future-bar .fb .l{margin-top:6px;font-size:13px;font-weight:750;color:var(--ink)}
+.future-bar .fb .s{margin-top:2px;font-size:12px;font-weight:600;color:var(--muted)}
+.future-bar .fb.us .v{color:var(--ink)}
+.future-note{margin:12px 0 0;font-size:13px;font-weight:600;color:var(--muted);text-align:center}
+.future-v2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.future-v2 .cell{padding:26px 24px;border-radius:22px;min-height:180px;background:#fff;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.05)}
+.future-v2 .cell.dark{background:var(--ink);color:#fff}
+.future-v2 .cell .n{font-size:48px;font-weight:800;letter-spacing:-.06em;line-height:1;margin-bottom:12px;opacity:.35}
+.future-v2 .cell h3{margin:0 0 8px;font-size:22px;font-weight:800;letter-spacing:-.03em}
+.future-v2 .cell p{margin:0;font-size:15px;font-weight:550;line-height:1.4;opacity:.85}
+.opt-banner{margin-bottom:18px;display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(79,70,229,.12);color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+
 .footnote{margin-top:10px;font-size:13px;line-height:1.35;color:var(--muted);font-weight:600}
 
 .loop-stage{display:flex;flex-direction:column;align-items:center;gap:22px}
@@ -109,7 +296,6 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .pz{width:170px;text-align:center;padding-top:4px}
 .pz:nth-child(even){margin-top:36px}
 .pz-piece{width:112px;height:112px;margin:0 auto 14px;border-radius:22px;transform:rotate(45deg);box-shadow:0 12px 24px rgba(15,23,42,.1);position:relative}
-.chip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-45deg);width:44px;height:44px;border-radius:50%;background:#fff;border:2px solid var(--ink);display:grid;place-items:center;font-weight:800;font-size:19px}
 .pz h4{margin:0;font-size:17px;font-weight:800;line-height:1.2}
 .pz p{margin:6px 0 0;font-size:14px;color:var(--muted);font-weight:550}
 .connector{height:5px;width:24px;background:rgba(11,18,32,.14);margin-top:60px;border-radius:4px}
@@ -159,7 +345,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 </head>
 <body>
 <div class="nav">
-  <img class="nav-logo" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
+  <img class="nav-logo" src="unstuck-logo-mark.png" alt="UnStuck"/>
   <button type="button" id="prev">← Prev</button>
   <button type="button" id="next">Next →</button>
   <button type="button" class="ghost" id="toggleNotes">Show notes</button>
@@ -198,38 +384,42 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
   <div class="topbar">
     <div class="topbar-row">
       <div class="topbar-copy">
-        <h1>The gap is already here</h1><p>Six in ten fourth graders are behind — and they still get practice that isn’t written for their miss.</p>
+        <h1>The gap is already here</h1>
+        <p>Six in ten fourth graders are behind — and they still get practice that isn’t written for their miss.</p>
       </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+      <div class="brand-lockup"><img src="unstuck-logo-mark.png" alt="UnStuck"/></div>
     </div>
   </div>
   <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
     <div class="content">
       <div class="problem-grid">
-        <div class="shock">
-          <span class="eyebrow">The punch · Grade 4 math</span>
-          <div class="big">6 / 10</div>
-          <h3>Six in ten fourth graders are behind</h3>
-          <div class="pair"><b class="bad">Six in ten behind</b> <b>Four in ten proficient</b></div>
-          <div class="nat-box">
-            <div class="nat-k">Nationwide · NAEP 2024</div>
-            <div class="nat-v">~39% of 4th graders proficient · <em>six in ten behind across America</em></div>
-          </div>
-          <p class="az-line"><strong>Arizona:</strong> same pattern — about four in ten 4th graders proficient (six in ten behind); closer to three in ten by 6th grade.</p>
+        <div class="stat-card primary">
+          <span class="tag">Grade 4 · the punch</span>
+          <div class="n">6 / 10</div>
+          <h3>Six in ten kids are behind</h3>
+          <p>Four in ten proficient. Most practice still ignores the miss.</p>
         </div>
-        <div class="side-stack">
-          <div class="side l">
-            <span class="tag">Classroom</span>
-            <div class="n">28</div>
-            <h3>kids. One worksheet.</h3>
-            <p>The lost kid and the bored kid still get the <strong>same page</strong>. That’s how gaps compound.</p>
-          </div>
-          <div class="side s">
-            <span class="tag">Kitchen table tonight</span>
-            <div class="n">0</div>
-            <h3>plans for their gap</h3>
-            <p>Parent knows they’re stuck — not <strong>what practice</strong> to give in the next five minutes.</p>
-          </div>
+        <div class="stat-card lav">
+          <span class="tag">Classroom</span>
+          <div class="n">28</div>
+          <h3>kids. One worksheet.</h3>
+          <p>The lost kid and the bored kid get the <strong>same page</strong>. Gaps compound.</p>
+        </div>
+        <div class="stat-card sage">
+          <span class="tag">Kitchen table tonight</span>
+          <div class="n">0</div>
+          <h3>plans for their gap</h3>
+          <p>Parent knows they’re stuck — not <strong>what practice</strong> to give in five minutes.</p>
+        </div>
+      </div>
+      <div class="receipt-strip">
+        <div class="receipt">
+          <div class="k">Nationwide · NAEP 2024</div>
+          <div class="v">~39% of 4th graders proficient · <em>six in ten behind across America</em></div>
+        </div>
+        <div class="receipt">
+          <div class="k">Arizona</div>
+          <div class="v">Same pattern — about four in ten proficient in 4th; closer to three in ten by 6th.</div>
         </div>
       </div>
       <div class="problem-foot">
@@ -242,135 +432,129 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
   <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Six in ten fourth graders are behind — four in ten proficient. Nationwide NAEP ~39%. Arizona same story. One worksheet for 28. Kitchen table: zero plan for the exact gap.</p></aside>
 </section>
 
-<section class="slide" id="s3">
-  <div class="topbar">
-    <div class="topbar-row">
-      <div class="topbar-copy">
-        <h1>What we shipped this weekend</h1><p>One loop that adapts — not another worksheet generator.</p>
+<section class="slide slide-plain" id="s3">
+  <div class="wedge-v2">
+    <div class="wedge-top">
+      <div>
+        <div class="kicker">The empty spot · market fit</div>
+        <h1 class="headline">What doesn’t exist at <em>8pm</em></h1>
       </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+      <img class="wedge-mark" src="unstuck-logo-mark.png" alt="UnStuck"/>
+    </div>
+    <div class="wedge-exists" aria-label="What already exists">
+      <span class="lbl">Exists</span>
+      <span class="pill">Tutors</span>
+      <span class="pill">Khan Academy</span>
+      <span class="pill">Worksheets</span>
+    </div>
+    <div class="wedge-hero">
+      <div class="tag">Doesn’t exist</div>
+      <div>
+        <h3>A customized learning journey — right now</h3>
+        <p>From <strong>this miss</strong> (bigger-bottom) to a <strong>fresh set tonight</strong>.</p>
+        <div class="neg"><span>Not a tutor chat</span><span>Not a diagnosis</span><span>Not another generic worksheet</span></div>
+      </div>
+    </div>
+    <div class="wedge-who">
+      <div class="who-copy">
+        <h4>Parents, teachers, and students use this tonight</h4>
+        <p>Same-night kitchen-table loop. Live adapt demo proves it. Teachers stay in control.</p>
+      </div>
+      <div class="people"><span>Parents</span><span>Teachers</span><span>Students</span></div>
     </div>
   </div>
-  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content loop-stage">
-      <div class="puzzle-row">
-        <div class="pz"><div class="pz-piece" style="background:var(--sage)"><span class="chip">1</span></div><h4>Quiz finds the gap</h4><p>Exact miss, plain English</p></div>
-        <div class="connector"></div>
-        <div class="pz"><div class="pz-piece" style="background:var(--lavender)"><span class="chip">2</span></div><h4>Generate a small set</h4><p>Written for that error</p></div>
-        <div class="connector"></div>
-        <div class="pz"><div class="pz-piece" style="background:var(--yellow)"><span class="chip">3</span></div><h4>Grade instantly</h4><p>Know what landed</p></div>
-        <div class="connector"></div>
-        <div class="pz"><div class="pz-piece" style="background:#c9d6f8"><span class="chip">4</span></div><h4>Next set adapts</h4><p>Scaffold or stretch</p></div>
-      </div>
-      <div class="loop-banner">Diagnose → generate → grade → adapt</div>
-    </div>
-  </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">This weekend: quiz finds the gap; generate; grade; next set changes. Not a random printable. One breath — then demo.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Map to judges: Innovation = customized journey from this error tonight. Market fit = parent + teacher + student. Completeness = live adapt demo next. Say Khan Academy. Don’t claim personalization is new — claim the same-night journey from this miss.</p></aside>
 </section>
 
-<section class="slide" id="s4">
-  <div class="topbar">
-    <div class="topbar-row">
-      <div class="topbar-copy">
-        <h1>See it adapt live</h1><p>Same skill. Wrong answer. Next set changes on purpose.</p>
-      </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
-    </div>
-  </div>
-  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content split">
+<section class="slide slide-plain" id="s4">
+  <div class="body" style="min-height:calc(100vh - 48px)"><div class="content hiw">
+    <div class="hiw-head">
       <div>
-        <div class="flow">
-          <div class="f" style="background:var(--lavender)">Quiz<span>see the miss</span></div>
-          <div class="f" style="background:var(--yellow)">Gap<span>name it</span></div>
-          <div class="f" style="background:var(--sage)">Practice<span>write the set</span></div>
-          <div class="f" style="background:#c9d6f8">Adapt<span>change next</span></div>
-        </div>
-        <div class="callout">Live beat: they treat <strong>bigger bottom = bigger fraction</strong> (3/8 vs 3/5). We write practice for that. They miss → next set <strong>scaffolds the same idea</strong>.</div>
+        <div class="opt-banner" style="margin-bottom:10px">Shipped this weekend</div>
+        <h2>One adaptive loop — not another worksheet generator.</h2>
       </div>
-      <div class="phone-wrap">
+      <img class="mark" src="unstuck-logo-mark.png" alt="UnStuck"/>
+    </div>
+    <div class="cycle-stage">
+      <div class="cycle-note" data-for="quiz"><span class="who">→ Quiz</span>Exact miss, named in plain English — the gap a parent can say out loud.<span class="ptr" aria-hidden="true"></span></div>
+      <div class="cycle-note" data-for="gen"><span class="who">→ Generate</span>A fresh set built for that error — not a random printable.<span class="ptr" aria-hidden="true"></span></div>
+      <div class="cycle-note" data-for="grade"><span class="who">→ Grade</span>Instant signal before the next set — what landed, what didn’t.<span class="ptr" aria-hidden="true"></span></div>
+      <div class="cycle-note" data-for="adapt"><span class="who">→ Adapt</span>Scaffold or stretch, then back to Quiz — that’s the loop.<span class="ptr" aria-hidden="true"></span></div>
+      <div class="cycle" role="img" aria-label="Quiz to Generate to Grade to Adapt, then back to Quiz">
+        <svg class="cycle-svg" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="78"/></svg>
+        <div class="cycle-core"><b>THE</b><span>LOOP</span></div>
+        <div class="cycle-node quiz"><div class="n">01 · Quiz</div><h3>Find the gap</h3></div>
+        <div class="cycle-node gen"><div class="n">02 · Generate</div><h3>Write a small set</h3></div>
+        <div class="cycle-node grade"><div class="n">03 · Grade</div><h3>Know what landed</h3></div>
+        <div class="cycle-node adapt"><div class="n">04 · Adapt</div><h3>Change on purpose</h3></div>
+      </div>
+    </div>
+  </div></div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Each outside note points at its block. Close on Adapt → Quiz.</p></aside>
+</section>
+
+<section class="slide slide-plain" id="s5">
+  <div class="body" style="min-height:calc(100vh - 48px)"><div class="content demo-hero">
+    <div class="kicker">Live demo</div>
+    <h2>Same skill. Wrong answer.<br>Next set changes on purpose.</h2>
+    <div class="demo-tabs">
+      <span>Quiz</span><span>Gap</span><span>Practice</span><span class="on">Adapt</span>
+    </div>
+    <div class="demo-stage">
+      <div class="side-note">They treat <strong>bigger bottom = bigger fraction</strong> (3/8 vs 3/5).</div>
+      <div class="phone-wrap" style="margin:0 auto">
         <div class="phone"><div class="phone-screen">
           <div class="ph-top"><div class="ph-avatar"></div><div class="ph-dots"><i></i><i></i></div></div>
           <div class="ph-card lav"><h4>Gap detected</h4><p>Thought 3/8 &gt; 3/5 because 8 &gt; 5</p></div>
           <div class="ph-card white"><h4>Q1 · Same-top compare</h4><p>Which is larger, 3/8 or 3/5?</p><span class="ph-pill" style="background:#b91c1c">Missed → 3/8</span></div>
           <div class="ph-card green"><h4>Next worksheet</h4><p>Visual bars + same-numerator drills</p><div class="ph-progress"><span style="width:40%"></span></div><div class="ph-meta"><span>Scaffolded</span><span>Same skill</span></div></div>
-          <div class="ph-nav"><i></i><i class="on"></i><i></i><i></i></div>
         </div></div>
       </div>
+      <div class="side-note">Miss again → we <strong>scaffold the same idea</strong>. That’s the adapt beat.</div>
     </div>
-  </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Watch this. Bigger-bottom myth. Practice for that. Miss → grade → next set scaffolds. That’s the loop.</p></aside>
-</section>
-
-<section class="slide" id="s5">
-  <div class="topbar">
-    <div class="topbar-row">
-      <div class="topbar-copy">
-        <h1>Why start here</h1><p>Broad tutors exist. Parents still need the right five minutes tonight.</p>
-      </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
-    </div>
-  </div>
-  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content split">
-      <div class="rings-wrap" aria-hidden="true">
-        <div class="ring r3"></div>
-        <div class="ring r2"></div>
-        <div class="ring r1">Start<br/>tonight</div>
-      </div>
-      <div class="legend">
-        <div class="legend-item"><i style="background:var(--lavender)"></i><div><h4>Total landscape</h4><p>Khan and others already personalize at huge scale — we don’t claim they stand still.</p></div></div>
-        <div class="legend-item"><i style="background:var(--yellow)"></i><div><h4>Our focus</h4><p>A parent who needs a <strong>fresh 5-minute set</strong> from <strong>this error pattern</strong> tonight.</p></div></div>
-        <div class="legend-item"><i style="background:var(--blue)"></i><div><h4>Where we start</h4><p>Ship the student loop now → teacher view + small pilot next.</p></div></div>
-      </div>
-    </div>
-  </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Khan is broad. Our wedge is same-night from this error. Student loop now; teacher view + pilot next.</p></aside>
+  </div></div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Phone is the star. Bigger-bottom myth. Let judges see the next set change.</p></aside>
 </section>
 
 <section class="slide" id="s6">
-  <div class="close">
-    <div class="deco"></div><div class="deco2"></div><div class="deco3"></div>
-    <div class="close-inner">
-      <div class="close-brand"><img src="unstuck-logo-mark.png" alt="UnStuck"/></div>
-      <div class="pills">
-        <span>Personalize practice</span>
-        <span>Don’t diagnose disabilities</span>
-        <span>Teachers stay in control</span>
-      </div>
-      <h1>The right practice shows up in minutes — and kids actually move forward.</h1>
-      <div class="sig">That’s UnStuck.</div>
+  <div class="close-v2">
+    <div class="close-brand"><img src="unstuck-logo-wordmark.png" alt="UnStuck"/></div>
+    <div class="trust">
+      <span>Personalize practice</span>
+      <span>Don’t diagnose disabilities</span>
+      <span>Teachers stay in control</span>
     </div>
+    <h1>The right practice shows up in minutes — and kids actually move forward.</h1>
+    <p class="close-gap">That’s how we chip away at the <strong>six in ten</strong> behind — the same NAEP gap we opened with.</p>
+    <div class="sig">That’s UnStuck.</div>
   </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Personalize practice. Don’t diagnose. Teachers in control. That’s UnStuck. Skip slide 7 if short.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Safety close, then tie back to 6-in-10 / NAEP. End here if short on time. Skip future.</p></aside>
 </section>
 
-<section class="slide" id="s7">
-  <div class="topbar">
-    <div class="topbar-row">
-      <div class="topbar-copy">
-        <h1>If we have a minute more</h1><p>Same adaptive engine — more subjects, more people helped. Skip if you’re short on time.</p>
+<section class="slide slide-plain" id="s7">
+  <div class="body" style="min-height:calc(100vh - 48px)"><div class="content">
+    <div class="hiw-head" style="margin-bottom:14px">
+      <div>
+        <div class="opt-banner">Optional · skip if near time</div>
+        <h2 style="margin-top:10px">If we have a minute more</h2>
+        <p style="margin:10px 0 0;font-size:18px;font-weight:550;color:rgba(11,18,32,.7);max-width:40em">Shrink the <strong style="color:var(--blue)">six-in-ten / NAEP</strong> gap at home — then aim at the bar Japan and Singapore already set.</p>
       </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+      <img class="mark" src="unstuck-logo-mark.png" alt="UnStuck"/>
     </div>
-  </div>
-  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content">
-      <div class="fund-bar">
-        <div class="seg" style="flex:1.1;background:var(--blue);color:#fff"><span class="icon" style="color:var(--blue)">1</span>Math spine</div>
-        <div class="seg" style="flex:1.15;background:var(--lavender)"><span class="icon" style="color:#7c6bb5">2</span>More subjects</div>
-        <div class="seg" style="flex:1;background:var(--yellow)"><span class="icon" style="color:#a3a12a">3</span>Teachers</div>
-        <div class="seg" style="flex:1.1;background:var(--sage)"><span class="icon" style="color:#6f9a5e">4</span>Homework snap</div>
-      </div>
-      <div class="fund-labels">
-        <div><h4>Deepen math first</h4><p>Fractions → ratios, then more of 4–6 math</p></div>
-        <div><h4>Then other subjects</h4><p>Same loop for English, science, and beyond — diagnose → practice → adapt</p></div>
-        <div><h4>Teacher clarity</h4><p>Plain English: why this kid is stuck</p></div>
-        <div><h4>Snap tonight’s homework</h4><p>Short practice from the page — aimed at what they miss</p></div>
-      </div>
+    <div class="future-bar" aria-label="TIMSS 2019 grade 4 math averages">
+      <div class="fb"><div class="v">625</div><div class="l">Singapore</div><div class="s">TIMSS 2019 · Grade 4 math</div></div>
+      <div class="fb"><div class="v">593</div><div class="l">Japan</div><div class="s">TIMSS 2019 · Grade 4 math</div></div>
+      <div class="fb us"><div class="v">535</div><div class="l">United States</div><div class="s">TIMSS 2019 · Grade 4 math</div></div>
     </div>
-  </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">If time: deepen math spine first, then expand the same engine to English and other subjects, teacher clarity, homework snap. Not built yet — roadmap only. Skip if ~4:30+.</p></aside>
+    <div class="future-v2">
+      <div class="cell dark"><div class="n">01</div><h3>Deepen math first</h3><p>Fractions → ratios, then more of grades 4–6.</p></div>
+      <div class="cell"><div class="n">02</div><h3>Then other subjects</h3><p>Same loop for English, science, and beyond.</p></div>
+      <div class="cell"><div class="n">03</div><h3>Teacher clarity</h3><p>Plain English: why this kid is stuck.</p></div>
+      <div class="cell"><div class="n">04</div><h3>Homework snap</h3><p>Short practice from tonight’s page — aimed at the miss.</p></div>
+    </div>
+    <p class="future-note">Receipt: TIMSS 2019 Grade 4 mathematics averages. Optional slide — skip if near time.</p>
+  </div></div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Only if time leftover. NAEP gap first, then Japan/Singapore as the bar (TIMSS 625 / 593 vs US 535). Don’t lead with roadmap.</p></aside>
 </section>
 
 <script>
