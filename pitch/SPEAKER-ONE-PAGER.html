@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>UnStuck — Speaker one-pager</title>
+<style>
+  @page { size: letter; margin: 0.45in; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    color: #0F172A;
+    background: #fff;
+    font-size: 11.5px;
+    line-height: 1.35;
+  }
+  .page {
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 18px 22px 16px;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    border-bottom: 3px solid #4F46E5;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: -0.03em;
+  }
+  header .meta {
+    text-align: right;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748B;
+  }
+  header .meta b { color: #4F46E5; display: block; font-size: 13px; }
+  .timing {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .timing div {
+    background: #EEF2FF;
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 10.5px;
+    font-weight: 700;
+  }
+  .timing span { display: block; color: #4F46E5; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+  }
+  .card {
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 8px 10px 9px;
+    break-inside: avoid;
+  }
+  .card.wide { grid-column: 1 / -1; }
+  .card .num {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #4F46E5;
+    margin-bottom: 2px;
+  }
+  .card h2 {
+    margin: 0 0 4px;
+    font-size: 13.5px;
+    letter-spacing: -0.02em;
+  }
+  .say {
+    margin: 0 0 4px;
+    font-weight: 650;
+  }
+  .say::before {
+    content: "SAY: ";
+    color: #4F46E5;
+    font-weight: 800;
+    font-size: 10px;
+    letter-spacing: .04em;
+  }
+  .note {
+    margin: 0;
+    color: #475569;
+    font-size: 11px;
+  }
+  .note::before {
+    content: "NOTE: ";
+    font-weight: 800;
+    color: #64748B;
+    font-size: 10px;
+    letter-spacing: .04em;
+  }
+  .locks {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 8px;
+  }
+  .locks .box {
+    background: #F8FAFC;
+    border-radius: 10px;
+    padding: 8px 10px;
+  }
+  .locks h3 {
+    margin: 0 0 4px;
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #4F46E5;
+  }
+  .locks ul { margin: 0; padding-left: 16px; }
+  .locks li { margin: 1px 0; }
+  footer {
+    margin-top: 8px;
+    font-size: 10.5px;
+    color: #64748B;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  @media print {
+    .page { padding: 0; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div>
+      <h1>UnStuck — speaker one-pager</h1>
+      <div style="color:#64748B;font-weight:650">Eric · 5-minute hackathon pitch · Grades 4–6 math</div>
+    </div>
+    <div class="meta">
+      <b>~5:00 total</b>
+      Skip slide 7 if short · End on safety
+    </div>
+  </header>
+
+  <div class="timing">
+    <div><span>~0:40</span>1 Vision</div>
+    <div><span>~0:45</span>2 Problem</div>
+    <div><span>~0:50</span>3 Loop</div>
+    <div><span>~1:45</span>4 Live demo ★</div>
+    <div><span>~1:00</span>5–6 Wedge + close</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">Slide 1 · Vision</div>
+      <h2>Kitchen table tonight</h2>
+      <p class="say">I’m Eric. UnStuck — no kid stays stuck at the kitchen table tonight. Right practice in minutes. Diagnose, generate, grade, adapt. Grades 4–6.</p>
+      <p class="note">Open with the vision line, not the product name dump. Hand to live demo later.</p>
+    </div>
+
+    <div class="card">
+      <div class="num">Slide 2 · Problem</div>
+      <h2>Six in ten behind</h2>
+      <p class="say">Six in ten fourth graders are behind — four in ten proficient. Nationwide NAEP ~39%. Arizona same story. One worksheet for 28. Kitchen table: zero plan for the exact gap.</p>
+      <p class="note">Punch = 6/10. Receipts under it. Don’t drown in stats.</p>
+    </div>
+
+    <div class="card">
+      <div class="num">Slide 3 · Shipped loop</div>
+      <h2>Quiz → Generate → Grade → Adapt</h2>
+      <p class="say">One adaptive loop — not another worksheet generator. Outside-in: Quiz finds the miss. Generate writes the set. Grade shows what landed. Adapt changes on purpose — then back to Quiz.</p>
+      <p class="note">Point at each outside callout into its block. Close on Adapt → Quiz.</p>
+    </div>
+
+    <div class="card">
+      <div class="num">Slide 4 · Live demo ★</div>
+      <h2>Bigger-bottom · next set changes</h2>
+      <p class="say">Same skill. Wrong answer. Next set changes on purpose. Watch Compare Fractions: they treat bigger bottom as bigger fraction — 3/8 vs 3/5. We catch it, then the next set scaffolds.</p>
+      <p class="note">Phone is the star. Let judges see Adapt fire. This is Completeness.</p>
+    </div>
+
+    <div class="card">
+      <div class="num">Slide 5 · Wedge</div>
+      <h2>What doesn’t exist at 8pm</h2>
+      <p class="say">Tutors and Khan Academy exist. What’s missing is a customized learning journey right now — from this miss to a fresh set tonight. Parents, teachers, and students use this tonight.</p>
+      <p class="note">Say Khan Academy. Don’t claim personalization is new — claim same-night journey from this error.</p>
+    </div>
+
+    <div class="card">
+      <div class="num">Slide 6 · Close</div>
+      <h2>That’s UnStuck</h2>
+      <p class="say">We personalize practice. We don’t diagnose disabilities. Teachers stay in control. The right practice shows up in minutes — and kids actually move forward. That’s UnStuck.</p>
+      <p class="note">Safety close. End here if short on time. Skip Future.</p>
+    </div>
+
+    <div class="card wide">
+      <div class="num">Slide 7 · Optional only</div>
+      <h2>If time leftover</h2>
+      <p class="say">Same adaptive engine — deepen math first, then other subjects, teacher clarity, homework snap.</p>
+      <p class="note">Future last. Never lead with roadmap. If near time, skip and stay on slide 6.</p>
+    </div>
+  </div>
+
+  <div class="locks">
+    <div class="box">
+      <h3>Demo gold</h3>
+      <ul>
+        <li>Skill: Compare Fractions</li>
+        <li>Error: bigger-bottom (3/8 vs 3/5)</li>
+        <li>Show: miss → scaffolded next set</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Safety locks</h3>
+      <ul>
+        <li>Personalize practice</li>
+        <li>Don’t diagnose disabilities</li>
+        <li>Teachers stay in control</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Judges map</h3>
+      <ul>
+        <li>Completeness = live adapt demo</li>
+        <li>Innovation = miss → set tonight</li>
+        <li>Market fit = parent at 8pm</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <div>Deck: Teacher-Hub/pitch/index.html · PR #34</div>
+    <div>If cut for time: 1 → 2 → 4 demo → 5 → 6. Drop 3 detail and 7.</div>
+  </footer>
+</div>
+</body>
+</html>
