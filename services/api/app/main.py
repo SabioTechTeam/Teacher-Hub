@@ -36,12 +36,14 @@ import themes as themes_mod  # noqa: E402
 from .store import STORE
 from . import diagnostic
 from . import seed
+from . import db
 
-# Populate mock fixtures on startup
+# Initialize SQLite database and populate mock fixtures on startup
 try:
+    db.init_db()
     seed.load()
 except Exception as exc:
-    print(f"[seed] note: fixture load skipped or failed: {exc}")
+    print(f"[init] note: database / seed load error: {exc}")
 
 app = FastAPI(title="UnStuck API", version="0.2.0")
 app.add_middleware(
@@ -102,10 +104,18 @@ def _strip_keys(ws: dict[str, Any]) -> dict[str, Any]:
 
 @app.get("/health")
 def health():
+    db_ok = False
+    try:
+        row = db.query_one("SELECT count(*) as c FROM unstuck.skills")
+        db_ok = bool(row and row.get("c", 0) > 0)
+    except Exception:
+        db_ok = False
+
     return {
         "ok": True,
         "llm": bool(os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")),
         "students_loaded": len(seed.students),
+        "db": db_ok,
     }
 
 
