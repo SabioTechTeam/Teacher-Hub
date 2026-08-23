@@ -113,7 +113,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .stat-card.primary{background:var(--yellow)}
 .stat-card.primary:after{content:"";position:absolute;right:-24px;bottom:-30px;width:120px;height:120px;border-radius:28px;background:rgba(255,255,255,.35);transform:rotate(18deg)}
 .stat-card.primary .n,.stat-card.primary h3,.stat-card.primary p,.stat-card.primary .tag{position:relative;z-index:1}
-.stat-card.lav{background:var(--lav)}
+.stat-card.lav{background:var(--lavender)}
 .stat-card.sage{background:var(--sage)}
 .receipt-strip{margin-top:16px;display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
 @media (max-width:900px){.receipt-strip{grid-template-columns:1fr}}
@@ -123,6 +123,51 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .receipt .v em{font-style:normal;color:var(--blue);font-weight:800}
 .problem-foot{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .problem-foot span{display:inline-flex;align-items:center;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid rgba(11,18,32,.08);font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(15,23,42,.05)}
+
+
+/* Slide 3 — Clay-style how-it-works cards */
+.step-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:8px}
+@media (max-width:980px){.step-grid{grid-template-columns:1fr 1fr}}
+.step-card{background:#fff;border-radius:22px;padding:22px 18px 20px;box-shadow:var(--shadow);min-height:240px;display:flex;flex-direction:column;border:1px solid rgba(11,18,32,.05)}
+.step-card .num{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.step-card .swatch{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:18px;margin-bottom:16px;box-shadow:0 8px 16px rgba(15,23,42,.08)}
+.step-card h4{margin:0 0 8px;font-size:clamp(17px,1.8vw,20px);font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.step-card p{margin:0;font-size:14px;font-weight:550;color:rgba(11,18,32,.72);line-height:1.4;margin-top:auto}
+.loop-banner{margin-top:18px;text-align:center;font-weight:800;font-size:clamp(15px,1.6vw,18px);letter-spacing:-.02em;padding:14px 18px;border-radius:999px;background:rgba(98,132,228,.12);color:var(--ink);border:1px solid rgba(98,132,228,.18)}
+
+/* Slide 4 — demo split polish */
+.demo-split{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center}
+@media (max-width:980px){.demo-split{grid-template-columns:1fr}}
+.demo-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.demo-flow .f{border-radius:16px;padding:14px 12px;font-weight:800;font-size:14px;letter-spacing:-.02em;line-height:1.15;box-shadow:var(--shadow)}
+.demo-flow .f span{display:block;margin-top:6px;font-size:12px;font-weight:600;opacity:.75}
+.demo-callout{border-radius:18px;padding:18px 18px;background:#fff;border:1px solid rgba(11,18,32,.06);box-shadow:var(--shadow);font-size:clamp(15px,1.55vw,17px);font-weight:600;line-height:1.45;letter-spacing:-.015em}
+.demo-callout strong{font-weight:800}
+
+/* Slide 5 — beachhead */
+.beach-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:28px;align-items:center}
+@media (max-width:980px){.beach-grid{grid-template-columns:1fr}}
+.beach-card{display:flex;gap:14px;padding:16px 16px;border-radius:18px;background:#fff;border:1px solid rgba(11,18,32,.06);box-shadow:var(--shadow);margin-bottom:12px}
+.beach-card:last-child{margin-bottom:0}
+.beach-card i{width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.beach-card h4{margin:0 0 4px;font-size:16px;font-weight:800;letter-spacing:-.02em}
+.beach-card p{margin:0;font-size:14px;font-weight:550;color:rgba(11,18,32,.75);line-height:1.4}
+
+/* Slide 6 — close breathing room */
+.close-brand{margin:0 0 28px}
+.close-brand img{height:88px;width:auto}
+.close .pills{margin:0 0 36px;display:flex;flex-wrap:wrap;gap:10px}
+.close h1{margin:0 0 18px;max-width:16em}
+.close .sig{margin-top:8px}
+
+/* Slide 7 — optional future cards */
+.future-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:6px}
+@media (max-width:980px){.future-grid{grid-template-columns:1fr 1fr}}
+.future-card{border-radius:20px;padding:20px 16px;min-height:220px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.future-card .num{width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;margin-bottom:14px;box-shadow:0 6px 12px rgba(15,23,42,.1)}
+.future-card h4{margin:0 0 8px;font-size:17px;font-weight:800;letter-spacing:-.02em}
+.future-card p{margin:0;font-size:14px;font-weight:550;line-height:1.4;color:rgba(11,18,32,.78);margin-top:auto}
+.skip-note{margin-top:16px;text-align:center;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.02em}
 
 .footnote{margin-top:10px;font-size:13px;line-height:1.35;color:var(--muted);font-weight:600}
 
@@ -272,47 +317,66 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
   <div class="topbar">
     <div class="topbar-row">
       <div class="topbar-copy">
-        <h1>What we shipped this weekend</h1><p>One loop that adapts — not another worksheet generator.</p>
+        <h1>What we shipped this weekend</h1>
+        <p>One loop that adapts — not another worksheet generator.</p>
       </div>
       <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
     </div>
   </div>
   <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content loop-stage">
-      <div class="puzzle-row">
-        <div class="pz"><div class="pz-piece" style="background:var(--sage)"><span class="chip">1</span></div><h4>Quiz finds the gap</h4><p>Exact miss, plain English</p></div>
-        <div class="connector"></div>
-        <div class="pz"><div class="pz-piece" style="background:var(--lavender)"><span class="chip">2</span></div><h4>Generate a small set</h4><p>Written for that error</p></div>
-        <div class="connector"></div>
-        <div class="pz"><div class="pz-piece" style="background:var(--yellow)"><span class="chip">3</span></div><h4>Grade instantly</h4><p>Know what landed</p></div>
-        <div class="connector"></div>
-        <div class="pz"><div class="pz-piece" style="background:#c9d6f8"><span class="chip">4</span></div><h4>Next set adapts</h4><p>Scaffold or stretch</p></div>
+    <div class="content">
+      <div class="step-grid">
+        <div class="step-card">
+          <div class="num">Step 01</div>
+          <div class="swatch" style="background:var(--sage)">1</div>
+          <h4>Quiz finds the gap</h4>
+          <p>Exact miss, named in plain English.</p>
+        </div>
+        <div class="step-card">
+          <div class="num">Step 02</div>
+          <div class="swatch" style="background:var(--lavender)">2</div>
+          <h4>Generate a small set</h4>
+          <p>Written for that error — not a random printable.</p>
+        </div>
+        <div class="step-card">
+          <div class="num">Step 03</div>
+          <div class="swatch" style="background:var(--yellow)">3</div>
+          <h4>Grade instantly</h4>
+          <p>Know what landed before the next set.</p>
+        </div>
+        <div class="step-card">
+          <div class="num">Step 04</div>
+          <div class="swatch" style="background:#c9d6f8">4</div>
+          <h4>Next set adapts</h4>
+          <p>Scaffold or stretch on purpose.</p>
+        </div>
       </div>
       <div class="loop-banner">Diagnose → generate → grade → adapt</div>
     </div>
   </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">This weekend: quiz finds the gap; generate; grade; next set changes. Not a random printable. One breath — then demo.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Four beats. Quiz names the miss. We write a tiny set for that miss. Grade. Next set changes on purpose. That’s the product.</p></aside>
 </section>
 
 <section class="slide" id="s4">
   <div class="topbar">
     <div class="topbar-row">
       <div class="topbar-copy">
-        <h1>See it adapt live</h1><p>Same skill. Wrong answer. Next set changes on purpose.</p>
+        <h1>See it adapt live</h1>
+        <p>Same skill. Wrong answer. Next set changes on purpose.</p>
       </div>
       <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
     </div>
   </div>
   <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content split">
+    <div class="content demo-split">
       <div>
-        <div class="flow">
+        <div class="demo-flow">
           <div class="f" style="background:var(--lavender)">Quiz<span>see the miss</span></div>
           <div class="f" style="background:var(--yellow)">Gap<span>name it</span></div>
           <div class="f" style="background:var(--sage)">Practice<span>write the set</span></div>
           <div class="f" style="background:#c9d6f8">Adapt<span>change next</span></div>
         </div>
-        <div class="callout">Live beat: they treat <strong>bigger bottom = bigger fraction</strong> (3/8 vs 3/5). We write practice for that. They miss → next set <strong>scaffolds the same idea</strong>.</div>
+        <div class="demo-callout">Live beat: they treat <strong>bigger bottom = bigger fraction</strong> (3/8 vs 3/5). We write practice for that. They miss again → next set <strong>scaffolds the same idea</strong>.</div>
       </div>
       <div class="phone-wrap">
         <div class="phone"><div class="phone-screen">
@@ -320,45 +384,45 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
           <div class="ph-card lav"><h4>Gap detected</h4><p>Thought 3/8 &gt; 3/5 because 8 &gt; 5</p></div>
           <div class="ph-card white"><h4>Q1 · Same-top compare</h4><p>Which is larger, 3/8 or 3/5?</p><span class="ph-pill" style="background:#b91c1c">Missed → 3/8</span></div>
           <div class="ph-card green"><h4>Next worksheet</h4><p>Visual bars + same-numerator drills</p><div class="ph-progress"><span style="width:40%"></span></div><div class="ph-meta"><span>Scaffolded</span><span>Same skill</span></div></div>
-          <div class="ph-nav"><i></i><i class="on"></i><i></i><i></i></div>
         </div></div>
       </div>
     </div>
   </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Watch this. Bigger-bottom myth. Practice for that. Miss → grade → next set scaffolds. That’s the loop.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Demo gold: Compare Fractions, bigger-bottom myth. Show miss → scaffolded next set. Let the phone do the talking.</p></aside>
 </section>
 
 <section class="slide" id="s5">
   <div class="topbar">
     <div class="topbar-row">
       <div class="topbar-copy">
-        <h1>Why start here</h1><p>Broad tutors exist. Parents still need the right five minutes tonight.</p>
+        <h1>Why start here</h1>
+        <p>Broad tutors exist. Parents still need the right five minutes tonight.</p>
       </div>
       <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
     </div>
   </div>
   <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content split">
+    <div class="content beach-grid">
       <div class="rings-wrap" aria-hidden="true">
         <div class="ring r3"></div>
         <div class="ring r2"></div>
         <div class="ring r1">Start<br/>tonight</div>
       </div>
-      <div class="legend">
-        <div class="legend-item"><i style="background:var(--lavender)"></i><div><h4>Total landscape</h4><p>Khan and others already personalize at huge scale — we don’t claim they stand still.</p></div></div>
-        <div class="legend-item"><i style="background:var(--yellow)"></i><div><h4>Our focus</h4><p>A parent who needs a <strong>fresh 5-minute set</strong> from <strong>this error pattern</strong> tonight.</p></div></div>
-        <div class="legend-item"><i style="background:var(--blue)"></i><div><h4>Where we start</h4><p>Ship the student loop now → teacher view + small pilot next.</p></div></div>
+      <div>
+        <div class="beach-card"><i style="background:var(--lavender)"></i><div><h4>Total landscape</h4><p>Khan and others already personalize at huge scale — we don’t claim they stand still.</p></div></div>
+        <div class="beach-card"><i style="background:var(--yellow)"></i><div><h4>Our focus</h4><p>A parent who needs a <strong>fresh 5-minute set</strong> from <strong>this error pattern</strong> tonight.</p></div></div>
+        <div class="beach-card"><i style="background:var(--blue)"></i><div><h4>Where we start</h4><p>Ship the student loop now → teacher view + small pilot next.</p></div></div>
       </div>
     </div>
   </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Khan is broad. Our wedge is same-night from this error. Student loop now; teacher view + pilot next.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Beachhead is the stuck kid / parent same-night. Teachers next. Schools later. Don’t claim we beat Khan’s whole stack.</p></aside>
 </section>
 
 <section class="slide" id="s6">
   <div class="close">
     <div class="deco"></div><div class="deco2"></div><div class="deco3"></div>
     <div class="close-inner">
-      <div class="close-brand"><img src="unstuck-logo-mark.png" alt="UnStuck"/></div>
+      <div class="close-brand"><img src="unstuck-logo-wordmark.png" alt="UnStuck"/></div>
       <div class="pills">
         <span>Personalize practice</span>
         <span>Don’t diagnose disabilities</span>
@@ -368,35 +432,47 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
       <div class="sig">That’s UnStuck.</div>
     </div>
   </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Personalize practice. Don’t diagnose. Teachers in control. That’s UnStuck. Skip slide 7 if short.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Safety close: personalize practice, don’t diagnose disabilities, teachers in control. End here if short on time.</p></aside>
 </section>
 
 <section class="slide" id="s7">
   <div class="topbar">
     <div class="topbar-row">
       <div class="topbar-copy">
-        <h1>If we have a minute more</h1><p>Same adaptive engine — more subjects, more people helped. Skip if you’re short on time.</p>
+        <h1>If we have a minute more</h1>
+        <p>Same adaptive engine — more subjects, more people helped. Skip this slide if you’re short on time.</p>
       </div>
       <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
     </div>
   </div>
   <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
     <div class="content">
-      <div class="fund-bar">
-        <div class="seg" style="flex:1.1;background:var(--blue);color:#fff"><span class="icon" style="color:var(--blue)">1</span>Math spine</div>
-        <div class="seg" style="flex:1.15;background:var(--lavender)"><span class="icon" style="color:#7c6bb5">2</span>More subjects</div>
-        <div class="seg" style="flex:1;background:var(--yellow)"><span class="icon" style="color:#a3a12a">3</span>Teachers</div>
-        <div class="seg" style="flex:1.1;background:var(--sage)"><span class="icon" style="color:#6f9a5e">4</span>Homework snap</div>
+      <div class="future-grid">
+        <div class="future-card" style="background:var(--blue);color:#fff">
+          <div class="num" style="color:var(--blue)">1</div>
+          <h4>Deepen math first</h4>
+          <p>Fractions → ratios, then more of grades 4–6 math.</p>
+        </div>
+        <div class="future-card" style="background:var(--lavender)">
+          <div class="num">2</div>
+          <h4>Then other subjects</h4>
+          <p>Same loop for English, science, and beyond.</p>
+        </div>
+        <div class="future-card" style="background:var(--yellow)">
+          <div class="num">3</div>
+          <h4>Teacher clarity</h4>
+          <p>Plain English: why this kid is stuck.</p>
+        </div>
+        <div class="future-card" style="background:var(--sage)">
+          <div class="num">4</div>
+          <h4>Homework snap</h4>
+          <p>Short practice from tonight’s page — aimed at the miss.</p>
+        </div>
       </div>
-      <div class="fund-labels">
-        <div><h4>Deepen math first</h4><p>Fractions → ratios, then more of 4–6 math</p></div>
-        <div><h4>Then other subjects</h4><p>Same loop for English, science, and beyond — diagnose → practice → adapt</p></div>
-        <div><h4>Teacher clarity</h4><p>Plain English: why this kid is stuck</p></div>
-        <div><h4>Snap tonight’s homework</h4><p>Short practice from the page — aimed at what they miss</p></div>
-      </div>
+      <div class="skip-note">Optional last slide · skip if near time</div>
     </div>
   </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">If time: deepen math spine first, then expand the same engine to English and other subjects, teacher clarity, homework snap. Not built yet — roadmap only. Skip if ~4:30+.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Only if time leftover. Future last. Lead with math spine, then subjects, teachers, homework snap.</p></aside>
 </section>
 
 <script>
