@@ -24,21 +24,21 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .slide{display:none;min-height:calc(100vh - 48px);background:var(--cream);position:relative;overflow:hidden}
 .slide.active{display:flex;flex-direction:column}
 
-.topbar{background:var(--blue);color:#fff;padding:22px var(--pad-x) 20px;position:relative;overflow:hidden}
+.topbar{background:var(--blue);color:#fff;padding:26px var(--pad-x) 24px;position:relative;overflow:hidden}
 .topbar:after{content:"";position:absolute;right:-36px;top:-46px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12)}
 .topbar-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;position:relative;z-index:1}
 .topbar-copy{flex:1;min-width:0}
 .brand-lockup{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .hero-brand{display:flex;align-items:center;gap:12px;margin:0 0 168px !important}
 .hero-brand img{height:104px;width:auto;max-width:min(640px,86vw);object-fit:contain;background:transparent;box-shadow:none;border-radius:0;display:block}
-.brand-lockup img{height:64px;width:auto;display:block;background:transparent;padding:0;box-shadow:none;border-radius:14px;object-fit:contain}
+.brand-lockup img{height:72px;width:auto;display:block;background:transparent;padding:0;box-shadow:none;border-radius:16px;object-fit:contain}
 
 
 .hero-brand span{font-weight:800;font-size:22px;letter-spacing:-.03em}
 .close-brand{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .close-brand img{height:72px;width:auto;background:transparent;padding:0;box-shadow:none;border-radius:14px;object-fit:contain}
 .topbar h1{margin:0;font-size:clamp(36px,4.8vw,54px);font-weight:800;letter-spacing:-.045em;line-height:1.02;position:relative}
-.topbar p{margin:8px 0 0;font-size:clamp(16px,1.7vw,20px);font-weight:550;opacity:.95;position:relative;max-width:40em;line-height:1.3}
+.topbar p{margin:12px 0 0;font-size:clamp(16px,1.7vw,20px);font-weight:550;opacity:.95;position:relative;max-width:38em;line-height:1.35}
 
 .body{flex:1;padding:22px var(--pad-x) 24px;position:relative;display:flex;flex-direction:column;justify-content:center}
 .blob-tr,.blob-bl{position:absolute;pointer-events:none;z-index:0;filter:blur(1px);opacity:.45}
@@ -79,29 +79,51 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .cta.soft{background:#fff;color:var(--ink);border:1px solid rgba(15,23,42,.08)}
 .foot{margin-top:16px;font-weight:700;font-size:14px;opacity:.78}
 
-.problem-grid{display:grid;grid-template-columns:1.45fr .95fr;gap:16px;align-items:stretch}
+
+@media (max-width:980px){}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.problem-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch;margin-top:4px}
 @media (max-width:980px){.problem-grid{grid-template-columns:1fr}}
-.shock{border-radius:26px;padding:24px 24px 22px;background:var(--yellow);box-shadow:var(--shadow);position:relative;overflow:hidden;min-height:320px;display:flex;flex-direction:column;justify-content:center}
-.shock:after{content:"";position:absolute;right:-28px;bottom:-36px;width:140px;height:140px;border-radius:34px;background:rgba(255,255,255,.35);transform:rotate(18deg)}
-.shock .eyebrow{position:relative;z-index:1;background:rgba(11,18,32,.08)}
-.shock .big{position:relative;z-index:1;margin:12px 0 4px;font-size:clamp(72px,9vw,104px);font-weight:800;letter-spacing:-.07em;line-height:.9}
-.shock h3{position:relative;z-index:1;margin:0 0 12px;font-size:clamp(24px,2.8vw,32px);font-weight:800;letter-spacing:-.03em;max-width:14em;line-height:1.12}
-.pair{position:relative;z-index:1;display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
-.pair b{display:inline-block;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.8);font-size:15px;font-weight:800}
-.pair b.bad{background:var(--ink);color:#fff}
-.nat-box{position:relative;z-index:1;margin:0 0 10px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.78);border:1px solid rgba(11,18,32,.06)}
-.nat-box .nat-k{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.nat-box .nat-v{font-size:clamp(17px,1.8vw,21px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
-.nat-box .nat-v em{font-style:normal;color:var(--blue)}
-.az-line{position:relative;z-index:1;margin:0;font-size:15px;font-weight:650;color:rgba(11,18,32,.8);line-height:1.4}
-.side-stack{display:flex;flex-direction:column;gap:14px}
-.side{flex:1;border-radius:22px;padding:20px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center;min-height:150px}
-.side.l{background:var(--lavender)}.side.s{background:var(--sage)}
-.side .n{font-size:clamp(48px,5.5vw,64px);font-weight:800;letter-spacing:-.05em;line-height:1;margin:6px 0 6px}
-.side h3{margin:0 0 6px;font-size:20px;font-weight:800;letter-spacing:-.02em}
-.side p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.75);line-height:1.35}
-.problem-foot{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
-.problem-foot span{padding:10px 14px;border-radius:999px;background:#fff;border:1px solid rgba(15,23,42,.06);font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(15,23,42,.04)}
+.stat-card{border-radius:24px;padding:22px 22px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden;min-height:280px;display:flex;flex-direction:column}
+.stat-card .tag{display:inline-block;align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:rgba(11,18,32,.08);margin-bottom:10px}
+.stat-card .n{font-size:clamp(56px,6.5vw,84px);font-weight:800;letter-spacing:-.07em;line-height:.92;margin:4px 0 8px}
+.stat-card h3{margin:0 0 10px;font-size:clamp(18px,1.9vw,22px);font-weight:800;letter-spacing:-.025em;line-height:1.15}
+.stat-card p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.78);line-height:1.4;margin-top:auto}
+.stat-card.primary{background:var(--yellow)}
+.stat-card.primary:after{content:"";position:absolute;right:-24px;bottom:-30px;width:120px;height:120px;border-radius:28px;background:rgba(255,255,255,.35);transform:rotate(18deg)}
+.stat-card.primary .n,.stat-card.primary h3,.stat-card.primary p,.stat-card.primary .tag{position:relative;z-index:1}
+.stat-card.lav{background:var(--lav)}
+.stat-card.sage{background:var(--sage)}
+.receipt-strip{margin-top:16px;display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+@media (max-width:900px){.receipt-strip{grid-template-columns:1fr}}
+.receipt{border-radius:16px;padding:14px 16px;background:rgba(255,255,255,.85);border:1px solid rgba(11,18,32,.06);box-shadow:0 8px 20px rgba(15,23,42,.04)}
+.receipt .k{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.receipt .v{font-size:15px;font-weight:700;letter-spacing:-.015em;line-height:1.35}
+.receipt .v em{font-style:normal;color:var(--blue);font-weight:800}
+.problem-foot{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.problem-foot span{display:inline-flex;align-items:center;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid rgba(11,18,32,.08);font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(15,23,42,.05)}
+
 .footnote{margin-top:10px;font-size:13px;line-height:1.35;color:var(--muted);font-weight:600}
 
 .loop-stage{display:flex;flex-direction:column;align-items:center;gap:22px}
@@ -198,7 +220,8 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
   <div class="topbar">
     <div class="topbar-row">
       <div class="topbar-copy">
-        <h1>The gap is already here</h1><p>Six in ten fourth graders are behind — and they still get practice that isn’t written for their miss.</p>
+        <h1>The gap is already here</h1>
+        <p>Six in ten fourth graders are behind — and they still get practice that isn’t written for their miss.</p>
       </div>
       <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
     </div>
@@ -206,30 +229,33 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
   <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
     <div class="content">
       <div class="problem-grid">
-        <div class="shock">
-          <span class="eyebrow">The punch · Grade 4 math</span>
-          <div class="big">6 / 10</div>
-          <h3>Six in ten fourth graders are behind</h3>
-          <div class="pair"><b class="bad">Six in ten behind</b> <b>Four in ten proficient</b></div>
-          <div class="nat-box">
-            <div class="nat-k">Nationwide · NAEP 2024</div>
-            <div class="nat-v">~39% of 4th graders proficient · <em>six in ten behind across America</em></div>
-          </div>
-          <p class="az-line"><strong>Arizona:</strong> same pattern — about four in ten 4th graders proficient (six in ten behind); closer to three in ten by 6th grade.</p>
+        <div class="stat-card primary">
+          <span class="tag">Grade 4 · the punch</span>
+          <div class="n">6 / 10</div>
+          <h3>Six in ten kids are behind</h3>
+          <p>Four in ten proficient. Most practice still ignores the miss.</p>
         </div>
-        <div class="side-stack">
-          <div class="side l">
-            <span class="tag">Classroom</span>
-            <div class="n">28</div>
-            <h3>kids. One worksheet.</h3>
-            <p>The lost kid and the bored kid still get the <strong>same page</strong>. That’s how gaps compound.</p>
-          </div>
-          <div class="side s">
-            <span class="tag">Kitchen table tonight</span>
-            <div class="n">0</div>
-            <h3>plans for their gap</h3>
-            <p>Parent knows they’re stuck — not <strong>what practice</strong> to give in the next five minutes.</p>
-          </div>
+        <div class="stat-card lav">
+          <span class="tag">Classroom</span>
+          <div class="n">28</div>
+          <h3>kids. One worksheet.</h3>
+          <p>The lost kid and the bored kid get the <strong>same page</strong>. Gaps compound.</p>
+        </div>
+        <div class="stat-card sage">
+          <span class="tag">Kitchen table tonight</span>
+          <div class="n">0</div>
+          <h3>plans for their gap</h3>
+          <p>Parent knows they’re stuck — not <strong>what practice</strong> to give in five minutes.</p>
+        </div>
+      </div>
+      <div class="receipt-strip">
+        <div class="receipt">
+          <div class="k">Nationwide · NAEP 2024</div>
+          <div class="v">~39% of 4th graders proficient · <em>six in ten behind across America</em></div>
+        </div>
+        <div class="receipt">
+          <div class="k">Arizona</div>
+          <div class="v">Same pattern — about four in ten proficient in 4th; closer to three in ten by 6th.</div>
         </div>
       </div>
       <div class="problem-foot">
