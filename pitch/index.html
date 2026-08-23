@@ -169,6 +169,57 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .future-card p{margin:0;font-size:14px;font-weight:550;line-height:1.4;color:rgba(11,18,32,.78);margin-top:auto}
 .skip-note{margin-top:16px;text-align:center;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.02em}
 
+
+/* === DISTINCT SLIDE SYSTEMS (designer reset) === */
+.slide-plain .body{background:var(--cream)}
+.hiw{padding:8px 0 0}
+.hiw-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:28px}
+.hiw-head h2{margin:0;font-size:clamp(40px,5vw,58px);font-weight:800;letter-spacing:-.045em;line-height:1.02;max-width:12em}
+.hiw-head .mark{height:56px;width:auto}
+.hiw-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;background:#fff;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.06)}
+.hiw-step{padding:28px 22px 26px;border-right:1px solid rgba(11,18,32,.08);min-height:280px;display:flex;flex-direction:column}
+.hiw-step:last-child{border-right:0}
+.hiw-step .n{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:18px}
+.hiw-step h3{margin:0 0 10px;font-size:clamp(20px,2.1vw,24px);font-weight:800;letter-spacing:-.03em;line-height:1.15}
+.hiw-step p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.72);line-height:1.4;margin-top:auto}
+.hiw-loop{margin-top:20px;font-size:15px;font-weight:800;letter-spacing:-.01em;color:rgba(11,18,32,.55)}
+
+.demo-hero{display:flex;flex-direction:column;align-items:center;gap:22px;padding-top:6px}
+.demo-hero .kicker{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.demo-hero h2{margin:0;text-align:center;font-size:clamp(34px,4.2vw,48px);font-weight:800;letter-spacing:-.04em;line-height:1.05;max-width:18em}
+.demo-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.demo-tabs span{padding:10px 14px;border-radius:999px;font-size:13px;font-weight:800;background:#fff;border:1px solid rgba(11,18,32,.08);box-shadow:0 4px 12px rgba(15,23,42,.05)}
+.demo-tabs span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.demo-stage{display:grid;grid-template-columns:1fr 280px 1fr;gap:20px;align-items:center;width:100%;max-width:1100px}
+.demo-stage .side-note{font-size:clamp(15px,1.6vw,18px);font-weight:650;line-height:1.45;letter-spacing:-.02em;padding:18px;border-radius:18px;background:rgba(255,255,255,.85);border:1px solid rgba(11,18,32,.06)}
+.demo-stage .side-note strong{font-weight:800}
+@media (max-width:980px){.demo-stage{grid-template-columns:1fr}.demo-stage .phone-wrap{justify-self:center}}
+
+.beach-full{display:flex;flex-direction:column;gap:14px;padding-top:4px}
+.beach-row{display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:center;padding:22px 24px;border-radius:20px;background:#fff;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.05)}
+.beach-row .label{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.beach-row .title{font-size:clamp(22px,2.4vw,28px);font-weight:800;letter-spacing:-.03em;margin:4px 0 6px}
+.beach-row p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.75);line-height:1.4;max-width:42em}
+.beach-row.focus{background:var(--yellow)}
+.beach-row.start{background:var(--blue);color:#fff}
+.beach-row.start .label{color:rgba(255,255,255,.75)}
+.beach-row.start p{color:rgba(255,255,255,.9)}
+
+.close-v2{min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:center;padding:48px var(--pad-x) 56px;background:var(--ink);color:#fff;position:relative}
+.close-v2 .tiny{height:44px;width:auto;margin-bottom:40px;opacity:.95}
+.close-v2 .trust{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
+.close-v2 .trust span{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.28);font-size:14px;font-weight:700;color:rgba(255,255,255,.9)}
+.close-v2 h1{margin:0 0 20px;font-size:clamp(40px,5.5vw,64px);font-weight:800;letter-spacing:-.045em;line-height:1.05;max-width:14em}
+.close-v2 .sig{font-size:clamp(22px,2.4vw,28px);font-weight:800;color:var(--yellow)}
+
+.future-v2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.future-v2 .cell{padding:26px 24px;border-radius:22px;min-height:180px;background:#fff;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.05)}
+.future-v2 .cell.dark{background:var(--ink);color:#fff}
+.future-v2 .cell .n{font-size:48px;font-weight:800;letter-spacing:-.06em;line-height:1;margin-bottom:12px;opacity:.35}
+.future-v2 .cell h3{margin:0 0 8px;font-size:22px;font-weight:800;letter-spacing:-.03em}
+.future-v2 .cell p{margin:0;font-size:15px;font-weight:550;line-height:1.4;opacity:.85}
+.opt-banner{margin-bottom:18px;display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(98,132,228,.12);color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+
 .footnote{margin-top:10px;font-size:13px;line-height:1.35;color:var(--muted);font-weight:600}
 
 .loop-stage{display:flex;flex-direction:column;align-items:center;gap:22px}
@@ -313,72 +364,36 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
   <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Six in ten fourth graders are behind — four in ten proficient. Nationwide NAEP ~39%. Arizona same story. One worksheet for 28. Kitchen table: zero plan for the exact gap.</p></aside>
 </section>
 
-<section class="slide" id="s3">
-  <div class="topbar">
-    <div class="topbar-row">
-      <div class="topbar-copy">
-        <h1>What we shipped this weekend</h1>
-        <p>One loop that adapts — not another worksheet generator.</p>
+<section class="slide slide-plain" id="s3">
+  <div class="body" style="min-height:calc(100vh - 48px)"><div class="content hiw">
+    <div class="hiw-head">
+      <div>
+        <div class="opt-banner" style="margin-bottom:12px">Shipped this weekend</div>
+        <h2>One adaptive loop — not another worksheet generator.</h2>
       </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+      <img class="mark" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
     </div>
-  </div>
-  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content">
-      <div class="step-grid">
-        <div class="step-card">
-          <div class="num">Step 01</div>
-          <div class="swatch" style="background:var(--sage)">1</div>
-          <h4>Quiz finds the gap</h4>
-          <p>Exact miss, named in plain English.</p>
-        </div>
-        <div class="step-card">
-          <div class="num">Step 02</div>
-          <div class="swatch" style="background:var(--lavender)">2</div>
-          <h4>Generate a small set</h4>
-          <p>Written for that error — not a random printable.</p>
-        </div>
-        <div class="step-card">
-          <div class="num">Step 03</div>
-          <div class="swatch" style="background:var(--yellow)">3</div>
-          <h4>Grade instantly</h4>
-          <p>Know what landed before the next set.</p>
-        </div>
-        <div class="step-card">
-          <div class="num">Step 04</div>
-          <div class="swatch" style="background:#c9d6f8">4</div>
-          <h4>Next set adapts</h4>
-          <p>Scaffold or stretch on purpose.</p>
-        </div>
-      </div>
-      <div class="loop-banner">Diagnose → generate → grade → adapt</div>
+    <div class="hiw-steps">
+      <div class="hiw-step"><div class="n">01 · Quiz</div><h3>Find the gap</h3><p>Exact miss, named in plain English.</p></div>
+      <div class="hiw-step"><div class="n">02 · Generate</div><h3>Write a small set</h3><p>Built for that error — not a random printable.</p></div>
+      <div class="hiw-step"><div class="n">03 · Grade</div><h3>Know what landed</h3><p>Instant signal before the next set.</p></div>
+      <div class="hiw-step"><div class="n">04 · Adapt</div><h3>Change on purpose</h3><p>Scaffold or stretch — same skill, new set.</p></div>
     </div>
-  </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Four beats. Quiz names the miss. We write a tiny set for that miss. Grade. Next set changes on purpose. That’s the product.</p></aside>
+    <div class="hiw-loop">Diagnose → generate → grade → adapt</div>
+  </div></div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Four beats only. This is the product. Don’t list features — walk the loop.</p></aside>
 </section>
 
-<section class="slide" id="s4">
-  <div class="topbar">
-    <div class="topbar-row">
-      <div class="topbar-copy">
-        <h1>See it adapt live</h1>
-        <p>Same skill. Wrong answer. Next set changes on purpose.</p>
-      </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+<section class="slide slide-plain" id="s4">
+  <div class="body" style="min-height:calc(100vh - 48px)"><div class="content demo-hero">
+    <div class="kicker">Live demo</div>
+    <h2>Same skill. Wrong answer. Next set changes on purpose.</h2>
+    <div class="demo-tabs">
+      <span>Quiz</span><span>Gap</span><span>Practice</span><span class="on">Adapt</span>
     </div>
-  </div>
-  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content demo-split">
-      <div>
-        <div class="demo-flow">
-          <div class="f" style="background:var(--lavender)">Quiz<span>see the miss</span></div>
-          <div class="f" style="background:var(--yellow)">Gap<span>name it</span></div>
-          <div class="f" style="background:var(--sage)">Practice<span>write the set</span></div>
-          <div class="f" style="background:#c9d6f8">Adapt<span>change next</span></div>
-        </div>
-        <div class="demo-callout">Live beat: they treat <strong>bigger bottom = bigger fraction</strong> (3/8 vs 3/5). We write practice for that. They miss again → next set <strong>scaffolds the same idea</strong>.</div>
-      </div>
-      <div class="phone-wrap">
+    <div class="demo-stage">
+      <div class="side-note">They treat <strong>bigger bottom = bigger fraction</strong> (3/8 vs 3/5).</div>
+      <div class="phone-wrap" style="margin:0 auto">
         <div class="phone"><div class="phone-screen">
           <div class="ph-top"><div class="ph-avatar"></div><div class="ph-dots"><i></i><i></i></div></div>
           <div class="ph-card lav"><h4>Gap detected</h4><p>Thought 3/8 &gt; 3/5 because 8 &gt; 5</p></div>
@@ -386,9 +401,10 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
           <div class="ph-card green"><h4>Next worksheet</h4><p>Visual bars + same-numerator drills</p><div class="ph-progress"><span style="width:40%"></span></div><div class="ph-meta"><span>Scaffolded</span><span>Same skill</span></div></div>
         </div></div>
       </div>
+      <div class="side-note">Miss again → we <strong>scaffold the same idea</strong>. That’s the adapt beat.</div>
     </div>
-  </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Demo gold: Compare Fractions, bigger-bottom myth. Show miss → scaffolded next set. Let the phone do the talking.</p></aside>
+  </div></div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Phone is the star. Bigger-bottom myth. Let judges see the next set change.</p></aside>
 </section>
 
 <section class="slide" id="s5">
@@ -401,78 +417,55 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
       <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
     </div>
   </div>
-  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content beach-grid">
-      <div class="rings-wrap" aria-hidden="true">
-        <div class="ring r3"></div>
-        <div class="ring r2"></div>
-        <div class="ring r1">Start<br/>tonight</div>
-      </div>
-      <div>
-        <div class="beach-card"><i style="background:var(--lavender)"></i><div><h4>Total landscape</h4><p>Khan and others already personalize at huge scale — we don’t claim they stand still.</p></div></div>
-        <div class="beach-card"><i style="background:var(--yellow)"></i><div><h4>Our focus</h4><p>A parent who needs a <strong>fresh 5-minute set</strong> from <strong>this error pattern</strong> tonight.</p></div></div>
-        <div class="beach-card"><i style="background:var(--blue)"></i><div><h4>Where we start</h4><p>Ship the student loop now → teacher view + small pilot next.</p></div></div>
-      </div>
+  <div class="body"><div class="content beach-full">
+    <div class="beach-row">
+      <div class="label">Landscape</div>
+      <div><div class="title">Personalization already exists</div><p>Khan and others personalize at huge scale — we don’t claim they stand still.</p></div>
     </div>
-  </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Beachhead is the stuck kid / parent same-night. Teachers next. Schools later. Don’t claim we beat Khan’s whole stack.</p></aside>
+    <div class="beach-row focus">
+      <div class="label">Our wedge</div>
+      <div><div class="title">The right five minutes tonight</div><p>A parent who needs a <strong>fresh set</strong> from <strong>this error pattern</strong> — not another generic worksheet.</p></div>
+    </div>
+    <div class="beach-row start">
+      <div class="label">Sequence</div>
+      <div><div class="title">Student loop now → teachers next</div><p>Ship the adapt path this weekend. Teacher clarity and a small pilot after.</p></div>
+    </div>
+  </div></div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Beachhead = stuck kid / parent same-night. Teachers next. Schools later.</p></aside>
 </section>
 
 <section class="slide" id="s6">
-  <div class="close">
-    <div class="deco"></div><div class="deco2"></div><div class="deco3"></div>
-    <div class="close-inner">
-      <div class="close-brand"><img src="unstuck-logo-wordmark.png" alt="UnStuck"/></div>
-      <div class="pills">
-        <span>Personalize practice</span>
-        <span>Don’t diagnose disabilities</span>
-        <span>Teachers stay in control</span>
-      </div>
-      <h1>The right practice shows up in minutes — and kids actually move forward.</h1>
-      <div class="sig">That’s UnStuck.</div>
+  <div class="close-v2">
+    <img class="tiny" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
+    <div class="trust">
+      <span>Personalize practice</span>
+      <span>Don’t diagnose disabilities</span>
+      <span>Teachers stay in control</span>
     </div>
+    <h1>The right practice shows up in minutes — and kids actually move forward.</h1>
+    <div class="sig">That’s UnStuck.</div>
   </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Safety close: personalize practice, don’t diagnose disabilities, teachers in control. End here if short on time.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Safety close. End here if short on time. Skip future.</p></aside>
 </section>
 
-<section class="slide" id="s7">
-  <div class="topbar">
-    <div class="topbar-row">
-      <div class="topbar-copy">
-        <h1>If we have a minute more</h1>
-        <p>Same adaptive engine — more subjects, more people helped. Skip this slide if you’re short on time.</p>
+<section class="slide slide-plain" id="s7">
+  <div class="body" style="min-height:calc(100vh - 48px)"><div class="content">
+    <div class="hiw-head" style="margin-bottom:18px">
+      <div>
+        <div class="opt-banner">Optional · skip if near time</div>
+        <h2 style="margin-top:10px">If we have a minute more</h2>
+        <p style="margin:10px 0 0;font-size:18px;font-weight:550;color:rgba(11,18,32,.7);max-width:36em">Same adaptive engine — more subjects, more people helped.</p>
       </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+      <img class="mark" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
     </div>
-  </div>
-  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
-    <div class="content">
-      <div class="future-grid">
-        <div class="future-card" style="background:var(--blue);color:#fff">
-          <div class="num" style="color:var(--blue)">1</div>
-          <h4>Deepen math first</h4>
-          <p>Fractions → ratios, then more of grades 4–6 math.</p>
-        </div>
-        <div class="future-card" style="background:var(--lavender)">
-          <div class="num">2</div>
-          <h4>Then other subjects</h4>
-          <p>Same loop for English, science, and beyond.</p>
-        </div>
-        <div class="future-card" style="background:var(--yellow)">
-          <div class="num">3</div>
-          <h4>Teacher clarity</h4>
-          <p>Plain English: why this kid is stuck.</p>
-        </div>
-        <div class="future-card" style="background:var(--sage)">
-          <div class="num">4</div>
-          <h4>Homework snap</h4>
-          <p>Short practice from tonight’s page — aimed at the miss.</p>
-        </div>
-      </div>
-      <div class="skip-note">Optional last slide · skip if near time</div>
+    <div class="future-v2">
+      <div class="cell dark"><div class="n">01</div><h3>Deepen math first</h3><p>Fractions → ratios, then more of grades 4–6.</p></div>
+      <div class="cell"><div class="n">02</div><h3>Then other subjects</h3><p>Same loop for English, science, and beyond.</p></div>
+      <div class="cell"><div class="n">03</div><h3>Teacher clarity</h3><p>Plain English: why this kid is stuck.</p></div>
+      <div class="cell"><div class="n">04</div><h3>Homework snap</h3><p>Short practice from tonight’s page — aimed at the miss.</p></div>
     </div>
-  </div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Only if time leftover. Future last. Lead with math spine, then subjects, teachers, homework snap.</p></aside>
+  </div></div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Only if time leftover. Future last. Don’t lead with roadmap.</p></aside>
 </section>
 
 <script>
