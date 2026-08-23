@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Grade 1 Mathematics Evaluation Rubric",
+    "grade": 1,
+    "standards_framework": "Common Core State Standards (CCSS)",
+    "total_domains": 4,
+    "total_standards": 16,
+    "max_points_per_standard": 4,
+    "total_max_points": 64,
+    "proficiency_scale": {
+      "4": {
+        "label": "Exceeds Standard",
+        "description": "Demonstrates rapid addition/subtraction fluency within 20; explains place value with tens and ones with zero errors.",
+        "score_range": { "min": 57, "max": 64 },
+        "percentage_range": "88–100%",
+        "action": "Accelerate to 2-digit addition and place value"
+      },
+      "3": {
+        "label": "Meets Standard",
+        "description": "Accurately adds and subtracts within 20 and demonstrates solid understanding of tens and ones.",
+        "score_range": { "min": 48, "max": 56 },
+        "percentage_range": "75–87%",
+        "action": "Continue Grade 1 standard pace"
+      },
+      "2": {
+        "label": "Approaching Standard",
+        "description": "Adds with counting strategies or fingers; occasionally confuses tens and ones.",
+        "score_range": { "min": 32, "max": 47 },
+        "percentage_range": "50–74%",
+        "action": "Targeted visual manipulatives and ten-frame practice"
+      },
+      "1": {
+        "label": "Below Standard",
+        "description": "Struggles with basic counting and addition within 10.",
+        "score_range": { "min": 0, "max": 31 },
+        "percentage_range": "0–49%",
+        "action": "Intensive foundational number sense intervention"
+      }
+    }
+  },
+  "domains": [
+    {
+      "code": "OA",
+      "title": "Operations & Algebraic Thinking",
+      "max_points": 16,
+      "standards": [
+        {
+          "id": "1.OA.6",
+          "description": "Add and subtract within 20, demonstrating fluency for addition and subtraction within 10.",
+          "max_points": 4,
+          "levels": {
+            "4": "Instantly computes additions and subtractions within 20 using mental strategies.",
+            "3": "Accurately computes within 20 using make-ten or decomposition strategies.",
+            "2": "Computes with counting on/counting back with occasional errors.",
+            "1": "Unable to reliably compute within 10 without concrete support."
+          }
+        }
+      ]
+    },
+    {
+      "code": "NBT",
+      "title": "Number & Operations in Base Ten",
+      "max_points": 16,
+      "standards": [
+        {
+          "id": "1.NBT.2",
+          "description": "Understand that the two digits of a two-digit number represent amounts of tens and ones.",
+          "max_points": 4,
+          "levels": {
+            "4": "Flawlessly composes and decomposes numbers into tens and ones and explains equivalence.",
+            "3": "Identifies tens and ones correctly in numbers up to 99.",
+            "2": "Identifies tens and ones with prompting or visuals.",
+            "1": "Confuses digit value with face value."
+          }
+        }
+      ]
+    }
+  ]
+}

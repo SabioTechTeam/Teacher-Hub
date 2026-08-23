@@ -39,6 +39,72 @@
 
   "questions": [
     {
+      "id": "q-gr1-01",
+      "skill_id": "math.1.addsub.within20",
+      "prompt": "What is 8 + 6?",
+      "choices": ["12", "13", "14", "15"],
+      "correct_index": 2
+    },
+    {
+      "id": "q-gr1-02",
+      "skill_id": "math.1.addsub.within20",
+      "prompt": "What is 15 - 7?",
+      "choices": ["6", "7", "8", "9"],
+      "correct_index": 2
+    },
+    {
+      "id": "q-gr1-03",
+      "skill_id": "math.1.addsub.within20",
+      "prompt": "Which number represents 1 ten and 5 ones?",
+      "choices": ["51", "15", "6", "105"],
+      "correct_index": 1
+    },
+
+    {
+      "id": "q-gr2-01",
+      "skill_id": "math.2.placevalue.twodigit",
+      "prompt": "What is 47 + 38?",
+      "choices": ["75", "85", "715", "81"],
+      "correct_index": 1
+    },
+    {
+      "id": "q-gr2-02",
+      "skill_id": "math.2.placevalue.twodigit",
+      "prompt": "What is 63 - 27?",
+      "choices": ["34", "36", "44", "46"],
+      "correct_index": 1
+    },
+    {
+      "id": "q-gr2-03",
+      "skill_id": "math.2.placevalue.twodigit",
+      "prompt": "There are 3 rows of stars with 5 stars in each row. How many stars in all?",
+      "choices": ["8", "12", "15", "18"],
+      "correct_index": 2
+    },
+
+    {
+      "id": "q-gr3-01",
+      "skill_id": "math.3.mult.intro",
+      "prompt": "What is 7 × 6?",
+      "choices": ["42", "36", "48", "49"],
+      "correct_index": 0
+    },
+    {
+      "id": "q-gr3-02",
+      "skill_id": "math.3.mult.intro",
+      "prompt": "Divide: 32 ÷ 4",
+      "choices": ["6", "7", "8", "9"],
+      "correct_index": 2
+    },
+    {
+      "id": "q-gr3-03",
+      "skill_id": "math.3.mult.intro",
+      "prompt": "A shape is partitioned into 3 equal pieces. 1 piece is shaded. What fraction is shaded?",
+      "choices": ["1/2", "1/3", "3/1", "1/4"],
+      "correct_index": 1
+    },
+
+    {
       "id": "q-parts-01",
       "skill_id": "math.4.fractions.parts",
       "prompt": "A pizza is cut into 4 equal slices. You eat 1 slice. What fraction of the pizza did you eat?",
@@ -163,87 +229,17 @@
     "asmt-001": {
       "assessment_id": "asmt-001",
       "scores": {
+        "math.1.addsub.within20": 1.0,
+        "math.2.placevalue.twodigit": 1.0,
+        "math.3.mult.intro": 0.85,
         "math.4.fractions.parts": 0.85,
         "math.4.fractions.equivalent": 0.60,
         "math.5.fractions.compare": 0.30
       },
       "gap_skill": "math.4.fractions.equivalent",
       "grade_level": 4
-    },
-    "asmt-002": {
-      "assessment_id": "asmt-002",
-      "scores": {
-        "math.4.fractions.parts": 0.95,
-        "math.4.fractions.equivalent": 0.88,
-        "math.5.fractions.compare": 0.72,
-        "math.5.fractions.add-like": 0.45
-      },
-      "gap_skill": "math.5.fractions.add-like",
-      "grade_level": 5
-    },
-    "asmt-003": {
-      "assessment_id": "asmt-003",
-      "scores": {
-        "math.4.fractions.parts": 0.70,
-        "math.4.fractions.equivalent": 0.50,
-        "math.5.fractions.compare": 0.20
-      },
-      "gap_skill": "math.4.fractions.equivalent",
-      "grade_level": 5
-    },
-    "asmt-004": {
-      "assessment_id": "asmt-004",
-      "scores": {
-        "math.4.fractions.parts": 0.98,
-        "math.4.fractions.equivalent": 0.95,
-        "math.5.fractions.compare": 0.90,
-        "math.5.fractions.add-like": 0.82,
-        "math.6.ratios.intro": 0.55
-      },
-      "gap_skill": "math.6.ratios.intro",
-      "grade_level": 6
     }
   },
 
-  "answers": {
-    "asmt-001": [
-      { "question_id": "q-parts-01",  "answer": "1/4",    "correct": true },
-      { "question_id": "q-parts-02",  "answer": "A rectangle divided into 8 parts with 3 shaded", "correct": true },
-      { "question_id": "q-parts-03",  "answer": "6",      "correct": true },
-      { "question_id": "q-equiv-01",  "answer": "3/6",    "correct": true },
-      { "question_id": "q-equiv-02",  "answer": "5",      "correct": false },
-      { "question_id": "q-equiv-03",  "answer": "No, they are different fractions", "correct": false },
-      { "question_id": "q-compare-01","answer": "They are equal", "correct": false }
-    ],
-    "asmt-002": [
-      { "question_id": "q-equiv-01",  "answer": "3/6",    "correct": true },
-      { "question_id": "q-equiv-02",  "answer": "6",      "correct": true },
-      { "question_id": "q-equiv-03",  "answer": "Yes, because 4÷4=1 and 8÷4=2", "correct": true },
-      { "question_id": "q-compare-01","answer": "3/4",    "correct": true },
-      { "question_id": "q-compare-02","answer": "3/8, 1/2, 5/6", "correct": true },
-      { "question_id": "q-compare-03","answer": "5/8 > 7/12", "correct": true },
-      { "question_id": "q-addlike-01","answer": "5/14",   "correct": false },
-      { "question_id": "q-addlike-02","answer": "3/5",    "correct": true },
-      { "question_id": "q-addlike-03","answer": "8/18",   "correct": false }
-    ],
-    "asmt-003": [
-      { "question_id": "q-parts-01",  "answer": "1/4",    "correct": true },
-      { "question_id": "q-parts-02",  "answer": "A rectangle divided into 8 parts with 5 shaded", "correct": false },
-      { "question_id": "q-parts-03",  "answer": "6",      "correct": true },
-      { "question_id": "q-equiv-01",  "answer": "2/6",    "correct": false },
-      { "question_id": "q-equiv-02",  "answer": "3",      "correct": false },
-      { "question_id": "q-compare-01","answer": "2/3",    "correct": false }
-    ],
-    "asmt-004": [
-      { "question_id": "q-compare-01","answer": "3/4",    "correct": true },
-      { "question_id": "q-compare-02","answer": "3/8, 1/2, 5/6", "correct": true },
-      { "question_id": "q-compare-03","answer": "5/8 > 7/12", "correct": true },
-      { "question_id": "q-addlike-01","answer": "5/7",    "correct": true },
-      { "question_id": "q-addlike-02","answer": "3/5",    "correct": true },
-      { "question_id": "q-addlike-03","answer": "8/9",    "correct": true },
-      { "question_id": "q-ratios-01", "answer": "3:5",    "correct": true },
-      { "question_id": "q-ratios-02", "answer": "3",      "correct": true },
-      { "question_id": "q-ratios-03", "answer": "3:4",    "correct": false }
-    ]
-  }
+  "answers": {}
 }

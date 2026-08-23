@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Grade 2 Mathematics Evaluation Rubric",
+    "grade": 2,
+    "standards_framework": "Common Core State Standards (CCSS)",
+    "total_domains": 4,
+    "total_standards": 18,
+    "max_points_per_standard": 4,
+    "total_max_points": 72,
+    "proficiency_scale": {
+      "4": {
+        "label": "Exceeds Standard",
+        "description": "Fluently adds and subtracts within 100 with regrouping; constructs and explains rectangular arrays.",
+        "score_range": { "min": 64, "max": 72 },
+        "percentage_range": "88–100%",
+        "action": "Accelerate to multiplication fundamentals"
+      },
+      "3": {
+        "label": "Meets Standard",
+        "description": "Consistently solves two-digit addition and subtraction problems using place value strategies.",
+        "score_range": { "min": 54, "max": 63 },
+        "percentage_range": "75–87%",
+        "action": "Continue Grade 2 standard pace"
+      },
+      "2": {
+        "label": "Approaching Standard",
+        "description": "Solves without regrouping; makes errors when carrying or borrowing across place values.",
+        "score_range": { "min": 36, "max": 53 },
+        "percentage_range": "50–74%",
+        "action": "Targeted base-ten blocks and visual regrouping practice"
+      },
+      "1": {
+        "label": "Below Standard",
+        "description": "Struggles with two-digit operations; requires single-digit foundation reinforcement.",
+        "score_range": { "min": 0, "max": 35 },
+        "percentage_range": "0–49%",
+        "action": "Intensive Grade 1-2 bridging intervention"
+      }
+    }
+  },
+  "domains": [
+    {
+      "code": "NBT",
+      "title": "Number & Operations in Base Ten",
+      "max_points": 16,
+      "standards": [
+        {
+          "id": "2.NBT.5",
+          "description": "Fluently add and subtract within 100 using strategies based on place value and properties of operations.",
+          "max_points": 4,
+          "levels": {
+            "4": "Solves two-digit addition/subtraction mentally with speed and precision.",
+            "3": "Accurately adds/subtracts within 100 with regrouping.",
+            "2": "Solves with partial regrouping accuracy.",
+            "1": "Unable to regroup across tens."
+          }
+        }
+      ]
+    },
+    {
+      "code": "OA",
+      "title": "Operations & Algebraic Thinking",
+      "max_points": 16,
+      "standards": [
+        {
+          "id": "2.OA.4",
+          "description": "Use addition to find the total number of objects arranged in rectangular arrays with up to 5 rows and up to 5 columns.",
+          "max_points": 4,
+          "levels": {
+            "4": "Writes repeated addition equations and connects directly to multiplication.",
+            "3": "Correctly determines array totals and writes repeated addition.",
+            "2": "Counts array elements individually with occasional errors.",
+            "1": "Cannot interpret array rows and columns."
+          }
+        }
+      ]
+    }
+  ]
+}

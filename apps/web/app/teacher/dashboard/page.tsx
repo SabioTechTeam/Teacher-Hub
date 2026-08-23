@@ -8,7 +8,7 @@ import { setSession } from "@/lib/session";
 interface StudentRecord {
   id: string;
   name: string;
-  grade: 4 | 5 | 6;
+  grade: 1 | 2 | 3 | 4 | 5 | 6;
   avg: number;
   gap: string;
   gapName: string;

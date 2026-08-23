@@ -41,8 +41,8 @@ def standard_for(skill_id: str) -> Optional[dict]:
     if not skill:
         return None
     wanted = {re.sub(r"\.([A-Z])\.", ".", s) for s in skill.standards}
-    # Own grade first, then any grade: a grade-5 skill may cite a grade-4 standard.
-    for grade in [skill.grade] + [g for g in (4, 5, 6) if g != skill.grade]:
+    # Own grade first, then any grade: e.g. a grade-5 skill may cite a grade-4 standard.
+    for grade in [skill.grade] + [g for g in (1, 2, 3, 4, 5, 6) if g != skill.grade]:
         book = rubric(grade)
         if not book:
             continue

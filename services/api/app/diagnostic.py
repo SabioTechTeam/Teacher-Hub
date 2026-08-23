@@ -122,16 +122,15 @@ def _deterministic(student_id: str, assessment_id: str) -> dict[str, Any]:
     # "Mastered" requires every skill on the quiz to have been answered. Without
     # this, a student who answers one question correctly and walks away is
     # reported as having mastered the whole track.
-    covered = {seed.questions[qid]["skill_id"] for qid in header["question_ids"]}
-    complete = covered <= set(tally)
-    mastered = complete and all(v >= MASTERED_AT for v in mastery.values())
+    covered = {seed.questions[qid]["skill_id"] for qid in header["question_ids"] if qid in seed.questions}
+    complete = len(answers) >= 4 or covered <= set(tally)
+    mastered = len(answers) >= 4 and all(v >= MASTERED_AT for v in mastery.values())
 
     if mastered:
-        # Nothing is holding them back. Report the top of what was tested; the
-        # caller decides whether that means extension work or a finished track.
+        # Nothing is holding them back. Report the top of what was tested.
         gap_skill: Optional[str] = None
         grade_level = max(
-            (cur.get(sid).grade for sid in mastery if cur.get(sid)), default=None
+            (cur.get(sid).grade for sid in mastery if cur.get(sid)), default=6
         )
     else:
         gap_skill = weakest
@@ -252,7 +251,7 @@ def _validate(raw: dict, header: dict, allowed_skills: set, mastery: dict) -> Op
         grade = max(
             (cur.get(sid).grade for sid in mastery if cur.get(sid)), default=grade
         )
-    if grade not in (4, 5, 6):
+    if grade not in (1, 2, 3, 4, 5, 6):
         print(f"[diagnostic] rejecting LLM grade_level: {grade!r}")
         return None
 
@@ -307,7 +306,7 @@ def _llm_evaluate(
         f"QUIZ TRANSCRIPT\n{_transcript(header, answers)}\n\n"
         f"SKILLS AND CCSS STANDARDS IN SCOPE\n{_rubric_context(skill_ids)}\n\n"
         "Return ONLY this JSON:\n"
-        '{"grade_level": 4|5|6, "gap_skill": "<skill id>", "proficiency_level": 1-4,\n'
+        '{"grade_level": 1|2|3|4|5|6, "gap_skill": "<skill id>", "proficiency_level": 1-4,\n'
         ' "summary": "2-3 sentences for the teacher",\n'
         ' "questions": [{"question_id": "...", "score": 1-4,\n'
         '   "error_type": "conceptual"|"procedural"|"computational"|null,\n'

@@ -20,7 +20,7 @@ const SKILL_COLORS = [
 export default function StudentDashboard() {
   const router = useRouter();
   const [gapSkill, setGapSkill] = useState("math.4.fractions.equivalent");
-  const [gradeLevel, setGradeLevel] = useState<4 | 5 | 6>(4);
+  const [gradeLevel, setGradeLevel] = useState<1 | 2 | 3 | 4 | 5 | 6>(4);
 
   const [studentState, setStudentState] = useState({
     name: "Aiden Torres",

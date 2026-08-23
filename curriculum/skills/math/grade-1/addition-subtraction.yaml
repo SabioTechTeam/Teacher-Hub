@@ -1,0 +1,10 @@
+id: math.1.addsub.within20
+grade: 1
+name: Addition & Subtraction within 20
+difficulty: 0.2
+standards:
+  - 1.OA.C.6
+  - 1.NBT.B.2
+prerequisites: []
+subject: mathematics
+description: Add and subtract within 20, demonstrating fluency for addition and subtraction within 10. Understand place value concepts of tens and ones.

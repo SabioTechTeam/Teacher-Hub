@@ -1,4 +1,7 @@
 edges:
+  - {from: math.1.addsub.within20, to: math.2.placevalue.twodigit}
+  - {from: math.2.placevalue.twodigit, to: math.3.mult.intro}
+  - {from: math.3.mult.intro, to: math.4.fractions.parts}
   - {from: math.4.fractions.parts, to: math.4.fractions.equivalent}
   - {from: math.4.fractions.equivalent, to: math.5.fractions.compare}
   - {from: math.5.fractions.compare, to: math.5.fractions.add-like}

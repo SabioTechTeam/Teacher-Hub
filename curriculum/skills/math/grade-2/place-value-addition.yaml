@@ -1,0 +1,11 @@
+id: math.2.placevalue.twodigit
+grade: 2
+name: Two-Digit Operations & Place Value
+difficulty: 0.3
+standards:
+  - 2.NBT.B.5
+  - 2.OA.C.4
+prerequisites:
+  - math.1.addsub.within20
+subject: mathematics
+description: Fluently add and subtract within 100 using strategies based on place value, properties of operations, and relationship between addition and subtraction. Use addition to find total number of objects in rectangular arrays.

@@ -8,8 +8,11 @@
  */
 import type { Worksheet, Result } from "./types";
 
-const SKILLS: Record<string, { name: string; grade: 4 | 5 | 6; standards: string[]; next: string; prev: string }> = {
-  "math.4.fractions.parts": { name: "Parts of a Whole", grade: 4, standards: ["4.NF.A.1"], next: "math.4.fractions.equivalent", prev: "math.4.fractions.parts" },
+const SKILLS: Record<string, { name: string; grade: 1 | 2 | 3 | 4 | 5 | 6; standards: string[]; next: string; prev: string }> = {
+  "math.1.addsub.within20": { name: "Addition & Subtraction within 20", grade: 1, standards: ["1.OA.C.6"], next: "math.2.placevalue.twodigit", prev: "math.1.addsub.within20" },
+  "math.2.placevalue.twodigit": { name: "Two-Digit Operations & Place Value", grade: 2, standards: ["2.NBT.B.5"], next: "math.3.mult.intro", prev: "math.1.addsub.within20" },
+  "math.3.mult.intro": { name: "Multiplication & Division Fundamentals", grade: 3, standards: ["3.OA.A.1"], next: "math.4.fractions.parts", prev: "math.2.placevalue.twodigit" },
+  "math.4.fractions.parts": { name: "Parts of a Whole", grade: 4, standards: ["4.NF.A.1"], next: "math.4.fractions.equivalent", prev: "math.3.mult.intro" },
   "math.4.fractions.equivalent": { name: "Equivalent Fractions", grade: 4, standards: ["4.NF.A.1"], next: "math.5.fractions.compare", prev: "math.4.fractions.parts" },
   "math.5.fractions.compare": { name: "Compare Fractions", grade: 5, standards: ["5.NF.A.1"], next: "math.5.fractions.add-like", prev: "math.4.fractions.equivalent" },
   "math.5.fractions.add-like": { name: "Add Fractions (Like Denominators)", grade: 5, standards: ["5.NF.A.1"], next: "math.6.ratios.intro", prev: "math.5.fractions.compare" },
@@ -17,6 +20,30 @@ const SKILLS: Record<string, { name: string; grade: 4 | 5 | 6; standards: string
 };
 
 const BANK: Record<string, { prompt: string; answer: string }[]> = {
+  "math.1.addsub.within20": [
+    { prompt: "What is 7 + 8?", answer: "15" },
+    { prompt: "What is 14 - 6?", answer: "8" },
+    { prompt: "What is 9 + 5?", answer: "14" },
+    { prompt: "What is 16 - 9?", answer: "7" },
+    { prompt: "What is 8 + 4?", answer: "12" },
+    { prompt: "What is 13 - 5?", answer: "8" },
+  ],
+  "math.2.placevalue.twodigit": [
+    { prompt: "What is 36 + 28?", answer: "64" },
+    { prompt: "What is 52 - 19?", answer: "33" },
+    { prompt: "What is 45 + 37?", answer: "82" },
+    { prompt: "What is 71 - 34?", answer: "37" },
+    { prompt: "What is 29 + 43?", answer: "72" },
+    { prompt: "What is 80 - 45?", answer: "35" },
+  ],
+  "math.3.mult.intro": [
+    { prompt: "What is 6 × 8?", answer: "48" },
+    { prompt: "What is 35 ÷ 5?", answer: "7" },
+    { prompt: "What is 7 × 9?", answer: "63" },
+    { prompt: "What is 42 ÷ 6?", answer: "7" },
+    { prompt: "What is 8 × 4?", answer: "32" },
+    { prompt: "What is 54 ÷ 9?", answer: "6" },
+  ],
   "math.4.fractions.parts": [
     { prompt: "A pizza is cut into 8 equal slices. You eat 3. What fraction did you eat?", answer: "3/8" },
     { prompt: "A chocolate bar has 5 equal pieces. You take 2. What fraction did you take?", answer: "2/5" },

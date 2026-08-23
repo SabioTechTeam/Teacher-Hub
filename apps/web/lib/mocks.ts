@@ -6,7 +6,7 @@
 // ---------------------------------------------------------------------------
 // Shared types (mirrors packages/types/src/index.ts)
 // ---------------------------------------------------------------------------
-export type GradeBand = 4 | 5 | 6;
+export type GradeBand = 1 | 2 | 3 | 4 | 5 | 6;
 export type SkillId   = string;
 
 export interface QuizQuestion {

@@ -38,22 +38,38 @@ def main() -> None:
     seed.load()
     all_skills = set(seed.questions_by_skill)
 
-    # Knows only the first skill. Four skills tie at 0.0, so the tie-break by
-    # curriculum order decides -- it must pick the earliest prerequisite.
-    weak = take("t-weak", {"math.4.fractions.parts"})
-    assert weak["gap_skill"] == "math.4.fractions.equivalent", weak["gap_skill"]
-    assert weak["grade_level"] == 4, weak["grade_level"]
-    assert weak["proficiency_label"] == "Below Standard", weak["proficiency_label"]
-    assert not weak["mastered"]
+    # Knows only Grade 1 skill. Struggles on Grade 2 -> diagnosed at Grade 2 with place value gap.
+    gr1_only = take("t-gr1", {"math.1.addsub.within20"})
+    assert gr1_only["gap_skill"] == "math.2.placevalue.twodigit", gr1_only["gap_skill"]
+    assert gr1_only["grade_level"] == 2, gr1_only["grade_level"]
+    assert gr1_only["proficiency_label"] == "Below Standard", gr1_only["proficiency_label"]
+    assert not gr1_only["mastered"]
 
-    # Same student, answering hardest-first. Insertion order now favours the
-    # grade-6 skill, so only the curriculum tie-break can still return grade 4.
-    backwards = take("t-weak-rev", {"math.4.fractions.parts"}, reverse=True)
+    # Knows Grades 1-3. Struggles on Grade 4 equivalent fractions -> Grade 4.
+    gr4_weak = take("t-weak", {
+        "math.1.addsub.within20",
+        "math.2.placevalue.twodigit",
+        "math.3.mult.intro",
+        "math.4.fractions.parts",
+    })
+    assert gr4_weak["gap_skill"] == "math.4.fractions.equivalent", gr4_weak["gap_skill"]
+    assert gr4_weak["grade_level"] == 4, gr4_weak["grade_level"]
+
+    # Same student, answering hardest-first.
+    backwards = take("t-weak-rev", {
+        "math.1.addsub.within20",
+        "math.2.placevalue.twodigit",
+        "math.3.mult.intro",
+        "math.4.fractions.parts",
+    }, reverse=True)
     assert backwards["gap_skill"] == "math.4.fractions.equivalent", backwards["gap_skill"]
     assert backwards["grade_level"] == 4, backwards["grade_level"]
 
-    # Solid through compare -> the gap is the next skill up, not the first stumble.
+    # Solid through compare -> Grade 5 add-like gap.
     mid = take("t-mid", {
+        "math.1.addsub.within20",
+        "math.2.placevalue.twodigit",
+        "math.3.mult.intro",
         "math.4.fractions.parts",
         "math.4.fractions.equivalent",
         "math.5.fractions.compare",
@@ -61,8 +77,7 @@ def main() -> None:
     assert mid["gap_skill"] == "math.5.fractions.add-like", mid["gap_skill"]
     assert mid["grade_level"] == 5, mid["grade_level"]
 
-    # Everything correct -> no gap, top grade, and it must say so rather than
-    # inventing a skill to remediate.
+    # Everything correct -> no gap, top grade (6), mastered.
     ace = take("t-ace", all_skills)
     assert ace["gap_skill"] is None, ace["gap_skill"]
     assert ace["mastered"] and ace["complete"], ace
@@ -91,24 +106,24 @@ def main() -> None:
         pass
 
     # --- guards on LLM output ------------------------------------------------
-    # These run offline: they feed _validate synthetic model responses, which is
-    # how the real failures showed up (structurally valid, pedagogically wrong).
     quiz = diagnostic.build_quiz("t-guard")
     header = {"question_ids": progress.assessment_questions("t-guard", quiz["assessment_id"])}
     allowed = set(seed.questions_by_skill)
     ok = {"grade_level": 5, "gap_skill": "math.5.fractions.add-like",
           "proficiency_level": 2, "summary": "s", "questions": []}
 
-    struggling = {  # failed everything after parts-of-a-whole
-        "math.4.fractions.parts": 1.0, "math.4.fractions.equivalent": 0.0,
-        "math.5.fractions.compare": 0.0, "math.5.fractions.add-like": 0.0,
-        "math.6.ratios.intro": 0.0,
+    struggling = {
+        "math.1.addsub.within20": 1.0, "math.2.placevalue.twodigit": 1.0,
+        "math.3.mult.intro": 1.0, "math.4.fractions.parts": 1.0,
+        "math.4.fractions.equivalent": 0.0, "math.5.fractions.compare": 0.0,
+        "math.5.fractions.add-like": 0.0, "math.6.ratios.intro": 0.0,
     }
     perfect = {k: 1.0 for k in struggling}
-    solid_to_compare = {  # add-like is a legitimate gap here: its prerequisite is met
-        "math.4.fractions.parts": 1.0, "math.4.fractions.equivalent": 1.0,
-        "math.5.fractions.compare": 1.0, "math.5.fractions.add-like": 0.0,
-        "math.6.ratios.intro": 0.0,
+    solid_to_compare = {
+        "math.1.addsub.within20": 1.0, "math.2.placevalue.twodigit": 1.0,
+        "math.3.mult.intro": 1.0, "math.4.fractions.parts": 1.0,
+        "math.4.fractions.equivalent": 1.0, "math.5.fractions.compare": 1.0,
+        "math.5.fractions.add-like": 0.0, "math.6.ratios.intro": 0.0,
     }
 
     # a skill id that is not in the curriculum must never reach worksheet generation
@@ -129,7 +144,7 @@ def main() -> None:
         header, allowed, solid_to_compare)
     assert got["questions"][0]["error_type"] is None, got
 
-    print("ok  weak->equivalent(g4)  mid->add-like(g5)  ace->no gap(g6)  partial not mastered  ·  LLM guards reject bad verdicts")
+    print("ok  Grades 1-6 diagnostic evaluation passing cleanly!")
 
 
 if __name__ == "__main__":

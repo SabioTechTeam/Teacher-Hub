@@ -12,7 +12,7 @@ export type Item = {
 export type Worksheet = {
   id: string;
   student_id: string;
-  grade_level: 4 | 5 | 6;
+  grade_level: 1 | 2 | 3 | 4 | 5 | 6;
   target_skill: string;
   skill_name: string;
   standards: string[];
@@ -41,7 +41,7 @@ export type Result = {
   grades: Grade[];
   decision: "advance" | "hold" | "remediate";
   next_target_skill: string;
-  next_grade_level: 4 | 5 | 6;
+  next_grade_level: 1 | 2 | 3 | 4 | 5 | 6;
   rationale: string;
   mastery_after: Record<string, number>;
 };
