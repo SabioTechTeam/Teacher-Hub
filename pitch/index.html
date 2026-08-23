@@ -7,9 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --cream:#FDFDF5; --ink:#0B1220; --muted:#4B5565;
-  --blue:#6284E4; --lavender:#E5DFF2; --sage:#DFEAD5; --yellow:#F2F294;
-  --peach:#F7E0D6; --white:#fff;
+  /* Matched to Teacher-Hub apps/web/app/globals.css */
+  --cream:#F8FAFC; --ink:#0F172A; --muted:#64748B;
+  --blue:#4F46E5; --lavender:#EEF2FF; --sage:#ECFDF5; --yellow:#FEF3C7;
+  --peach:#FFF1F2; --white:#fff;
   --pad-x: 40px;
   --shadow: 0 14px 30px rgba(15,23,42,.08);
 }
@@ -133,7 +134,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .step-card .swatch{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:18px;margin-bottom:16px;box-shadow:0 8px 16px rgba(15,23,42,.08)}
 .step-card h4{margin:0 0 8px;font-size:clamp(17px,1.8vw,20px);font-weight:800;letter-spacing:-.02em;line-height:1.2}
 .step-card p{margin:0;font-size:14px;font-weight:550;color:rgba(11,18,32,.72);line-height:1.4;margin-top:auto}
-.loop-banner{margin-top:18px;text-align:center;font-weight:800;font-size:clamp(15px,1.6vw,18px);letter-spacing:-.02em;padding:14px 18px;border-radius:999px;background:rgba(98,132,228,.12);color:var(--ink);border:1px solid rgba(98,132,228,.18)}
+.loop-banner{margin-top:18px;text-align:center;font-weight:800;font-size:clamp(15px,1.6vw,18px);letter-spacing:-.02em;padding:14px 18px;border-radius:999px;background:rgba(79,70,229,.12);color:var(--ink);border:1px solid rgba(79,70,229,.18)}
 
 /* Slide 4 — demo split polish */
 .demo-split{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center}
@@ -172,21 +173,49 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 
 /* === DISTINCT SLIDE SYSTEMS (designer reset) === */
 .slide-plain .body{background:var(--cream)}
-.hiw{padding:8px 0 0}
-.hiw-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:28px}
-.hiw-head h2{margin:0;font-size:clamp(40px,5vw,58px);font-weight:800;letter-spacing:-.045em;line-height:1.02;max-width:12em}
-.hiw-head .mark{height:56px;width:auto}
-.hiw-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;background:#fff;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.06)}
-.hiw-step{padding:28px 22px 26px;border-right:1px solid rgba(11,18,32,.08);min-height:280px;display:flex;flex-direction:column}
-.hiw-step:last-child{border-right:0}
-.hiw-step .n{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:18px}
-.hiw-step h3{margin:0 0 10px;font-size:clamp(20px,2.1vw,24px);font-weight:800;letter-spacing:-.03em;line-height:1.15}
-.hiw-step p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.72);line-height:1.4;margin-top:auto}
-.hiw-loop{margin-top:20px;font-size:15px;font-weight:800;letter-spacing:-.01em;color:rgba(11,18,32,.55)}
+.hiw{padding:4px 0 0}
+.hiw-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:10px}
+.hiw-head h2{margin:0;font-size:clamp(30px,3.6vw,44px);font-weight:800;letter-spacing:-.045em;line-height:1.05;max-width:14em}
+.hiw-head .mark{height:44px;width:auto}
+.cycle-stage{position:relative;width:min(1080px,100%);height:600px;margin:0 auto}
+.cycle{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:440px;aspect-ratio:1}
+.cycle-svg{position:absolute;inset:12%;width:76%;height:76%}
+.cycle-svg circle{fill:none;stroke:var(--blue);stroke-width:5}
+.cycle-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120px;height:120px;border-radius:50%;background:var(--ink);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:var(--shadow);z-index:2}
+.cycle-core b{font-size:12px;letter-spacing:.14em;font-weight:800}
+.cycle-core span{font-size:20px;font-weight:800;letter-spacing:-.03em}
+.cycle-node{position:absolute;width:150px;padding:14px 12px;border-radius:18px;background:#fff;border:2px solid var(--blue);box-shadow:var(--shadow);text-align:center;z-index:3}
+.cycle-node .n{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+.cycle-node h3{margin:0;font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+.cycle-node.quiz{top:0;left:50%;transform:translateX(-50%)}
+.cycle-node.gen{top:50%;right:0;transform:translateY(-50%)}
+.cycle-node.grade{bottom:0;left:50%;transform:translateX(-50%)}
+.cycle-node.adapt{top:50%;left:0;transform:translateY(-50%)}
+.cycle-note{position:absolute;width:210px;background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:16px;padding:14px 14px;box-shadow:var(--shadow);font-size:14px;font-weight:600;line-height:1.35;letter-spacing:-.015em;color:rgba(15,23,42,.8);z-index:5}
+.cycle-note .who{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.cycle-note .ptr{position:absolute;top:50%;height:3px;background:var(--blue);transform:translateY(-50%);display:block;width:88px}
+.cycle-note .ptr:after{content:"";position:absolute;top:50%;width:0;height:0;border-style:solid;transform:translateY(-50%)}
+/* Quiz note: above-left of quiz card, arrow right into quiz */
+.cycle-note[data-for="quiz"]{left:calc(50% - 430px);top:28px}
+.cycle-note[data-for="quiz"] .ptr{left:100%;margin-left:6px;width:100px}
+.cycle-note[data-for="quiz"] .ptr:after{right:-10px;border-width:7px 0 7px 12px;border-color:transparent transparent transparent var(--blue)}
+/* Generate: right of gen card */
+.cycle-note[data-for="gen"]{right:8px;top:50%;transform:translateY(-50%)}
+.cycle-note[data-for="gen"] .ptr{right:100%;margin-right:6px;width:96px}
+.cycle-note[data-for="gen"] .ptr:after{left:-10px;border-width:7px 12px 7px 0;border-color:transparent var(--blue) transparent transparent}
+/* Grade: below-right of grade card */
+.cycle-note[data-for="grade"]{right:calc(50% - 430px);bottom:28px}
+.cycle-note[data-for="grade"] .ptr{right:100%;margin-right:6px;width:100px}
+.cycle-note[data-for="grade"] .ptr:after{left:-10px;border-width:7px 12px 7px 0;border-color:transparent var(--blue) transparent transparent}
+/* Adapt: left of adapt card */
+.cycle-note[data-for="adapt"]{left:8px;top:50%;transform:translateY(-50%)}
+.cycle-note[data-for="adapt"] .ptr{left:100%;margin-left:6px;width:96px}
+.cycle-note[data-for="adapt"] .ptr:after{right:-10px;border-width:7px 0 7px 12px;border-color:transparent transparent transparent var(--blue)}
+@media (max-width:980px){.cycle-stage{height:auto;min-height:720px}.cycle-note .ptr{display:none}}
 
 .demo-hero{display:flex;flex-direction:column;align-items:center;gap:22px;padding-top:6px}
 .demo-hero .kicker{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
-.demo-hero h2{margin:0;text-align:center;font-size:clamp(34px,4.2vw,48px);font-weight:800;letter-spacing:-.04em;line-height:1.05;max-width:18em}
+.demo-hero h2{margin:0;text-align:center;font-size:clamp(34px,4.2vw,48px);font-weight:800;letter-spacing:-.04em;line-height:1.12;max-width:16em}
 .demo-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .demo-tabs span{padding:10px 14px;border-radius:999px;font-size:13px;font-weight:800;background:#fff;border:1px solid rgba(11,18,32,.08);box-shadow:0 4px 12px rgba(15,23,42,.05)}
 .demo-tabs span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -196,17 +225,20 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 @media (max-width:980px){.demo-stage{grid-template-columns:1fr}.demo-stage .phone-wrap{justify-self:center}}
 
 .beach-full{display:flex;flex-direction:column;gap:14px;padding-top:4px}
-.beach-row{display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:center;padding:22px 24px;border-radius:20px;background:#fff;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.05)}
-.beach-row .label{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.beach-row .title{font-size:clamp(22px,2.4vw,28px);font-weight:800;letter-spacing:-.03em;margin:4px 0 6px}
-.beach-row p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.75);line-height:1.4;max-width:42em}
+.beach-row{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start;padding:22px 24px;border-radius:20px;background:#fff;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.05)}
+.beach-row .label{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:8px}
+.beach-row .title{font-size:clamp(22px,2.4vw,28px);font-weight:800;letter-spacing:-.03em;margin:0 0 6px}
+.beach-row p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.75);line-height:1.4;max-width:44em}
+.beach-row.exists{background:#fff}
 .beach-row.focus{background:var(--yellow)}
+.beach-row.focus .label{color:rgba(11,18,32,.55)}
 .beach-row.start{background:var(--blue);color:#fff}
 .beach-row.start .label{color:rgba(255,255,255,.75)}
 .beach-row.start p{color:rgba(255,255,255,.9)}
+.beach-row.start .title{color:#fff}
 
 .close-v2{min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:center;padding:48px var(--pad-x) 56px;background:var(--ink);color:#fff;position:relative}
-.close-v2 .tiny{height:44px;width:auto;margin-bottom:40px;opacity:.95}
+.close-v2 .tiny{height:64px;width:auto;max-width:64px;aspect-ratio:1;object-fit:contain;display:block;margin-bottom:36px}
 .close-v2 .trust{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
 .close-v2 .trust span{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.28);font-size:14px;font-weight:700;color:rgba(255,255,255,.9)}
 .close-v2 h1{margin:0 0 20px;font-size:clamp(40px,5.5vw,64px);font-weight:800;letter-spacing:-.045em;line-height:1.05;max-width:14em}
@@ -218,7 +250,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .future-v2 .cell .n{font-size:48px;font-weight:800;letter-spacing:-.06em;line-height:1;margin-bottom:12px;opacity:.35}
 .future-v2 .cell h3{margin:0 0 8px;font-size:22px;font-weight:800;letter-spacing:-.03em}
 .future-v2 .cell p{margin:0;font-size:15px;font-weight:550;line-height:1.4;opacity:.85}
-.opt-banner{margin-bottom:18px;display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(98,132,228,.12);color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.opt-banner{margin-bottom:18px;display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(79,70,229,.12);color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 
 .footnote{margin-top:10px;font-size:13px;line-height:1.35;color:var(--muted);font-weight:600}
 
@@ -368,26 +400,33 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
   <div class="body" style="min-height:calc(100vh - 48px)"><div class="content hiw">
     <div class="hiw-head">
       <div>
-        <div class="opt-banner" style="margin-bottom:12px">Shipped this weekend</div>
+        <div class="opt-banner" style="margin-bottom:10px">Shipped this weekend</div>
         <h2>One adaptive loop — not another worksheet generator.</h2>
       </div>
       <img class="mark" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
     </div>
-    <div class="hiw-steps">
-      <div class="hiw-step"><div class="n">01 · Quiz</div><h3>Find the gap</h3><p>Exact miss, named in plain English.</p></div>
-      <div class="hiw-step"><div class="n">02 · Generate</div><h3>Write a small set</h3><p>Built for that error — not a random printable.</p></div>
-      <div class="hiw-step"><div class="n">03 · Grade</div><h3>Know what landed</h3><p>Instant signal before the next set.</p></div>
-      <div class="hiw-step"><div class="n">04 · Adapt</div><h3>Change on purpose</h3><p>Scaffold or stretch — same skill, new set.</p></div>
+    <div class="cycle-stage">
+      <div class="cycle-note" data-for="quiz"><span class="who">→ Quiz</span>Exact miss, named in plain English — the gap a parent can say out loud.<span class="ptr" aria-hidden="true"></span></div>
+      <div class="cycle-note" data-for="gen"><span class="who">→ Generate</span>A fresh set built for that error — not a random printable.<span class="ptr" aria-hidden="true"></span></div>
+      <div class="cycle-note" data-for="grade"><span class="who">→ Grade</span>Instant signal before the next set — what landed, what didn’t.<span class="ptr" aria-hidden="true"></span></div>
+      <div class="cycle-note" data-for="adapt"><span class="who">→ Adapt</span>Scaffold or stretch, then back to Quiz — that’s the loop.<span class="ptr" aria-hidden="true"></span></div>
+      <div class="cycle" role="img" aria-label="Quiz to Generate to Grade to Adapt, then back to Quiz">
+        <svg class="cycle-svg" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="78"/></svg>
+        <div class="cycle-core"><b>THE</b><span>LOOP</span></div>
+        <div class="cycle-node quiz"><div class="n">01 · Quiz</div><h3>Find the gap</h3></div>
+        <div class="cycle-node gen"><div class="n">02 · Generate</div><h3>Write a small set</h3></div>
+        <div class="cycle-node grade"><div class="n">03 · Grade</div><h3>Know what landed</h3></div>
+        <div class="cycle-node adapt"><div class="n">04 · Adapt</div><h3>Change on purpose</h3></div>
+      </div>
     </div>
-    <div class="hiw-loop">Diagnose → generate → grade → adapt</div>
   </div></div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Four beats only. This is the product. Don’t list features — walk the loop.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Each outside note points at its block. Close on Adapt → Quiz.</p></aside>
 </section>
 
 <section class="slide slide-plain" id="s4">
   <div class="body" style="min-height:calc(100vh - 48px)"><div class="content demo-hero">
     <div class="kicker">Live demo</div>
-    <h2>Same skill. Wrong answer. Next set changes on purpose.</h2>
+    <h2>Same skill. Wrong answer.<br>Next set changes on purpose.</h2>
     <div class="demo-tabs">
       <span>Quiz</span><span>Gap</span><span>Practice</span><span class="on">Adapt</span>
     </div>
@@ -411,32 +450,32 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
   <div class="topbar">
     <div class="topbar-row">
       <div class="topbar-copy">
-        <h1>Why start here</h1>
-        <p>Broad tutors exist. Parents still need the right five minutes tonight.</p>
+        <h1>What doesn’t exist at 8pm</h1>
+        <p>Useful new angle. Someone would actually use it tonight.</p>
       </div>
       <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
     </div>
   </div>
   <div class="body"><div class="content beach-full">
-    <div class="beach-row">
-      <div class="label">Landscape</div>
-      <div><div class="title">Personalization already exists</div><p>Khan and others personalize at huge scale — we don’t claim they stand still.</p></div>
+    <div class="beach-row exists">
+      <div class="label">Exists</div>
+      <div><div class="title">Tutors. Khan Academy. Worksheets.</div><p>Help and personalization already scale. We don’t claim the category is empty.</p></div>
     </div>
     <div class="beach-row focus">
-      <div class="label">Our wedge</div>
-      <div><div class="title">The right five minutes tonight</div><p>A parent who needs a <strong>fresh set</strong> from <strong>this error pattern</strong> — not another generic worksheet.</p></div>
+      <div class="label">Doesn’t exist</div>
+      <div><div class="title">A customized learning journey — right now</div><p>From <strong>this miss</strong> (bigger-bottom) to a <strong>fresh set tonight</strong> — not a tutor chat, not a diagnosis, not another generic worksheet.</p></div>
     </div>
     <div class="beach-row start">
-      <div class="label">Sequence</div>
-      <div><div class="title">Student loop now → teachers next</div><p>Ship the adapt path this weekend. Teacher clarity and a small pilot after.</p></div>
+      <div class="label">Who uses it</div>
+      <div><div class="title">Parents, teachers, and students use this tonight</div><p>Same-night kitchen-table loop. Live adapt demo proves it. Teachers stay in control.</p></div>
     </div>
   </div></div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Beachhead = stuck kid / parent same-night. Teachers next. Schools later.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Map to judges: Innovation = customized journey from this error tonight. Market fit = parent + teacher + student. Completeness = live adapt demo. Say Khan Academy, not Khan. Don’t claim personalization is new — claim the same-night journey from this miss.</p></aside>
 </section>
 
 <section class="slide" id="s6">
   <div class="close-v2">
-    <img class="tiny" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
+    <img class="tiny" src="unstuck-logo-icon.png" alt="UnStuck"/>
     <div class="trust">
       <span>Personalize practice</span>
       <span>Don’t diagnose disabilities</span>
