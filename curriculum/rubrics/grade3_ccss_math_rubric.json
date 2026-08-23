@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Grade 3 Mathematics Evaluation Rubric",
+    "grade": 3,
+    "standards_framework": "Common Core State Standards (CCSS)",
+    "total_domains": 5,
+    "total_standards": 25,
+    "max_points_per_standard": 4,
+    "total_max_points": 100,
+    "proficiency_scale": {
+      "4": {
+        "label": "Exceeds Standard",
+        "description": "Multiplies and divides within 100 fluently; models unit fractions and justifies fraction models on number lines.",
+        "score_range": { "min": 88, "max": 100 },
+        "percentage_range": "88–100%",
+        "action": "Accelerate to Grade 4 fraction equivalence & decomposing"
+      },
+      "3": {
+        "label": "Meets Standard",
+        "description": "Fluently multiplies and divides within 100 and understands unit fractions 1/b.",
+        "score_range": { "min": 75, "max": 87 },
+        "percentage_range": "75–87%",
+        "action": "Continue Grade 3 standard pace"
+      },
+      "2": {
+        "label": "Approaching Standard",
+        "description": "Multiplies using skip counting; needs visual support for division or fractions.",
+        "score_range": { "min": 50, "max": 74 },
+        "percentage_range": "50–74%",
+        "action": "Targeted multiplication arrays and visual fraction models"
+      },
+      "1": {
+        "label": "Below Standard",
+        "description": "Struggles with concept of equal groups and division.",
+        "score_range": { "min": 0, "max": 49 },
+        "percentage_range": "0–49%",
+        "action": "Intensive repeated addition and grouping intervention"
+      }
+    }
+  },
+  "domains": [
+    {
+      "code": "OA",
+      "title": "Operations & Algebraic Thinking",
+      "max_points": 20,
+      "standards": [
+        {
+          "id": "3.OA.1",
+          "description": "Interpret products of whole numbers, e.g., interpret 5 × 7 as the total number of objects in 5 groups of 7 objects each.",
+          "max_points": 4,
+          "levels": {
+            "4": "Applies properties of operations (distributive/associative) to solve multi-step problems.",
+            "3": "Accurately represents and computes products within 100.",
+            "2": "Solves using repeated addition with minor counting errors.",
+            "1": "Confuses addition with multiplication."
+          }
+        }
+      ]
+    },
+    {
+      "code": "NF",
+      "title": "Number & Operations—Fractions",
+      "max_points": 16,
+      "standards": [
+        {
+          "id": "3.NF.1",
+          "description": "Understand a fraction 1/b as the quantity formed by 1 part when a whole is partitioned into b equal parts.",
+          "max_points": 4,
+          "levels": {
+            "4": "Explains partitioning and locates unit and non-unit fractions on a number line.",
+            "3": "Correctly identifies unit fractions 1/b in area and set models.",
+            "2": "Identifies shaded parts but confuses numerator and denominator.",
+            "1": "Unable to partition shapes into equal parts."
+          }
+        }
+      ]
+    }
+  ]
+}

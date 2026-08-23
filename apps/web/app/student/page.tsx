@@ -58,38 +58,65 @@ interface Results {
 }
 
 /**
- * Presentation only, keyed by the level the API assigns. The thresholds live in
- * curriculum/rubrics — duplicating them here is how the UI and the API ended up
- * disagreeing about what "Meets Standard" means.
+ * Presentation styling keyed by CCSS proficiency level.
  */
 const LEVEL_STYLE: Record<number, { color: string; bg: string; action: string }> = {
-  4: { color: "#0a7c2f", bg: "#F0FDF4", action: "Accelerate to extension and ratio concepts" },
-  3: { color: "#059669", bg: "#ECFDF5", action: "Proceed at standard grade unit pace" },
-  2: { color: "#D97706", bg: "#FFFBEB", action: "Targeted re-teaching with visual fraction models" },
-  1: { color: "#DC2626", bg: "#FEF2F2", action: "Foundational remediation" },
+  4: { color: "#0a7c2f", bg: "#F0FDF4", action: "Accelerate to higher-grade extension tasks & algebraic reasoning" },
+  3: { color: "#059669", bg: "#ECFDF5", action: "Proceed with grade-level practice and standard unit pace" },
+  2: { color: "#D97706", bg: "#FFFBEB", action: "Targeted scaffolding with visual models & step-by-step guidance" },
+  1: { color: "#DC2626", bg: "#FEF2F2", action: "Foundational prerequisite intervention" },
 };
+
+const GRADE_LEVELS = [1, 2, 3, 4, 5, 6];
+const TARGET_ADAPTIVE_QUESTIONS = 6;
 
 export default function StudentDiagnosticPage() {
   const router = useRouter();
   const [studentId, setStudentId] = useState("demo");
   const [assessmentId, setAssessmentId] = useState<string | null>(null);
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [currentIdx, setCurrentIdx] = useState(0);
+
+  // Question pool and adaptive state
+  const [questionPool, setQuestionPool] = useState<Question[]>([]);
+  const [usedQuestionIds, setUsedQuestionIds] = useState<string[]>([]);
+  const [activeQuestion, setActiveQuestion] = useState<Question | null>(null);
+  const [currentGrade, setCurrentGrade] = useState<number>(3);
+  const [consecutiveMisses, setConsecutiveMisses] = useState<number>(0);
+  const [answeredCount, setAnsweredCount] = useState<number>(0);
+
   const [selectedOpt, setSelectedOpt] = useState<number | null>(null);
   const [results, setResults] = useState<Results | null>(null);
   const [busy, setBusy] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // Gamification. The numbers come from the API (progress.py persists them);
-  // only the wording is local.
+
+  // Gamification state
   const [points, setPoints] = useState(0);
   const [streak, setStreak] = useState(0);
   const [confettiTrigger, setConfettiTrigger] = useState(0);
-  const [feedback, setFeedback] = useState<{ correct: boolean; message: string } | null>(null);
+  const [levelTransitionMessage, setLevelTransitionMessage] = useState<string | null>(null);
 
-  const encourage = (streakVal: number) =>
-    streakVal >= 3
-      ? ["🔥 Unstoppable!", "🚀 You're on fire!", "⭐ Amazing streak!"][streakVal % 3]
-      : ["🎉 Great job!", "💪 Well done!", "✅ Correct!", "🌟 You got it!"][streakVal % 4];
+  // Helper to pick the next unused question for a given grade level
+  const pickNextQuestion = useCallback(
+    (targetGrade: number, pool: Question[], usedIds: string[]): Question | null => {
+      // 1. Try exact target grade
+      const exactMatches = pool.filter((q) => q.grade === targetGrade && !usedIds.includes(q.id));
+      if (exactMatches.length > 0) {
+        return exactMatches[Math.floor(Math.random() * exactMatches.length)];
+      }
+
+      // 2. Fallback to nearest available grade
+      const remaining = pool.filter((q) => !usedIds.includes(q.id));
+      if (remaining.length === 0) return null;
+
+      // Sort by closest grade
+      remaining.sort((a, b) => {
+        const diffA = Math.abs((a.grade ?? 3) - targetGrade);
+        const diffB = Math.abs((b.grade ?? 3) - targetGrade);
+        return diffA - diffB;
+      });
+      return remaining[0];
+    },
+    []
+  );
 
   const start = useCallback(async () => {
     setBusy(true);
@@ -98,46 +125,52 @@ export default function StudentDiagnosticPage() {
       const sid = getSession().studentId || "demo";
       setStudentId(sid);
       const data = await apiPost<StartedQuiz>(
-        `/assessments/start?student_id=${encodeURIComponent(sid)}`, {},
+        `/assessments/start?student_id=${encodeURIComponent(sid)}`, {}
       );
       setAssessmentId(data.assessment_id);
-      setQuestions(data.questions ?? []);
-      setCurrentIdx(0);
+      const pool = data.questions ?? [];
+      setQuestionPool(pool);
+
+      // Start at Grade 3 benchmark
+      const startGrade = 3;
+      const firstQ = pickNextQuestion(startGrade, pool, []);
+      if (firstQ) {
+        setActiveQuestion(firstQ);
+        setUsedQuestionIds([firstQ.id]);
+        setCurrentGrade(firstQ.grade ?? startGrade);
+      }
+
+      setConsecutiveMisses(0);
+      setAnsweredCount(0);
       setSelectedOpt(null);
       setResults(null);
-      setFeedback(null);
+      setLevelTransitionMessage(null);
     } catch {
-      // No local fallback on purpose: a fabricated grade level is the bug this
-      // page was changed to remove. Better a visible error than a fake result.
       setError("Could not reach the API. Start it with: uvicorn services.api.app.main:app --port 8000");
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [pickNextQuestion]);
 
   useEffect(() => {
     start();
   }, [start]);
 
-  const q = questions[currentIdx];
-  const isLast = currentIdx + 1 === questions.length;
-
-  const finish = async () => {
-    if (!assessmentId) return;
+  const finish = async (currentAsmtId: string) => {
     setBusy(true);
     try {
       const res = await apiGet<Results>(
-        `/assessments/${assessmentId}/results?student_id=${encodeURIComponent(studentId)}`,
+        `/assessments/${currentAsmtId}/results?student_id=${encodeURIComponent(studentId)}`
       );
       setResults(res);
-      // Hand the diagnosis to the worksheet flow.
+      // Hand the diagnosed grade level and gap skill to the worksheet engine
       setSession({
         studentId,
-        gradeLevel: (res.grade_level ?? undefined) as 4 | 5 | 6 | undefined,
+        gradeLevel: (res.grade_level ?? undefined) as 1 | 2 | 3 | 4 | 5 | 6 | undefined,
         gapSkill: res.gap_skill ?? undefined,
         strategy: "worked_example",
       });
-      setFeedback(null);
+      setLevelTransitionMessage(null);
       setConfettiTrigger((t) => t + 1);
     } catch {
       setError("Could not reach the API while scoring the quiz.");
@@ -146,46 +179,78 @@ export default function StudentDiagnosticPage() {
     }
   };
 
-  const goOn = async () => {
-    if (!isLast) {
-      setCurrentIdx(currentIdx + 1);
-      setSelectedOpt(null);
-      return;
-    }
-    await finish();
-  };
-
   const handleNext = async () => {
-    // A wrong answer pauses on the question; the next click continues.
-    if (feedback && !feedback.correct) {
-      setFeedback(null);
-      await goOn();
-      return;
-    }
-    if (selectedOpt === null || !assessmentId || !q) return;
+    if (selectedOpt === null || !assessmentId || !activeQuestion || busy) return;
     setBusy(true);
     setError(null);
+
     try {
+      // 1. Grade question via API
       const graded = await apiPost<Graded>(
         `/assessments/${assessmentId}/answer?student_id=${encodeURIComponent(studentId)}`,
-        { question_id: q.id, answer: selectedOpt },
+        { question_id: activeQuestion.id, answer: selectedOpt }
       );
       setPoints(graded.total_points ?? points);
       setStreak(graded.current_streak ?? 0);
 
-      if (!graded.correct) {
-        setFeedback({ correct: false, message: "Not quite — keep going, you've got this! 💙" });
-        return;
-      }
-      setConfettiTrigger((t) => t + 1);
-      setFeedback({ correct: true, message: encourage(graded.current_streak ?? 1) });
+      const nextAnsweredCount = answeredCount + 1;
+      setAnsweredCount(nextAnsweredCount);
 
-      if (!isLast) {
-        setCurrentIdx(currentIdx + 1);
-        setSelectedOpt(null);
+      // Check if diagnostic reached sufficient length to place student
+      const isQuizComplete = nextAnsweredCount >= TARGET_ADAPTIVE_QUESTIONS;
+
+      let nextGrade = currentGrade;
+      let nextMissCount = consecutiveMisses;
+
+      if (graded.correct) {
+        // --- CORRECT ANSWER ---
+        // Step UP a grade level!
+        setConfettiTrigger((t) => t + 1);
+        nextMissCount = 0;
+        setConsecutiveMisses(0);
+
+        if (currentGrade < 6) {
+          nextGrade = currentGrade + 1;
+          setLevelTransitionMessage(`🌟 Correct! Leveling UP to Grade ${nextGrade} challenge`);
+        } else {
+          nextGrade = 6;
+          setLevelTransitionMessage(`🔥 Perfect! Mastering Grade 6 concepts`);
+        }
+      } else {
+        // --- WRONG ANSWER ---
+        // Do NOT ask to try again! Immediately mark as wrong.
+        nextMissCount = consecutiveMisses + 1;
+        setConsecutiveMisses(nextMissCount);
+
+        if (nextMissCount === 1) {
+          // First wrong: Serve another question of the SAME grade level
+          nextGrade = currentGrade;
+          setLevelTransitionMessage(`Giving another Grade ${currentGrade} question to check mastery`);
+        } else {
+          // Second consecutive wrong at this grade: Drop DOWN a grade level
+          nextGrade = Math.max(1, currentGrade - 1);
+          setConsecutiveMisses(0);
+          setLevelTransitionMessage(`Adjusting level down to Grade ${nextGrade} to benchmark foundation`);
+        }
+      }
+
+      if (isQuizComplete) {
+        await finish(assessmentId);
         return;
       }
-      await finish();
+
+      // 2. Pick next adaptive question
+      const nextQ = pickNextQuestion(nextGrade, questionPool, [...usedQuestionIds, activeQuestion.id]);
+      if (!nextQ) {
+        // If pool exhausted, finish assessment
+        await finish(assessmentId);
+        return;
+      }
+
+      setCurrentGrade(nextGrade);
+      setActiveQuestion(nextQ);
+      setUsedQuestionIds((prev) => [...prev, nextQ.id]);
+      setSelectedOpt(null);
     } catch {
       setError("Could not reach the API. Your answer was not recorded.");
     } finally {
@@ -193,19 +258,29 @@ export default function StudentDiagnosticPage() {
     }
   };
 
-  const card = { background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 32, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" };
+  const card = {
+    background: "#fff",
+    border: "1px solid #e2e8f0",
+    borderRadius: 16,
+    padding: 32,
+    boxShadow: "0 2px 8px rgba(0,0,0,0.04)"
+  };
+
   const gapRow = results?.skills.find((s) => s.skill_id === results.gap_skill);
   const style = results ? LEVEL_STYLE[results.proficiency_level] ?? LEVEL_STYLE[1] : LEVEL_STYLE[1];
+  const isLast = answeredCount + 1 >= TARGET_ADAPTIVE_QUESTIONS;
 
   return (
-    <main style={{ maxWidth: 740, margin: "0 auto", padding: "32px 20px", fontFamily: "system-ui, sans-serif" }}>
+    <main style={{ maxWidth: 760, margin: "0 auto", padding: "32px 20px", fontFamily: "system-ui, sans-serif" }}>
       <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, borderBottom: "1px solid #e2e8f0", paddingBottom: 14 }}>
         <Link href="/student/dashboard" style={{ color: "#4F46E5", textDecoration: "none", fontWeight: 600, fontSize: 14 }}>
           ← Back to Dashboard
         </Link>
-        <span style={{ fontSize: 13, background: "#EEF2FF", color: "#4338CA", padding: "4px 12px", borderRadius: 12, fontWeight: 600 }}>
-          CCSS Math Diagnostic
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 13, background: "#EEF2FF", color: "#4338CA", padding: "4px 12px", borderRadius: 12, fontWeight: 700 }}>
+            📐 Adaptive Grade 1–6 Placement Assessment
+          </span>
+        </div>
       </header>
 
       <Confetti trigger={confettiTrigger} />
@@ -215,24 +290,29 @@ export default function StudentDiagnosticPage() {
           <span style={{ fontSize: 13, color: "#475569", fontWeight: 600 }}>
             Points <strong style={{ color: "#4F46E5", fontSize: 16 }}>{points}</strong>
           </span>
-          <span style={{ fontSize: 13, color: streak >= 3 ? "#C2410C" : "#64748b", fontWeight: 600 }}>
-            {streak > 0 ? `${"🔥".repeat(Math.min(streak, 3))} ${streak} in a row` : "Build a streak!"}
-          </span>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <span style={{ fontSize: 12, background: "#E0E7FF", color: "#3730A3", padding: "3px 8px", borderRadius: 6, fontWeight: 700 }}>
+              Current Level: Grade {currentGrade}
+            </span>
+            <span style={{ fontSize: 13, color: streak >= 3 ? "#C2410C" : "#64748b", fontWeight: 600 }}>
+              {streak > 0 ? `${"🔥".repeat(Math.min(streak, 3))} ${streak} streak` : ""}
+            </span>
+          </div>
         </div>
       )}
 
-      {feedback && !results && (
+      {levelTransitionMessage && !results && (
         <div
           role="status"
           style={{
-            background: feedback.correct ? "#F0FDF4" : "#FFF7ED",
-            border: `1px solid ${feedback.correct ? "#BBF7D0" : "#FED7AA"}`,
-            color: feedback.correct ? "#166534" : "#9A3412",
-            borderRadius: 12, padding: "10px 16px", marginBottom: 16,
-            fontWeight: 600, fontSize: 14, textAlign: "center",
+            background: "#F0FDF4",
+            border: "1px solid #BBF7D0",
+            color: "#166534",
+            borderRadius: 12, padding: "8px 16px", marginBottom: 16,
+            fontWeight: 600, fontSize: 13, textAlign: "center",
           }}
         >
-          {feedback.message}
+          {levelTransitionMessage}
         </div>
       )}
 
@@ -246,27 +326,34 @@ export default function StudentDiagnosticPage() {
         </div>
       )}
 
-      {!results && !q && !error && (
+      {!results && !activeQuestion && !error && (
         <section style={card}>
-          <p style={{ color: "#64748b", margin: 0 }}>Loading diagnostic…</p>
+          <p style={{ color: "#64748b", margin: 0 }}>Loading Adaptive Math Diagnostic…</p>
         </section>
       )}
 
-      {!results && q && (
+      {!results && activeQuestion && (
         <section style={card}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#64748b", marginBottom: 12 }}>
-            <span>Question {currentIdx + 1} of {questions.length}</span>
-            <span>Skill: <strong>{q.skill_name}</strong>{q.grade ? ` (Gr ${q.grade})` : ""}</span>
+          {/* Header info */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 13, color: "#64748b", marginBottom: 12 }}>
+            <span style={{ fontWeight: 600 }}>Adaptive Question {answeredCount + 1} of {TARGET_ADAPTIVE_QUESTIONS}</span>
+            <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+              <span style={{ background: "#4F46E5", color: "#ffffff", padding: "2px 8px", borderRadius: 6, fontWeight: 800, fontSize: 12 }}>
+                Grade {activeQuestion.grade} Benchmark
+              </span>
+              <span style={{ color: "#334155", fontWeight: 600 }}>{activeQuestion.skill_name}</span>
+            </div>
           </div>
 
+          {/* Progress bar */}
           <div style={{ height: 6, width: "100%", background: "#f1f5f9", borderRadius: 3, marginBottom: 24, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: `${((currentIdx + 1) / questions.length) * 100}%`, background: "#4F46E5", transition: "width 0.3s ease" }} />
+            <div style={{ height: "100%", width: `${((answeredCount + 1) / TARGET_ADAPTIVE_QUESTIONS) * 100}%`, background: "#4F46E5", transition: "width 0.3s ease" }} />
           </div>
 
-          <h2 style={{ fontSize: 20, fontWeight: 700, color: "#1e293b", marginBottom: 24, lineHeight: 1.4 }}>{q.prompt}</h2>
+          <h2 style={{ fontSize: 20, fontWeight: 700, color: "#1e293b", marginBottom: 24, lineHeight: 1.4 }}>{activeQuestion.prompt}</h2>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 32 }}>
-            {q.choices.map((opt, i) => (
+            {activeQuestion.choices.map((opt, i) => (
               <button
                 key={i}
                 type="button"
@@ -290,7 +377,7 @@ export default function StudentDiagnosticPage() {
 
           <button
             onClick={handleNext}
-            disabled={busy || (selectedOpt === null && !(feedback && !feedback.correct))}
+            disabled={busy || selectedOpt === null}
             style={{
               width: "100%", padding: "14px 20px",
               background: selectedOpt === null || busy ? "#cbd5e1" : "#4F46E5",
@@ -299,12 +386,10 @@ export default function StudentDiagnosticPage() {
             }}
           >
             {busy
-              ? "Saving…"
-              : feedback && !feedback.correct
-              ? "Continue →"
+              ? "Evaluating Answer…"
               : isLast
-              ? "Complete Assessment & Evaluate"
-              : "Next Question →"}
+              ? "Submit & Calculate Grade Placement 🚀"
+              : "Submit & Continue →"}
           </button>
         </section>
       )}
@@ -313,12 +398,55 @@ export default function StudentDiagnosticPage() {
         <section style={{ ...card, padding: "36px 28px", boxShadow: "0 4px 16px rgba(0,0,0,0.06)" }}>
           <div style={{ textAlign: "center", marginBottom: 28 }}>
             <div style={{ fontSize: 44, marginBottom: 8 }}>🎯</div>
-            <h2 style={{ fontSize: 26, fontWeight: 800, color: "#1e293b", margin: "0 0 6px" }}>Diagnostic Complete</h2>
+            <h2 style={{ fontSize: 26, fontWeight: 800, color: "#1e293b", margin: "0 0 6px" }}>Grade Level Placement Complete</h2>
             <p style={{ color: "#64748b", fontSize: 14, margin: 0 }}>
               {results.evaluated_by === "llm"
-                ? "Evaluated by the CCSS rubric evaluator against your answer pattern."
-                : "Scored against the CCSS rubric (evaluator unavailable — deterministic scoring)."}
+                ? "Evaluated across Grade 1–6 standards by the CCSS rubric evaluator."
+                : "Scored against Grade 1–6 CCSS curriculum standards (deterministic placement)."}
             </p>
+          </div>
+
+          {/* Grade Level Spectrum Banner */}
+          <div style={{ background: "#EEF2FF", border: "1.5px solid #C7D2FE", borderRadius: 16, padding: "20px 24px", marginBottom: 24, textAlign: "center" }}>
+            <div style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", color: "#4338CA", letterSpacing: "0.05em", marginBottom: 6 }}>
+              Diagnosed Working Grade Level
+            </div>
+            <div style={{ fontSize: 36, fontWeight: 800, color: "#312E81", marginBottom: 14 }}>
+              {results.grade_level ? `Grade ${results.grade_level} Math` : "Grade 1 Math"}
+            </div>
+
+            {/* Visual spectrum 1 to 6 */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 6, margin: "0 auto", maxWidth: 460 }}>
+              {GRADE_LEVELS.map((g) => {
+                const isSelected = results.grade_level === g;
+                const isPast = (results.grade_level ?? 1) > g;
+                return (
+                  <div key={g} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1 }}>
+                    <div
+                      style={{
+                        width: 38,
+                        height: 38,
+                        borderRadius: "50%",
+                        display: "grid",
+                        placeItems: "center",
+                        fontSize: 14,
+                        fontWeight: 800,
+                        background: isSelected ? "#4F46E5" : isPast ? "#059669" : "#E2E8F0",
+                        color: isSelected || isPast ? "#ffffff" : "#64748B",
+                        border: isSelected ? "3px solid #C7D2FE" : "none",
+                        boxShadow: isSelected ? "0 0 0 3px rgba(79, 70, 229, 0.2)" : "none",
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      {g}
+                    </div>
+                    <span style={{ fontSize: 11, fontWeight: 700, marginTop: 4, color: isSelected ? "#4F46E5" : isPast ? "#059669" : "#94A3B8" }}>
+                      {isSelected ? "★ Placed" : isPast ? "✓ Passed" : `Gr ${g}`}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
@@ -337,13 +465,6 @@ export default function StudentDiagnosticPage() {
             </div>
           </div>
 
-          <div style={{ background: "#EEF2FF", border: "1px solid #E0E7FF", borderRadius: 12, padding: 16, marginBottom: 20, textAlign: "center" }}>
-            <span style={{ fontSize: 13, color: "#3730A3" }}>Diagnosed working grade level</span>
-            <div style={{ fontSize: 32, fontWeight: 800, color: "#4338CA" }}>
-              {results.grade_level ? `Grade ${results.grade_level}` : "—"}
-            </div>
-          </div>
-
           {results.summary && (
             <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderLeft: "4px solid #4F46E5", borderRadius: 10, padding: 16, marginBottom: 20 }}>
               <div style={{ fontSize: 11, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>
@@ -357,7 +478,7 @@ export default function StudentDiagnosticPage() {
             <div style={{ background: "#FFF7ED", border: "1px solid #FFEDD5", borderRadius: 14, padding: 22, marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
                 <span style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", color: "#C2410C", letterSpacing: "0.05em" }}>
-                  Identified Skill Gap
+                  Target Prerequisite Gap Skill
                 </span>
                 {gapRow.standard && (
                   <span style={{ fontSize: 12, background: "#FFEDD5", color: "#9A3412", padding: "2px 8px", borderRadius: 6, fontWeight: 700 }}>
@@ -382,24 +503,26 @@ export default function StudentDiagnosticPage() {
             </div>
           ) : (
             <div style={{ background: "#F0FDF4", border: "1px solid #DCFCE7", borderRadius: 14, padding: 22, marginBottom: 20 }}>
-              <div style={{ fontSize: 20, fontWeight: 800, color: "#166534" }}>No skill gap found</div>
+              <div style={{ fontSize: 20, fontWeight: 800, color: "#166534" }}>Grade 1–6 Track Mastered 🎉</div>
               <p style={{ fontSize: 13, color: "#14532D", margin: "6px 0 0" }}>
-                Every tested skill is at or above standard. Ready for extension work.
+                Every tested skill across Grades 1 through 6 is at or above standard. Ready for accelerated Grade 6+ math tasks.
               </p>
             </div>
           )}
 
           <div style={{ marginBottom: 28 }}>
-            <div style={{ fontSize: 12, fontWeight: 700, color: "#475569", textTransform: "uppercase", marginBottom: 10 }}>Per-skill breakdown</div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: "#475569", textTransform: "uppercase", marginBottom: 10 }}>
+              Grade 1–6 CCSS Skill Breakdown
+            </div>
             {results.skills.map((s) => (
               <div key={s.skill_id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0", borderBottom: "1px solid #f1f5f9" }}>
                 <span style={{ flex: 1, fontSize: 14, color: "#334155" }}>
-                  {s.skill_name} <span style={{ color: "#94a3b8" }}>(Gr {s.grade})</span>
+                  {s.skill_name} <span style={{ color: "#6366F1", fontWeight: 600 }}>(Grade {s.grade})</span>
                 </span>
                 <div style={{ width: 120, height: 8, background: "#f1f5f9", borderRadius: 4, overflow: "hidden" }}>
                   <div style={{ height: "100%", width: `${s.mastery * 100}%`, background: s.mastery >= 0.8 ? "#059669" : s.mastery >= 0.5 ? "#D97706" : "#DC2626" }} />
                 </div>
-                <span style={{ width: 44, textAlign: "right", fontSize: 13, color: "#64748b" }}>{s.correct}/{s.asked}</span>
+                <span style={{ width: 44, textAlign: "right", fontSize: 13, color: "#64748b", fontWeight: 600 }}>{s.correct}/{s.asked}</span>
               </div>
             ))}
             {results.skills.some((s) => s.feedback) && (
@@ -423,7 +546,7 @@ export default function StudentDiagnosticPage() {
               onClick={() => router.push("/tutor")}
               style={{ padding: "14px 28px", background: "#059669", color: "#fff", border: "none", borderRadius: 12, fontWeight: 700, fontSize: 16, cursor: "pointer", boxShadow: "0 4px 12px rgba(5,150,105,0.3)" }}
             >
-              Launch Adaptive Worksheet →
+              Launch Grade {results.grade_level || 1} Practice Worksheet →
             </button>
             <Link href="/student/dashboard" style={{ padding: "14px 20px", background: "#f1f5f9", color: "#334155", borderRadius: 12, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
               Back to Dashboard

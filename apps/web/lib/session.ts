@@ -1,11 +1,10 @@
 /**
- * Student session in localStorage. Role 1 owns this object; this is a minimal
- * safe implementation so the worksheet flow works before the shell lands.
- * Shape matches StudentSession in packages/types.
+ * Student session in localStorage.
+ * Grade levels 1 through 6 supported.
  */
 export type StudentSession = {
   studentId: string;
-  gradeLevel?: 4 | 5 | 6;
+  gradeLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   gapSkill?: string;
   strategy?: string;
 };
