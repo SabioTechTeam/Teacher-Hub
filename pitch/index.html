@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>UnStuck — Pitch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --cream:#FDFDF5; --ink:#0B1220; --muted:#4B5565;
+  --blue:#6284E4; --lavender:#E5DFF2; --sage:#DFEAD5; --yellow:#F2F294;
+  --peach:#F7E0D6; --white:#fff;
+  --pad-x: 40px;
+  --shadow: 0 14px 30px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#d8dde8;-webkit-font-smoothing:antialiased}
+.nav{position:sticky;top:0;z-index:40;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 12px;background:var(--ink);color:#fff}
+.nav button{border:0;border-radius:8px;cursor:pointer;background:var(--blue);color:#fff;font:600 13px Inter,system-ui,sans-serif;padding:7px 11px}
+.nav button.ghost{background:transparent;border:1px solid rgba(255,255,255,.35)}
+#counter{margin-left:auto;font-size:12px;opacity:.85}
+.nav-logo{height:34px;width:auto;background:transparent;padding:0;border-radius:8px;object-fit:contain}
+
+.slide{display:none;min-height:calc(100vh - 48px);background:var(--cream);position:relative;overflow:hidden}
+.slide.active{display:flex;flex-direction:column}
+
+.topbar{background:var(--blue);color:#fff;padding:22px var(--pad-x) 20px;position:relative;overflow:hidden}
+.topbar:after{content:"";position:absolute;right:-36px;top:-46px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12)}
+.topbar-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;position:relative;z-index:1}
+.topbar-copy{flex:1;min-width:0}
+.brand-lockup{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.brand-lockup img{height:64px;width:auto;display:block;background:transparent;padding:0;box-shadow:none;border-radius:14px;object-fit:contain}
+.hero-brand{display:flex;align-items:center;gap:12px;margin:0 0 72px}
+.hero-brand{margin-bottom:22px}.hero-brand img{height:118px;width:auto;max-width:min(720px,90vw);object-fit:contain;background:transparent;box-shadow:none;border-radius:0}
+.hero-brand span{font-weight:800;font-size:22px;letter-spacing:-.03em}
+.close-brand{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.close-brand img{height:72px;width:auto;background:transparent;padding:0;box-shadow:none;border-radius:14px;object-fit:contain}
+.topbar h1{margin:0;font-size:clamp(36px,4.8vw,54px);font-weight:800;letter-spacing:-.045em;line-height:1.02;position:relative}
+.topbar p{margin:8px 0 0;font-size:clamp(16px,1.7vw,20px);font-weight:550;opacity:.95;position:relative;max-width:40em;line-height:1.3}
+
+.body{flex:1;padding:22px var(--pad-x) 24px;position:relative;display:flex;flex-direction:column;justify-content:center}
+.blob-tr,.blob-bl{position:absolute;pointer-events:none;z-index:0;filter:blur(1px);opacity:.45}
+.blob-tr{right:-80px;top:-60px;width:260px;height:200px;border-radius:50%;background:radial-gradient(circle at 30% 40%,#f8c4b8,#c9d7f8 55%,transparent 70%)}
+.blob-bl{left:-90px;bottom:-70px;width:280px;height:210px;border-radius:50%;background:radial-gradient(circle at 60% 40%,#dfead5,#c9d7f8 55%,transparent 70%)}
+.content{position:relative;z-index:1;width:100%}
+
+.eyebrow,.tag{display:inline-block;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.tag{background:rgba(255,255,255,.7)}
+
+.phone-wrap{display:flex;justify-content:center;align-items:center}
+.phone{width:280px;height:560px;background:#141416;border-radius:40px;padding:11px;box-shadow:0 28px 55px rgba(15,23,42,.28),inset 0 0 0 1px rgba(255,255,255,.12);position:relative}
+.phone:before{content:"";position:absolute;top:16px;left:50%;transform:translateX(-50%);width:92px;height:20px;background:#050505;border-radius:18px;z-index:3}
+.phone-screen{height:100%;border-radius:30px;overflow:hidden;background:#f3f4f7;display:flex;flex-direction:column;padding:36px 14px 12px}
+.ph-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.ph-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--lavender),var(--blue))}
+.ph-dots{display:flex;gap:5px}.ph-dots i{width:8px;height:8px;border-radius:50%;background:#cfd5e0;display:block}
+.ph-card{border-radius:16px;padding:12px;margin-bottom:10px;box-shadow:0 6px 14px rgba(15,23,42,.06)}
+.ph-card.green{background:var(--sage)}.ph-card.lav{background:var(--lavender)}.ph-card.blue{background:#d7e2fb}
+.ph-card.white{background:#fff;border:1px solid rgba(15,23,42,.05)}
+.ph-card h4{margin:0 0 4px;font-size:14px;font-weight:800}
+.ph-card p{margin:0;font-size:12px;color:var(--muted);font-weight:550;line-height:1.35}
+.ph-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.ph-pill{display:inline-block;margin-top:8px;padding:6px 10px;border-radius:999px;background:var(--ink);color:#fff;font-size:11px;font-weight:700}
+.ph-progress{height:8px;border-radius:999px;background:#e8ebf2;overflow:hidden;margin-top:10px}
+.ph-progress span{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--blue),#9bb3f0)}
+.ph-meta{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;font-weight:700;color:var(--muted)}
+.ph-nav{margin-top:auto;background:rgba(255,255,255,.92);border-radius:16px;padding:11px 16px;display:flex;justify-content:space-between}
+.ph-nav i{width:16px;height:4px;border-radius:4px;background:#c5ccd8;display:block}
+.ph-nav i.on{background:var(--blue);width:20px}
+
+.hero{background:linear-gradient(135deg,var(--peach) 0%,var(--cream) 48%,#e8eeff 100%);min-height:calc(100vh - 48px);display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:center;padding:28px var(--pad-x) 28px}
+@media (max-width:980px){.hero{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(34px,4.2vw,52px);line-height:1.08;letter-spacing:-.035em;margin:0 0 16px;font-weight:800;max-width:18ch}
+.hero .sub{margin:0 0 20px;max-width:28em;color:var(--muted);font-size:clamp(17px,1.8vw,21px);font-weight:550;line-height:1.4}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.cta{display:inline-flex;padding:12px 18px;border-radius:999px;background:var(--ink);color:#fff;font-weight:700;font-size:14px}
+.cta.soft{background:#fff;color:var(--ink);border:1px solid rgba(15,23,42,.08)}
+.foot{margin-top:16px;font-weight:700;font-size:14px;opacity:.78}
+
+.problem-grid{display:grid;grid-template-columns:1.45fr .95fr;gap:16px;align-items:stretch}
+@media (max-width:980px){.problem-grid{grid-template-columns:1fr}}
+.shock{border-radius:26px;padding:24px 24px 22px;background:var(--yellow);box-shadow:var(--shadow);position:relative;overflow:hidden;min-height:320px;display:flex;flex-direction:column;justify-content:center}
+.shock:after{content:"";position:absolute;right:-28px;bottom:-36px;width:140px;height:140px;border-radius:34px;background:rgba(255,255,255,.35);transform:rotate(18deg)}
+.shock .eyebrow{position:relative;z-index:1;background:rgba(11,18,32,.08)}
+.shock .big{position:relative;z-index:1;margin:12px 0 4px;font-size:clamp(72px,9vw,104px);font-weight:800;letter-spacing:-.07em;line-height:.9}
+.shock h3{position:relative;z-index:1;margin:0 0 12px;font-size:clamp(24px,2.8vw,32px);font-weight:800;letter-spacing:-.03em;max-width:14em;line-height:1.12}
+.pair{position:relative;z-index:1;display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.pair b{display:inline-block;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.8);font-size:15px;font-weight:800}
+.pair b.bad{background:var(--ink);color:#fff}
+.nat-box{position:relative;z-index:1;margin:0 0 10px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.78);border:1px solid rgba(11,18,32,.06)}
+.nat-box .nat-k{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.nat-box .nat-v{font-size:clamp(17px,1.8vw,21px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.nat-box .nat-v em{font-style:normal;color:var(--blue)}
+.az-line{position:relative;z-index:1;margin:0;font-size:15px;font-weight:650;color:rgba(11,18,32,.8);line-height:1.4}
+.side-stack{display:flex;flex-direction:column;gap:14px}
+.side{flex:1;border-radius:22px;padding:20px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center;min-height:150px}
+.side.l{background:var(--lavender)}.side.s{background:var(--sage)}
+.side .n{font-size:clamp(48px,5.5vw,64px);font-weight:800;letter-spacing:-.05em;line-height:1;margin:6px 0 6px}
+.side h3{margin:0 0 6px;font-size:20px;font-weight:800;letter-spacing:-.02em}
+.side p{margin:0;font-size:15px;font-weight:550;color:rgba(11,18,32,.75);line-height:1.35}
+.problem-foot{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.problem-foot span{padding:10px 14px;border-radius:999px;background:#fff;border:1px solid rgba(15,23,42,.06);font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(15,23,42,.04)}
+.footnote{margin-top:10px;font-size:13px;line-height:1.35;color:var(--muted);font-weight:600}
+
+.loop-stage{display:flex;flex-direction:column;align-items:center;gap:22px}
+.puzzle-row{display:flex;align-items:flex-start;justify-content:center;gap:0;flex-wrap:wrap;width:100%}
+.pz{width:170px;text-align:center;padding-top:4px}
+.pz:nth-child(even){margin-top:36px}
+.pz-piece{width:112px;height:112px;margin:0 auto 14px;border-radius:22px;transform:rotate(45deg);box-shadow:0 12px 24px rgba(15,23,42,.1);position:relative}
+.chip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-45deg);width:44px;height:44px;border-radius:50%;background:#fff;border:2px solid var(--ink);display:grid;place-items:center;font-weight:800;font-size:19px}
+.pz h4{margin:0;font-size:17px;font-weight:800;line-height:1.2}
+.pz p{margin:6px 0 0;font-size:14px;color:var(--muted);font-weight:550}
+.connector{height:5px;width:24px;background:rgba(11,18,32,.14);margin-top:60px;border-radius:4px}
+@media (max-width:900px){.connector{display:none}.pz:nth-child(even){margin-top:0}}
+.loop-banner{display:inline-flex;padding:14px 22px;border-radius:999px;background:#fff;border:1px solid rgba(15,23,42,.06);box-shadow:0 8px 20px rgba(15,23,42,.06);font-weight:800;font-size:16px}
+
+.split{display:grid;grid-template-columns:1.08fr .92fr;gap:22px;align-items:center}
+@media (max-width:980px){.split{grid-template-columns:1fr}}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.flow .f{border-radius:18px;padding:20px 10px;text-align:center;min-height:130px;display:flex;flex-direction:column;justify-content:center;gap:6px;box-shadow:var(--shadow);font-weight:800;font-size:18px}
+.flow .f span{font-size:13px;font-weight:600;color:rgba(11,18,32,.65)}
+.callout{margin-top:14px;border-radius:18px;padding:18px 18px;background:#fff;border:1px solid rgba(15,23,42,.06);box-shadow:0 10px 22px rgba(15,23,42,.05);font-size:16px;font-weight:600;line-height:1.35}
+.callout strong{color:var(--blue)}
+
+.rings-wrap{position:relative;width:min(380px,100%);margin:0 auto;aspect-ratio:1}
+.ring{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center}
+.r3{background:var(--lavender)}.r2{background:var(--yellow);inset:13%}
+.r1{background:var(--blue);inset:30%;color:#fff;font-weight:800;font-size:20px;letter-spacing:-.02em;text-align:center;padding:14px;line-height:1.15}
+.legend{display:flex;flex-direction:column;gap:12px}
+.legend-item{display:grid;grid-template-columns:16px 1fr;gap:12px;padding:16px 16px;border-radius:18px;background:#fff;border:1px solid rgba(15,23,42,.05);box-shadow:0 8px 18px rgba(15,23,42,.05)}
+.legend-item i{width:13px;height:13px;border-radius:50%;margin-top:5px}
+.legend-item h4{margin:0 0 4px;font-size:18px;font-weight:800}
+.legend-item p{margin:0;color:var(--muted);font-size:15px;line-height:1.35;font-weight:550}
+.legend-item strong{color:var(--blue)}
+
+.close{min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:flex-end;padding:36px var(--pad-x) 44px;background:var(--yellow);position:relative;overflow:hidden}
+.close .deco{position:absolute;right:-40px;top:30px;width:340px;height:340px;border-radius:40px;background:rgba(255,255,255,.35);transform:rotate(18deg)}
+.close .deco2{position:absolute;right:70px;top:100px;width:200px;height:200px;border-radius:30px;background:var(--lavender);transform:rotate(18deg);opacity:.9}
+.close .deco3{position:absolute;right:145px;top:175px;width:130px;height:130px;border-radius:26px;background:var(--sage);transform:rotate(18deg)}
+.close-inner{position:relative;z-index:2;max-width:940px}
+.close .pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.close .pills span{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.75);font-weight:800;font-size:14px}
+.close h1{margin:0;font-size:clamp(40px,5.4vw,64px);font-weight:800;letter-spacing:-.05em;line-height:1.03;max-width:13em}
+.close .sig{margin-top:20px;font-size:24px;font-weight:800}
+
+.fund-bar{display:flex;height:128px;border-radius:20px;overflow:visible;position:relative;margin-top:8px}
+.seg{position:relative;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;text-align:center;padding:0 8px;line-height:1.15}
+.seg .icon{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:34px;height:34px;border-radius:50%;background:#fff;border:2px solid currentColor;display:grid;place-items:center;font-size:13px;font-weight:800;box-shadow:0 6px 14px rgba(15,23,42,.1)}
+.fund-labels{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
+.fund-labels h4{margin:0 0 6px;font-size:17px;font-weight:800}
+.fund-labels p{margin:0;font-size:14px;color:var(--muted);font-weight:550;line-height:1.35}
+
+.speak{display:none;position:absolute;right:20px;bottom:12px;left:20px;z-index:5;background:rgba(255,255,255,.97);border:1px solid rgba(15,23,42,.08);border-left:6px solid var(--lavender);border-radius:14px;padding:12px 14px;max-height:26%;overflow:auto}
+.speak-label{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.say{margin:0;font-size:13px;line-height:1.35;font-weight:500}
+</style>
+</head>
+<body>
+<div class="nav">
+  <img class="nav-logo" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
+  <button type="button" id="prev">← Prev</button>
+  <button type="button" id="next">Next →</button>
+  <button type="button" class="ghost" id="toggleNotes">Show notes</button>
+  <span id="counter"></span>
+</div>
+
+<section class="slide active" id="s1">
+  <div class="hero">
+    <div>
+      <div class="hero-brand"><img src="unstuck-logo-wordmark.png" alt="UnStuck"/></div>
+      <h1>No kid stays stuck on math at the kitchen table tonight.</h1>
+      <p class="sub">UnStuck: the right practice, written for this student — in minutes. Grades 4–6 math.</p>
+      <div class="cta-row">
+        <span class="cta">Live demo next</span>
+        <span class="cta soft">Same-night parent wedge</span>
+      </div>
+      <div class="foot">Hackathon pitch · 5 minutes</div>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone"><div class="phone-screen">
+        <div class="ph-top"><div class="ph-avatar"></div><div class="ph-dots"><i></i><i></i></div></div>
+        <div class="ph-card green"><h4>Tonight · Compare Fractions</h4><p>Grade 5 · gap found from diagnostic</p></div>
+        <div class="ph-row">
+          <div class="ph-card lav"><h4>Stuck on</h4><p>Bigger bottom ≠ bigger fraction</p></div>
+          <div class="ph-card blue"><h4>Next set</h4><p>Scaffolded visuals</p><span class="ph-pill">Adapt</span></div>
+        </div>
+        <div class="ph-card white"><h4>Practice worksheet</h4><p>3 items written for this error</p><div class="ph-progress"><span></span></div><div class="ph-meta"><span>2/3 correct</span><span>Keep going</span></div></div>
+        <div class="ph-nav"><i class="on"></i><i></i><i></i><i></i></div>
+      </div></div>
+    </div>
+  </div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">I'm Eric. UnStuck — no kid stays stuck at the kitchen table tonight. Right practice in minutes. Diagnose, generate, grade, adapt. Grades 4–6.</p></aside>
+</section>
+
+<section class="slide" id="s2">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="topbar-copy">
+        <h1>The gap is already here</h1><p>Six in ten fourth graders are behind — and they still get practice that isn’t written for their miss.</p>
+      </div>
+      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+    </div>
+  </div>
+  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
+    <div class="content">
+      <div class="problem-grid">
+        <div class="shock">
+          <span class="eyebrow">The punch · Grade 4 math</span>
+          <div class="big">6 / 10</div>
+          <h3>Six in ten fourth graders are behind</h3>
+          <div class="pair"><b class="bad">Six in ten behind</b> <b>Four in ten proficient</b></div>
+          <div class="nat-box">
+            <div class="nat-k">Nationwide · NAEP 2024</div>
+            <div class="nat-v">~39% of 4th graders proficient · <em>six in ten behind across America</em></div>
+          </div>
+          <p class="az-line"><strong>Arizona:</strong> same pattern — about four in ten 4th graders proficient (six in ten behind); closer to three in ten by 6th grade.</p>
+        </div>
+        <div class="side-stack">
+          <div class="side l">
+            <span class="tag">Classroom</span>
+            <div class="n">28</div>
+            <h3>kids. One worksheet.</h3>
+            <p>The lost kid and the bored kid still get the <strong>same page</strong>. That’s how gaps compound.</p>
+          </div>
+          <div class="side s">
+            <span class="tag">Kitchen table tonight</span>
+            <div class="n">0</div>
+            <h3>plans for their gap</h3>
+            <p>Parent knows they’re stuck — not <strong>what practice</strong> to give in the next five minutes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="problem-foot">
+        <span>Not another random printable</span>
+        <span>Practice has to match the miss</span>
+      </div>
+      <p class="footnote">If asked: NAEP 2024 also ~28% of 8th graders at/above Proficient in math.</p>
+    </div>
+  </div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Six in ten fourth graders are behind — four in ten proficient. Nationwide NAEP ~39%. Arizona same story. One worksheet for 28. Kitchen table: zero plan for the exact gap.</p></aside>
+</section>
+
+<section class="slide" id="s3">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="topbar-copy">
+        <h1>What we shipped this weekend</h1><p>One loop that adapts — not another worksheet generator.</p>
+      </div>
+      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+    </div>
+  </div>
+  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
+    <div class="content loop-stage">
+      <div class="puzzle-row">
+        <div class="pz"><div class="pz-piece" style="background:var(--sage)"><span class="chip">1</span></div><h4>Quiz finds the gap</h4><p>Exact miss, plain English</p></div>
+        <div class="connector"></div>
+        <div class="pz"><div class="pz-piece" style="background:var(--lavender)"><span class="chip">2</span></div><h4>Generate a small set</h4><p>Written for that error</p></div>
+        <div class="connector"></div>
+        <div class="pz"><div class="pz-piece" style="background:var(--yellow)"><span class="chip">3</span></div><h4>Grade instantly</h4><p>Know what landed</p></div>
+        <div class="connector"></div>
+        <div class="pz"><div class="pz-piece" style="background:#c9d6f8"><span class="chip">4</span></div><h4>Next set adapts</h4><p>Scaffold or stretch</p></div>
+      </div>
+      <div class="loop-banner">Diagnose → generate → grade → adapt</div>
+    </div>
+  </div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">This weekend: quiz finds the gap; generate; grade; next set changes. Not a random printable. One breath — then demo.</p></aside>
+</section>
+
+<section class="slide" id="s4">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="topbar-copy">
+        <h1>See it adapt live</h1><p>Same skill. Wrong answer. Next set changes on purpose.</p>
+      </div>
+      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+    </div>
+  </div>
+  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
+    <div class="content split">
+      <div>
+        <div class="flow">
+          <div class="f" style="background:var(--lavender)">Quiz<span>see the miss</span></div>
+          <div class="f" style="background:var(--yellow)">Gap<span>name it</span></div>
+          <div class="f" style="background:var(--sage)">Practice<span>write the set</span></div>
+          <div class="f" style="background:#c9d6f8">Adapt<span>change next</span></div>
+        </div>
+        <div class="callout">Live beat: they treat <strong>bigger bottom = bigger fraction</strong> (3/8 vs 3/5). We write practice for that. They miss → next set <strong>scaffolds the same idea</strong>.</div>
+      </div>
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="ph-top"><div class="ph-avatar"></div><div class="ph-dots"><i></i><i></i></div></div>
+          <div class="ph-card lav"><h4>Gap detected</h4><p>Thought 3/8 &gt; 3/5 because 8 &gt; 5</p></div>
+          <div class="ph-card white"><h4>Q1 · Same-top compare</h4><p>Which is larger, 3/8 or 3/5?</p><span class="ph-pill" style="background:#b91c1c">Missed → 3/8</span></div>
+          <div class="ph-card green"><h4>Next worksheet</h4><p>Visual bars + same-numerator drills</p><div class="ph-progress"><span style="width:40%"></span></div><div class="ph-meta"><span>Scaffolded</span><span>Same skill</span></div></div>
+          <div class="ph-nav"><i></i><i class="on"></i><i></i><i></i></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Watch this. Bigger-bottom myth. Practice for that. Miss → grade → next set scaffolds. That’s the loop.</p></aside>
+</section>
+
+<section class="slide" id="s5">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="topbar-copy">
+        <h1>Why start here</h1><p>Broad tutors exist. Parents still need the right five minutes tonight.</p>
+      </div>
+      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+    </div>
+  </div>
+  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
+    <div class="content split">
+      <div class="rings-wrap" aria-hidden="true">
+        <div class="ring r3"></div>
+        <div class="ring r2"></div>
+        <div class="ring r1">Start<br/>tonight</div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><i style="background:var(--lavender)"></i><div><h4>Total landscape</h4><p>Khan and others already personalize at huge scale — we don’t claim they stand still.</p></div></div>
+        <div class="legend-item"><i style="background:var(--yellow)"></i><div><h4>Our focus</h4><p>A parent who needs a <strong>fresh 5-minute set</strong> from <strong>this error pattern</strong> tonight.</p></div></div>
+        <div class="legend-item"><i style="background:var(--blue)"></i><div><h4>Where we start</h4><p>Ship the student loop now → teacher view + small pilot next.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Khan is broad. Our wedge is same-night from this error. Student loop now; teacher view + pilot next.</p></aside>
+</section>
+
+<section class="slide" id="s6">
+  <div class="close">
+    <div class="deco"></div><div class="deco2"></div><div class="deco3"></div>
+    <div class="close-inner">
+      <div class="close-brand"><img src="unstuck-logo-mark.png" alt="UnStuck"/></div>
+      <div class="pills">
+        <span>Personalize practice</span>
+        <span>Don’t diagnose disabilities</span>
+        <span>Teachers stay in control</span>
+      </div>
+      <h1>The right practice shows up in minutes — and kids actually move forward.</h1>
+      <div class="sig">That’s UnStuck.</div>
+    </div>
+  </div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Personalize practice. Don’t diagnose. Teachers in control. That’s UnStuck. Skip slide 7 if short.</p></aside>
+</section>
+
+<section class="slide" id="s7">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="topbar-copy">
+        <h1>If we have a minute more</h1><p>Same adaptive engine — more subjects, more people helped. Skip if you’re short on time.</p>
+      </div>
+      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+    </div>
+  </div>
+  <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
+    <div class="content">
+      <div class="fund-bar">
+        <div class="seg" style="flex:1.1;background:var(--blue);color:#fff"><span class="icon" style="color:var(--blue)">1</span>Math spine</div>
+        <div class="seg" style="flex:1.15;background:var(--lavender)"><span class="icon" style="color:#7c6bb5">2</span>More subjects</div>
+        <div class="seg" style="flex:1;background:var(--yellow)"><span class="icon" style="color:#a3a12a">3</span>Teachers</div>
+        <div class="seg" style="flex:1.1;background:var(--sage)"><span class="icon" style="color:#6f9a5e">4</span>Homework snap</div>
+      </div>
+      <div class="fund-labels">
+        <div><h4>Deepen math first</h4><p>Fractions → ratios, then more of 4–6 math</p></div>
+        <div><h4>Then other subjects</h4><p>Same loop for English, science, and beyond — diagnose → practice → adapt</p></div>
+        <div><h4>Teacher clarity</h4><p>Plain English: why this kid is stuck</p></div>
+        <div><h4>Snap tonight’s homework</h4><p>Short practice from the page — aimed at what they miss</p></div>
+      </div>
+    </div>
+  </div>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">If time: deepen math spine first, then expand the same engine to English and other subjects, teacher clarity, homework snap. Not built yet — roadmap only. Skip if ~4:30+.</p></aside>
+</section>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let i=0,notesOn=false;
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('counter').textContent=(i+1)+' / '+slides.length}
+document.getElementById('prev').onclick=()=>show(i-1);
+document.getElementById('next').onclick=()=>show(i+1);
+document.getElementById('toggleNotes').onclick=()=>{notesOn=!notesOn;document.querySelectorAll('.speak').forEach(el=>el.style.display=notesOn?'block':'none');document.getElementById('toggleNotes').textContent=notesOn?'Hide notes':'Show notes'};
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();show(i+1)}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}
+  if(e.key==='n'||e.key==='N')document.getElementById('toggleNotes').click();
+});
+show(0);
+</script>
+</body>
+</html>
