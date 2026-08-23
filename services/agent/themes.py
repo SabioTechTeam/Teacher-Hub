@@ -18,8 +18,12 @@ class Theme:
     id: str
     label: str
     emoji: str
-    # (container, unit) pairs — "a {container} holds {n} {unit}s"
+    # (container, unit): genuinely fillable and divisible into equal parts.
+    # "a {container} holds {n} {unit}s" must read true.
     vessels: list[tuple[str, str]] = field(default_factory=list)
+    # Things you spend TIME on. Used when a sum exceeds one whole, where a
+    # container story would be impossible but an accumulating one is fine.
+    activities: list[str] = field(default_factory=list)
     # things you can have a ratio of: (a, b)
     pairs: list[tuple[str, str]] = field(default_factory=list)
     # short encouragement in the theme's voice
@@ -29,37 +33,54 @@ class Theme:
 THEMES: dict[str, Theme] = {
     "space": Theme(
         id="space", label="Space & Rockets", emoji="🚀",
-        vessels=[("rocket", "fuel cell"), ("space station", "solar panel"), ("cargo pod", "supply crate")],
+        vessels=[("cargo pod", "supply crate"), ("fuel tank", "cell"), ("supply crate", "ration")],
+        activities=["mission", "spacewalk", "launch checklist"],
         pairs=[("astronauts", "seats"), ("moons", "planets"), ("oxygen tanks", "fuel tanks")],
         cheers=["Liftoff!", "You're in orbit!", "Mission control is impressed!"],
     ),
     "minecraft": Theme(
         id="minecraft", label="Minecraft Blocks", emoji="🎮",
         vessels=[("chest", "block"), ("crafting grid", "slot"), ("stack", "item")],
+        activities=["build", "mining trip", "redstone project"],
         pairs=[("diamonds", "iron ingots"), ("oak planks", "sticks"), ("redstone", "torches")],
         cheers=["Blocks stacked!", "Crafted perfectly!", "That's a diamond answer!"],
     ),
+    "videogames": Theme(
+        id="videogames", label="Video Games", emoji="🎮",
+        # Generic game vocabulary on purpose. A child who loves a specific
+        # franchise reads "quest log" as their world, and we ship no one
+        # else's trademarks or characters.
+        vessels=[("quest log", "objective"), ("inventory", "slot"), ("health bar", "segment"), ("coin pouch", "coin")],
+        activities=["level", "boss fight", "side quest"],
+        pairs=[("coins collected", "coins in the level"), ("levels cleared", "levels"),
+               ("power-ups", "item boxes"), ("hearts remaining", "hearts total")],
+        cheers=["Level up!", "New high score!", "Achievement unlocked!"],
+    ),
     "basketball": Theme(
         id="basketball", label="Basketball Stats", emoji="🏀",
-        vessels=[("game", "quarter"), ("season", "game"), ("practice", "drill")],
+        vessels=[("water bottle", "gulp"), ("ball rack", "slot"), ("scorebook page", "row")],
+        activities=["practice", "shooting drill", "scrimmage"],
         pairs=[("free throws made", "attempts"), ("three-pointers", "total shots"), ("assists", "passes")],
         cheers=["Nothing but net!", "Buzzer beater!", "That's a triple-double!"],
     ),
     "dinosaurs": Theme(
         id="dinosaurs", label="Dinosaurs", emoji="🦖",
-        vessels=[("fossil dig site", "bone"), ("museum case", "specimen"), ("nest", "egg")],
+        vessels=[("museum case", "specimen"), ("nest", "egg"), ("fossil crate", "bone")],
+        activities=["dig", "fossil hunt", "museum tour"],
         pairs=[("herbivores", "carnivores"), ("complete fossils", "fragments"), ("footprints", "trails")],
         cheers=["Roar-some!", "Prehistoric precision!", "You dug that up perfectly!"],
     ),
     "robotics": Theme(
         id="robotics", label="Robotics & Coding", emoji="🤖",
-        vessels=[("robot", "servo"), ("circuit board", "sensor"), ("battery pack", "cell")],
+        vessels=[("battery pack", "cell"), ("parts bin", "component"), ("cable spool", "metre")],
+        activities=["build", "coding session", "test run"],
         pairs=[("working robots", "kits"), ("lines of code", "functions"), ("motors", "wheels")],
         cheers=["Compiled successfully!", "Zero bugs!", "Systems nominal!"],
     ),
     "soccer": Theme(
         id="soccer", label="Soccer", emoji="⚽",
-        vessels=[("match", "half"), ("tournament", "match"), ("training session", "drill")],
+        vessels=[("water bottle", "gulp"), ("ball bag", "ball"), ("kit box", "shirt")],
+        activities=["practice", "match", "training session"],
         pairs=[("goals", "shots on target"), ("wins", "matches played"), ("passes completed", "passes")],
         cheers=["GOAL!", "Back of the net!", "What a strike!"],
     ),
@@ -69,6 +90,7 @@ THEMES: dict[str, Theme] = {
 NEUTRAL = Theme(
     id="neutral", label="Everyday", emoji="✏️",
     vessels=[("pizza", "slice"), ("chocolate bar", "piece"), ("ribbon", "equal part")],
+    activities=["homework session", "reading time", "walk to school"],
     pairs=[("apples", "oranges"), ("red marbles", "blue marbles"), ("cups of flour", "cups of milk")],
     cheers=["Great job!", "Well done!", "You got it!"],
 )

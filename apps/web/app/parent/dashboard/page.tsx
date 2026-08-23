@@ -51,7 +51,8 @@ const INITIAL_RECORDS: UploadedRecord[] = [
 
 const HOBBY_OPTIONS = [
   { id: "space", label: "🚀 Space & Rockets", active: true },
-  { id: "minecraft", label: "🎮 Minecraft Blocks", active: true },
+  { id: "minecraft", label: "🧱 Building Blocks", active: true },
+  { id: "videogames", label: "🎮 Video Games", active: false },
   { id: "basketball", label: "🏀 Basketball Stats", active: true },
   { id: "dinosaurs", label: "🦖 Dinosaurs", active: false },
   { id: "robotics", label: "🤖 Robotics & Coding", active: false },

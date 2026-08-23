@@ -107,6 +107,7 @@ def _template_items(
         guard += 1
         th = themes_mod.pick(theme_ids, rng)
         vessel, unit = rng.choice(th.vessels)
+        activity = rng.choice(th.activities) if th.activities else "practice session"
         pair_a, pair_b = rng.choice(th.pairs)
 
         b, d = rng.randint(2, 9), rng.randint(2, 9)
@@ -115,7 +116,7 @@ def _template_items(
 
         if "parts" in skill_id:
             verb = "is" if a == 1 else "are"
-            prompt = (f"{th.emoji} A {vessel} is divided into {b} equal {unit}s. "
+            prompt = (f"{th.emoji} A {vessel} holds {b} equal {unit}s. "
                       f"{a} {unit}{'' if a == 1 else 's'} {verb} used. What fraction is used?")
             check = f"{a}/{b}"
             visual = {"kind": "shaded_whole", "bars": [{"num": a, "den": b, "label": vessel}]}
@@ -140,13 +141,24 @@ def _template_items(
         elif "add-like" in skill_id:
             den = rng.randint(3, 9)
             x, y = rng.randint(1, den - 1), rng.randint(1, den - 1)
-            prompt = f"{th.emoji} You fill {x}/{den} of a {vessel}, then {y}/{den} more. How full is it now?"
+            # A container cannot be filled past full. When the sum exceeds one
+            # whole -- which is legitimate maths and worth practising -- switch
+            # to a quantity that genuinely accumulates, so the story stays true.
+            if x + y <= den:
+                prompt = (f"{th.emoji} You fill {x}/{den} of a {vessel}, then {y}/{den} more. "
+                          f"How full is it now?")
+            else:
+                prompt = (f"{th.emoji} You spend {x}/{den} of an hour on a {activity}, "
+                          f"then {y}/{den} of an hour more. How long altogether?")
             check = f"{x}/{den} + {y}/{den}"
             visual = {"kind": "sum",
                       "bars": [{"num": x, "den": den, "label": f"{x}/{den}"},
                                {"num": y, "den": den, "label": f"{y}/{den}"}]}
         else:  # ratios
-            prompt = (f"{th.emoji} For every {b} {pair_b} there are {a} {pair_a}. "
+            # "there are 1 power-ups" reads badly to a nine-year-old.
+            a_label = pair_a[:-1] if a == 1 and pair_a.endswith("s") else pair_a
+            there = "is" if a == 1 else "are"
+            prompt = (f"{th.emoji} For every {b} {pair_b} there {there} {a} {a_label}. "
                       f"Write {pair_a} to {pair_b} as a fraction.")
             check = f"{a}/{b}"
             visual = {"kind": "ratio",

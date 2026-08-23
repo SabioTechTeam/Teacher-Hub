@@ -91,7 +91,8 @@ const keys = new Map<string, Record<string, string>>();
 /** Mirrors services/agent/themes.py so mock mode looks like the real thing. */
 const THEME_VESSEL: Record<string, { emoji: string; vessel: string; unit: string }> = {
   space: { emoji: "🚀", vessel: "rocket", unit: "fuel cell" },
-  minecraft: { emoji: "🎮", vessel: "chest", unit: "block" },
+  minecraft: { emoji: "🧱", vessel: "chest", unit: "block" },
+  videogames: { emoji: "🎮", vessel: "quest log", unit: "objective" },
   basketball: { emoji: "🏀", vessel: "game", unit: "quarter" },
   dinosaurs: { emoji: "🦖", vessel: "nest", unit: "egg" },
   robotics: { emoji: "🤖", vessel: "battery pack", unit: "cell" },

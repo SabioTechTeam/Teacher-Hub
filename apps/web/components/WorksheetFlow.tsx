@@ -30,7 +30,8 @@ const DECISION_COLOR: Record<string, string> = {
 
 const THEME_LABEL: Record<string, string> = {
   space: "🚀 Space & Rockets",
-  minecraft: "🎮 Minecraft Blocks",
+  minecraft: "🧱 Building Blocks",
+  videogames: "🎮 Video Games",
   basketball: "🏀 Basketball Stats",
   dinosaurs: "🦖 Dinosaurs",
   robotics: "🤖 Robotics & Coding",
