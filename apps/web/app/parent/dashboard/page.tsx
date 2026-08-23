@@ -175,9 +175,9 @@ export default function ParentDashboard() {
     <div className={styles.shell}>
       {/* ── Nav ── */}
       <nav className={styles.nav}>
-        <div className={styles.navBrand} onClick={() => router.push("/")}>
-          <div className={styles.navMark}>👨‍👩‍👧</div>
-          UnStuck Parent Portal
+        <div className={styles.navBrand} onClick={() => router.push("/")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
+          <img src="/unstuck-logo-mark.png" alt="UnStuck Logo" width={32} height={32} style={{ objectFit: "contain", borderRadius: 8 }} />
+          <span>UnStuck Parent Portal</span>
         </div>
         <div className={styles.navRight}>
           <button className={styles.demoBtn} onClick={handleLaunchChildSession}>

@@ -86,7 +86,7 @@ export default function LoginClient() {
       <div className={styles.panel}>
         <div className={styles.card}>
           <div className={styles.logo}>
-            <div className={styles.logoMark}>🎯</div>
+            <img src="/unstuck-logo-mark.png" alt="UnStuck Logo" width={38} height={38} style={{ objectFit: "contain", borderRadius: 8 }} />
             <span className={styles.logoText}>UnStuck</span>
           </div>
 
