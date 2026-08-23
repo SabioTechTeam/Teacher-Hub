@@ -6,34 +6,6 @@
       "status": "completed",
       "started_at": "2026-08-20T09:05:00Z",
       "completed_at": "2026-08-20T09:12:00Z"
-    },
-    {
-      "id": "asmt-002",
-      "student_id": "stu-002",
-      "status": "completed",
-      "started_at": "2026-08-21T10:00:00Z",
-      "completed_at": "2026-08-21T10:09:00Z"
-    },
-    {
-      "id": "asmt-003",
-      "student_id": "stu-003",
-      "status": "completed",
-      "started_at": "2026-08-21T11:15:00Z",
-      "completed_at": "2026-08-21T11:21:00Z"
-    },
-    {
-      "id": "asmt-004",
-      "student_id": "stu-004",
-      "status": "completed",
-      "started_at": "2026-08-22T08:30:00Z",
-      "completed_at": "2026-08-22T08:39:00Z"
-    },
-    {
-      "id": "asmt-005",
-      "student_id": "stu-005",
-      "status": "in_progress",
-      "started_at": "2026-08-22T09:00:00Z",
-      "completed_at": null
     }
   ],
 
@@ -41,21 +13,21 @@
     {
       "id": "q-gr1-01",
       "skill_id": "math.1.addsub.within20",
-      "prompt": "What is 8 + 6?",
+      "prompt": "🍎 Sam has 8 apples. He picks 6 more apples. How many apples does Sam have in all? (8 + 6)",
       "choices": ["12", "13", "14", "15"],
       "correct_index": 2
     },
     {
       "id": "q-gr1-02",
       "skill_id": "math.1.addsub.within20",
-      "prompt": "What is 15 - 7?",
+      "prompt": "🍪 There are 15 cookies in a jar. You eat 7 cookies. How many cookies are left? (15 - 7)",
       "choices": ["6", "7", "8", "9"],
       "correct_index": 2
     },
     {
       "id": "q-gr1-03",
       "skill_id": "math.1.addsub.within20",
-      "prompt": "Which number represents 1 ten and 5 ones?",
+      "prompt": "📦 Which number shows 1 bundle of ten and 5 single ones?",
       "choices": ["51", "15", "6", "105"],
       "correct_index": 1
     },
@@ -63,21 +35,21 @@
     {
       "id": "q-gr2-01",
       "skill_id": "math.2.placevalue.twodigit",
-      "prompt": "What is 47 + 38?",
+      "prompt": "🐸 A frog hops 47 feet, then hops 38 more feet. How far did the frog hop in all? (47 + 38)",
       "choices": ["75", "85", "715", "81"],
       "correct_index": 1
     },
     {
       "id": "q-gr2-02",
       "skill_id": "math.2.placevalue.twodigit",
-      "prompt": "What is 63 - 27?",
+      "prompt": "🎈 A store has 63 balloons. 27 balloons fly away. How many balloons are left? (63 - 27)",
       "choices": ["34", "36", "44", "46"],
       "correct_index": 1
     },
     {
       "id": "q-gr2-03",
       "skill_id": "math.2.placevalue.twodigit",
-      "prompt": "There are 3 rows of stars with 5 stars in each row. How many stars in all?",
+      "prompt": "⭐ Look at 3 rows of stars with 5 stars in each row. How many stars in all? (3 × 5)",
       "choices": ["8", "12", "15", "18"],
       "correct_index": 2
     },
@@ -85,21 +57,21 @@
     {
       "id": "q-gr3-01",
       "skill_id": "math.3.mult.intro",
-      "prompt": "What is 7 × 6?",
+      "prompt": "📦 There are 7 boxes with 6 crayons in each box. How many crayons in total? (7 × 6)",
       "choices": ["42", "36", "48", "49"],
       "correct_index": 0
     },
     {
       "id": "q-gr3-02",
       "skill_id": "math.3.mult.intro",
-      "prompt": "Divide: 32 ÷ 4",
+      "prompt": "🍕 32 slices of pizza are shared equally among 4 friends. How many slices does each friend get? (32 ÷ 4)",
       "choices": ["6", "7", "8", "9"],
       "correct_index": 2
     },
     {
       "id": "q-gr3-03",
       "skill_id": "math.3.mult.intro",
-      "prompt": "A shape is partitioned into 3 equal pieces. 1 piece is shaded. What fraction is shaded?",
+      "prompt": "🍰 A cake is cut into 3 equal pieces. Mia eats 1 piece. What fraction of the cake did Mia eat?",
       "choices": ["1/2", "1/3", "3/1", "1/4"],
       "correct_index": 1
     },
@@ -114,12 +86,12 @@
     {
       "id": "q-parts-02",
       "skill_id": "math.4.fractions.parts",
-      "prompt": "Which picture shows 3/8 of a shape shaded?",
+      "prompt": "Which shape shows 3/8 of its area shaded?",
       "choices": [
-        "A rectangle divided into 8 parts with 5 shaded",
-        "A rectangle divided into 8 parts with 3 shaded",
-        "A rectangle divided into 3 parts with 1 shaded",
-        "A rectangle divided into 8 parts with 8 shaded"
+        "Divided into 8 parts with 5 shaded",
+        "Divided into 8 parts with 3 shaded",
+        "Divided into 3 parts with 1 shaded",
+        "Divided into 8 parts with 8 shaded"
       ],
       "correct_index": 1
     },
@@ -176,7 +148,7 @@
       "id": "q-compare-03",
       "skill_id": "math.5.fractions.compare",
       "prompt": "Use <, >, or = to compare: 5/8 ___ 7/12",
-      "choices": ["5/8 < 7/12", "5/8 > 7/12", "5/8 = 7/12", "Cannot compare without a common denominator"],
+      "choices": ["5/8 < 7/12", "5/8 > 7/12", "5/8 = 7/12", "Cannot compare without common denominators"],
       "correct_index": 1
     },
 
@@ -190,7 +162,7 @@
     {
       "id": "q-addlike-02",
       "skill_id": "math.5.fractions.add-like",
-      "prompt": "Maria ate 1/5 of a cake on Monday and 2/5 on Tuesday. How much did she eat in total?",
+      "prompt": "Maria ate 1/5 of a cake on Monday and 2/5 on Tuesday. How much cake did she eat in total?",
       "choices": ["2/10", "3/5", "3/10", "1/2"],
       "correct_index": 1
     },
@@ -205,7 +177,7 @@
     {
       "id": "q-ratios-01",
       "skill_id": "math.6.ratios.intro",
-      "prompt": "In a bag there are 3 red marbles and 5 blue marbles. What is the ratio of red to blue?",
+      "prompt": "In a bag there are 3 red marbles and 5 blue marbles. What is the ratio of red to blue marbles?",
       "choices": ["5:3", "3:8", "3:5", "8:3"],
       "correct_index": 2
     },
