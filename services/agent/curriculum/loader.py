@@ -5,6 +5,7 @@ The prerequisite graph is what makes the loop adaptive: a low score walks
 successor. Without it, "adapt" is just a grade number going up and down.
 """
 from __future__ import annotations
+import json
 import os
 from dataclasses import dataclass, field
 from functools import lru_cache
@@ -95,8 +96,29 @@ def load_curriculum() -> Curriculum:
     skills: dict[str, Skill] = {}
     edges: list[tuple[str, str]] = []
 
+    # Preferred source: the canonical static JSON bundle (grades 4-6).
+    bundle_path = os.path.join(root, "curriculum", "math-curriculum-4-6.json")
+    if os.path.isfile(bundle_path):
+        with open(bundle_path, "r", encoding="utf-8") as fh:
+            b = json.load(fh)
+        for s in b.get("skills") or []:
+            if not s.get("id"):
+                continue
+            skills[s["id"]] = Skill(
+                id=s["id"], grade=int(s.get("grade", 5)), name=s.get("name", s["id"]),
+                prerequisites=list(s.get("prerequisites") or []),
+                standards=list(s.get("standards") or []),
+                difficulty=float(s.get("difficulty", 0.5)),
+                subject=s.get("subject", "mathematics"),
+                description=str(s.get("description") or "").strip(),
+            )
+        for e in b.get("edges") or []:
+            if e.get("from") and e.get("to"):
+                edges.append((e["from"], e["to"]))
+
+    # Fallback: legacy per-skill YAML layout (kept for compatibility).
     skills_dir = os.path.join(root, "curriculum", "skills")
-    if yaml and os.path.isdir(skills_dir):
+    if not skills and yaml and os.path.isdir(skills_dir):
         for dirpath, _, files in os.walk(skills_dir):
             for fn in files:
                 if not fn.endswith((".yaml", ".yml")):

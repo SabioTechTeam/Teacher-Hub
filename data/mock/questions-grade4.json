@@ -1,0 +1,20 @@
+[
+  {"id": "q-g4c01", "skill_id": "math.4.fractions.compare", "prompt": "Which fraction is greater: 3/8 or 5/8?", "choices": ["3/8", "5/8", "They are equal", "Cannot tell"], "correct_index": 1},
+  {"id": "q-g4c02", "skill_id": "math.4.fractions.compare", "prompt": "Which statement is true?", "choices": ["1/2 is greater than 3/7", "1/2 is less than 3/7", "They are equal", "They cannot be compared"], "correct_index": 0},
+  {"id": "q-g4c03", "skill_id": "math.4.fractions.compare", "prompt": "Which fraction is the largest?", "choices": ["2/9", "2/5", "2/3", "They are all equal"], "correct_index": 2},
+  {"id": "q-g4d01", "skill_id": "math.4.fractions.decompose", "prompt": "3/7 + 2/7 = ?", "choices": ["5/14", "5/7", "6/7", "1/7"], "correct_index": 1},
+  {"id": "q-g4d02", "skill_id": "math.4.fractions.decompose", "prompt": "7/8 - 2/8 = ?", "choices": ["5/8", "5/16", "9/8", "4/8"], "correct_index": 0},
+  {"id": "q-g4d03", "skill_id": "math.4.fractions.decompose", "prompt": "What fraction completes the equation: 2/5 + ___ = 1?", "choices": ["2/5", "3/5", "4/5", "1/5"], "correct_index": 1},
+  {"id": "q-g4m01", "skill_id": "math.4.fractions.mixed-numbers", "prompt": "Write 9/4 as a mixed number.", "choices": ["1 3/4", "2 1/4", "2 1/2", "3 1/4"], "correct_index": 1},
+  {"id": "q-g4m02", "skill_id": "math.4.fractions.mixed-numbers", "prompt": "Write 3 2/5 as an improper fraction.", "choices": ["17/5", "15/5", "32/5", "16/5"], "correct_index": 0},
+  {"id": "q-g4m03", "skill_id": "math.4.fractions.mixed-numbers", "prompt": "Which improper fraction equals 1 1/2?", "choices": ["2/3", "3/2", "4/2", "1/3"], "correct_index": 1},
+  {"id": "q-g4w01", "skill_id": "math.4.fractions.multiply-whole", "prompt": "3 x 2/5 = ?", "choices": ["6/15", "5/6", "6/5", "2/15"], "correct_index": 2},
+  {"id": "q-g4w02", "skill_id": "math.4.fractions.multiply-whole", "prompt": "4 x 3/8 = ?", "choices": ["12/8", "7/8", "3/32", "8/12"], "correct_index": 0},
+  {"id": "q-g4w03", "skill_id": "math.4.fractions.multiply-whole", "prompt": "What is 2/3 of 9?", "choices": ["27", "3", "6", "18"], "correct_index": 2},
+  {"id": "q-g4t01", "skill_id": "math.4.fractions.decimals", "prompt": "Write 7/10 as a decimal.", "choices": ["0.07", "0.7", "7.0", "1.7"], "correct_index": 1},
+  {"id": "q-g4t02", "skill_id": "math.4.fractions.decimals", "prompt": "35/100 = ? (as a decimal)", "choices": ["0.35", "3.5", "0.035", "0.53"], "correct_index": 0},
+  {"id": "q-g4t03", "skill_id": "math.4.fractions.decimals", "prompt": "The decimal 0.6 is the same as which fraction?", "choices": ["6/100", "1/6", "0.6/10", "60/100"], "correct_index": 3},
+  {"id": "q-g4x01", "skill_id": "math.4.fractions.compare-decimals", "prompt": "Which decimal is greater?", "choices": ["0.45", "0.5", "They are equal", "Cannot tell"], "correct_index": 1},
+  {"id": "q-g4x02", "skill_id": "math.4.fractions.compare-decimals", "prompt": "Which decimal is the smallest?", "choices": ["0.9", "0.19", "0.09", "0.91"], "correct_index": 2},
+  {"id": "q-g4x03", "skill_id": "math.4.fractions.compare-decimals", "prompt": "Compare: 0.7 and 0.70", "choices": ["0.7 < 0.70", "0.7 > 0.70", "They are equal", "Cannot compare them"], "correct_index": 2}
+]

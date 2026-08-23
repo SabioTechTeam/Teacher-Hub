@@ -1,0 +1,17 @@
+[
+  {"id": "q-g6r01", "skill_id": "math.6.ratios.unit-rate", "prompt": "A car travels 60 miles in 3 hours. What is its speed as a unit rate?", "choices": ["30 mph", "63 mph", "180 mph", "20 mph"], "correct_index": 3},
+  {"id": "q-g6r02", "skill_id": "math.6.ratios.unit-rate", "prompt": "Pens cost $8 for a pack of 4. What is the cost per pen?", "choices": ["$4", "$2", "$32", "$0.50"], "correct_index": 1},
+  {"id": "q-g6r03", "skill_id": "math.6.ratios.unit-rate", "prompt": "You read 90 pages in 6 minutes. What is your rate in pages per minute?", "choices": ["84", "540", "16", "15"], "correct_index": 3},
+  {"id": "q-g6e01", "skill_id": "math.6.ratios.equivalent", "prompt": "Which ratio is equivalent to 2:3?", "choices": ["3:2", "6:9", "4:9", "9:6"], "correct_index": 1},
+  {"id": "q-g6e02", "skill_id": "math.6.ratios.equivalent", "prompt": "Fill in the missing number so the ratios are equal: 3:5 = __ : 20", "choices": ["15", "10", "12", "9"], "correct_index": 2},
+  {"id": "q-g6e03", "skill_id": "math.6.ratios.equivalent", "prompt": "A ratio table starts with 4:6. Which pair could come next in the same table?", "choices": ["8:9", "6:4", "6:9", "12:12"], "correct_index": 2},
+  {"id": "q-g6p01", "skill_id": "math.6.ratios.percent", "prompt": "What is 45% of 80?", "choices": ["40", "32", "36", "45"], "correct_index": 2},
+  {"id": "q-g6p02", "skill_id": "math.6.ratios.percent", "prompt": "Write 18/25 as a percent.", "choices": ["72%", "43%", "18%", "80%"], "correct_index": 0},
+  {"id": "q-g6p03", "skill_id": "math.6.ratios.percent", "prompt": "30% of what number is 12?", "choices": ["30", "36", "4", "40"], "correct_index": 3},
+  {"id": "q-g6v01", "skill_id": "math.6.ratios.conversion", "prompt": "2.5 liters = how many milliliters?", "choices": ["250", "25", "2500", "25000"], "correct_index": 2},
+  {"id": "q-g6v02", "skill_id": "math.6.ratios.conversion", "prompt": "48 inches = how many feet?", "choices": ["4", "48", "12", "96"], "correct_index": 0},
+  {"id": "q-g6v03", "skill_id": "math.6.ratios.conversion", "prompt": "1.5 kilograms = how many grams?", "choices": ["150", "1050", "15", "1500"], "correct_index": 3},
+  {"id": "q-g6f01", "skill_id": "math.6.ns.divide-fractions", "prompt": "1/2 divided by 1/4 = ?", "choices": ["1/8", "2", "4", "2/6"], "correct_index": 1},
+  {"id": "q-g6f02", "skill_id": "math.6.ns.divide-fractions", "prompt": "3/4 divided by 2/3 = ?", "choices": ["6/12", "8/9", "5/7", "9/8"], "correct_index": 3},
+  {"id": "q-g6f03", "skill_id": "math.6.ns.divide-fractions", "prompt": "5/6 divided by 1/3 = ?", "choices": ["5/18", "5/2", "2/5", "1/6"], "correct_index": 1}
+]

@@ -32,7 +32,7 @@ from curriculum import (  # noqa: E402
 )
 import llm  # noqa: E402
 
-from . import progress, seed
+from . import progress, db
 
 MASTERED_AT = 0.8
 ERROR_TYPES = {"conceptual", "procedural", "computational"}
@@ -48,26 +48,26 @@ def _order(skill_id: str) -> tuple[int, float]:
 def build_quiz(student_id: str) -> dict[str, Any]:
     """Create an assessment and return its questions, answer key withheld."""
     cur = load_curriculum()
-    ordered = sorted(seed.questions_by_skill, key=_order)
+    rows = db.questions_for_quiz()
 
     question_ids: list[str] = []
     payload: list[dict[str, Any]] = []
-    for skill_id in ordered:
+    for q in rows:
+        skill_id = q["skill_id"]
         skill = cur.get(skill_id)
-        for q in seed.questions_by_skill[skill_id]:
-            question_ids.append(q["id"])
-            payload.append(
-                {
-                    "id": q["id"],
-                    "skill_id": skill_id,
-                    "skill_name": skill.name if skill else skill_id,
-                    "grade": skill.grade if skill else None,
-                    "prompt": q["prompt"],
-                    "choices": list(q.get("choices") or []),
-                }
-            )
+        question_ids.append(q["id"])
+        payload.append(
+            {
+                "id": q["id"],
+                "skill_id": skill_id,
+                "skill_name": skill.name if skill else skill_id,
+                "grade": skill.grade if skill else None,
+                "prompt": q["prompt"],
+                "choices": list(q.get("choices") or []),
+            }
+        )
 
-    assessment_id = seed.next_id("asmt")
+    assessment_id = db.next_id("asmt")
     progress.register_assessment(student_id, assessment_id, question_ids)
 
     return {
@@ -122,9 +122,9 @@ def _deterministic(student_id: str, assessment_id: str) -> dict[str, Any]:
     # "Mastered" requires every skill on the quiz to have been answered. Without
     # this, a student who answers one question correctly and walks away is
     # reported as having mastered the whole track.
-    covered = {seed.questions[qid]["skill_id"] for qid in header["question_ids"] if qid in seed.questions}
-    complete = len(answers) >= 4 or covered <= set(tally)
-    mastered = len(answers) >= 4 and all(v >= MASTERED_AT for v in mastery.values())
+    covered = {q["skill_id"] for q in (db.question_get(x) for x in header["question_ids"]) if q}
+    complete = covered <= set(tally)
+    mastered = complete and all(v >= MASTERED_AT for v in mastery.values())
 
     if mastered:
         # Nothing is holding them back. Report the top of what was tested.
@@ -167,7 +167,7 @@ def _transcript(header: dict, answers: list[dict]) -> str:
     by_question = {row["question_id"]: row for row in answers}
     lines = []
     for n, qid in enumerate(header["question_ids"], start=1):
-        q = seed.questions[qid]
+        q = db.question_get(qid)
         row = by_question.get(qid)
         opts = " ".join(
             f"{chr(65 + i)}) {c}" for i, c in enumerate(q.get("choices") or [])
@@ -294,7 +294,9 @@ def _llm_evaluate(
     except OSError:
         return None
 
-    skill_ids = sorted({seed.questions[q]["skill_id"] for q in header["question_ids"]}, key=_order)
+    skill_ids = sorted(
+        {q["skill_id"] for q in (db.question_get(x) for x in header["question_ids"]) if q},
+        key=_order)
     user = (
         "Evaluate this completed multiple-choice diagnostic. It is already scored "
         "against a known answer key, so do not re-derive correctness -- judge what "
@@ -372,7 +374,10 @@ def evaluate(student_id: str, assessment_id: str) -> dict[str, Any]:
         # Surface the sharpest feedback per skill for the UI.
         worst: dict[str, dict] = {}
         for q in verdict["questions"]:
-            sid = seed.questions[q["question_id"]]["skill_id"]
+            qrow = db.question_get(q["question_id"])
+            if not qrow:
+                continue
+            sid = qrow["skill_id"]
             if q["feedback"] and (sid not in worst or (q["score"] or 4) < (worst[sid]["score"] or 4)):
                 worst[sid] = q
         for row in result["skills"]:

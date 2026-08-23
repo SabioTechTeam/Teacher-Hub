@@ -1,0 +1,35 @@
+{
+    "worksheets": [
+        {
+            "id": "ws-parts-visual",
+            "skill_id": "math.4.fractions.parts",
+            "strategy": "visual",
+            "title": "Parts of a Whole — Picture It",
+            "items": [
+                {
+                    "id": "ws-parts-visual-01",
+                    "prompt": "A chocolate bar has 6 equal pieces. Color 2 pieces. Write the fraction that shows how many pieces are colored.",
+                    "answer": "2/6",
+                    "hint": "The number of colored pieces goes on top (numerator). The total pieces go on the bottom (denominator)."
+                },
+                {
+                    "id": "ws-parts-visual-02",
+                    "prompt": "Look at the circle below divided into 8 equal slices. If 3 slices are shaded, what fraction is shaded?",
+                    "answer": "3/8",
+                    "hint": "Count the shaded slices for the numerator and total slices for the denominator."
+                },
+                {
+                    "id": "ws-parts-visual-03",
+                    "prompt": "Draw a rectangle and divide it into 4 equal parts. Shade 1 part. What fraction did you shade?",
+                    "answer": "1/4",
+                    "hint": "You shaded 1 out of 4 total parts."
+                },
+                {
+                    "id": "ws-parts-visual-04",
+                    "prompt": "A strip of paper is cut into 5 equal sections. 4 sections are red. Write the fraction that represents the red part.",
+                    "answer": "4/5",
+                    "hint": "Red sections = numerator, total sections = denominator."
+                }
+            ]
+        },
+    }

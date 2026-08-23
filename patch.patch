@@ -1,0 +1,933 @@
+diff --git a/services/agent/curriculum/loader.py b/services/agent/curriculum/loader.py
+index fd2111b..9cacfee 100644
+--- a/services/agent/curriculum/loader.py
++++ b/services/agent/curriculum/loader.py
+@@ -5,6 +5,7 @@ The prerequisite graph is what makes the loop adaptive: a low score walks
+ successor. Without it, "adapt" is just a grade number going up and down.
+ """
+ from __future__ import annotations
++import json
+ import os
+ from dataclasses import dataclass, field
+ from functools import lru_cache
+@@ -95,8 +96,29 @@ def load_curriculum() -> Curriculum:
+     skills: dict[str, Skill] = {}
+     edges: list[tuple[str, str]] = []
+ 
++    # Preferred source: the canonical static JSON bundle (grades 4-6).
++    bundle_path = os.path.join(root, "curriculum", "math-curriculum-4-6.json")
++    if os.path.isfile(bundle_path):
++        with open(bundle_path, "r", encoding="utf-8") as fh:
++            b = json.load(fh)
++        for s in b.get("skills") or []:
++            if not s.get("id"):
++                continue
++            skills[s["id"]] = Skill(
++                id=s["id"], grade=int(s.get("grade", 5)), name=s.get("name", s["id"]),
++                prerequisites=list(s.get("prerequisites") or []),
++                standards=list(s.get("standards") or []),
++                difficulty=float(s.get("difficulty", 0.5)),
++                subject=s.get("subject", "mathematics"),
++                description=str(s.get("description") or "").strip(),
++            )
++        for e in b.get("edges") or []:
++            if e.get("from") and e.get("to"):
++                edges.append((e["from"], e["to"]))
++
++    # Fallback: legacy per-skill YAML layout (kept for compatibility).
+     skills_dir = os.path.join(root, "curriculum", "skills")
+-    if yaml and os.path.isdir(skills_dir):
++    if not skills and yaml and os.path.isdir(skills_dir):
+         for dirpath, _, files in os.walk(skills_dir):
+             for fn in files:
+                 if not fn.endswith((".yaml", ".yml")):
+diff --git a/services/api/app/diagnostic.py b/services/api/app/diagnostic.py
+index e427371..319e0ca 100644
+--- a/services/api/app/diagnostic.py
++++ b/services/api/app/diagnostic.py
+@@ -32,7 +32,7 @@ from curriculum import (  # noqa: E402
+ )
+ import llm  # noqa: E402
+ 
+-from . import progress, seed
++from . import progress, db
+ 
+ MASTERED_AT = 0.8
+ ERROR_TYPES = {"conceptual", "procedural", "computational"}
+@@ -48,26 +48,26 @@ def _order(skill_id: str) -> tuple[int, float]:
+ def build_quiz(student_id: str) -> dict[str, Any]:
+     """Create an assessment and return its questions, answer key withheld."""
+     cur = load_curriculum()
+-    ordered = sorted(seed.questions_by_skill, key=_order)
++    rows = db.questions_for_quiz()
+ 
+     question_ids: list[str] = []
+     payload: list[dict[str, Any]] = []
+-    for skill_id in ordered:
++    for q in rows:
++        skill_id = q["skill_id"]
+         skill = cur.get(skill_id)
+-        for q in seed.questions_by_skill[skill_id]:
+-            question_ids.append(q["id"])
+-            payload.append(
+-                {
+-                    "id": q["id"],
+-                    "skill_id": skill_id,
+-                    "skill_name": skill.name if skill else skill_id,
+-                    "grade": skill.grade if skill else None,
+-                    "prompt": q["prompt"],
+-                    "choices": list(q.get("choices") or []),
+-                }
+-            )
++        question_ids.append(q["id"])
++        payload.append(
++            {
++                "id": q["id"],
++                "skill_id": skill_id,
++                "skill_name": skill.name if skill else skill_id,
++                "grade": skill.grade if skill else None,
++                "prompt": q["prompt"],
++                "choices": list(q.get("choices") or []),
++            }
++        )
+ 
+-    assessment_id = seed.next_id("asmt")
++    assessment_id = db.next_id("asmt")
+     progress.register_assessment(student_id, assessment_id, question_ids)
+ 
+     return {
+@@ -122,7 +122,7 @@ def _deterministic(student_id: str, assessment_id: str) -> dict[str, Any]:
+     # "Mastered" requires every skill on the quiz to have been answered. Without
+     # this, a student who answers one question correctly and walks away is
+     # reported as having mastered the whole track.
+-    covered = {seed.questions[qid]["skill_id"] for qid in header["question_ids"]}
++    covered = {q["skill_id"] for q in (db.question_get(x) for x in header["question_ids"]) if q}
+     complete = covered <= set(tally)
+     mastered = complete and all(v >= MASTERED_AT for v in mastery.values())
+ 
+@@ -168,7 +168,7 @@ def _transcript(header: dict, answers: list[dict]) -> str:
+     by_question = {row["question_id"]: row for row in answers}
+     lines = []
+     for n, qid in enumerate(header["question_ids"], start=1):
+-        q = seed.questions[qid]
++        q = db.question_get(qid)
+         row = by_question.get(qid)
+         opts = " ".join(
+             f"{chr(65 + i)}) {c}" for i, c in enumerate(q.get("choices") or [])
+@@ -295,7 +295,9 @@ def _llm_evaluate(
+     except OSError:
+         return None
+ 
+-    skill_ids = sorted({seed.questions[q]["skill_id"] for q in header["question_ids"]}, key=_order)
++    skill_ids = sorted(
++        {q["skill_id"] for q in (db.question_get(x) for x in header["question_ids"]) if q},
++        key=_order)
+     user = (
+         "Evaluate this completed multiple-choice diagnostic. It is already scored "
+         "against a known answer key, so do not re-derive correctness -- judge what "
+@@ -373,7 +375,10 @@ def evaluate(student_id: str, assessment_id: str) -> dict[str, Any]:
+         # Surface the sharpest feedback per skill for the UI.
+         worst: dict[str, dict] = {}
+         for q in verdict["questions"]:
+-            sid = seed.questions[q["question_id"]]["skill_id"]
++            qrow = db.question_get(q["question_id"])
++            if not qrow:
++                continue
++            sid = qrow["skill_id"]
+             if q["feedback"] and (sid not in worst or (q["score"] or 4) < (worst[sid]["score"] or 4)):
+                 worst[sid] = q
+         for row in result["skills"]:
+diff --git a/services/api/app/main.py b/services/api/app/main.py
+index 961f78b..080609a 100644
+--- a/services/api/app/main.py
++++ b/services/api/app/main.py
+@@ -33,14 +33,15 @@ from curriculum import load_curriculum  # noqa: E402
+ import notes as notes_mod  # noqa: E402
+ 
+ from .store import STORE
++from . import db
+ from . import diagnostic
+-from . import seed
+ 
+-# Populate mock fixtures on startup
++# Open (and, on first boot, create + seed) the SQLite database.
+ try:
+-    seed.load()
++    _DB_INFO = db.init_db()
++    print(f"[db] unstuck ready: {_DB_INFO}")
+ except Exception as exc:
+-    print(f"[seed] note: fixture load skipped or failed: {exc}")
++    print(f"[db] init failed: {exc}")
+ 
+ app = FastAPI(title="UnStuck API", version="0.2.0")
+ app.add_middleware(
+@@ -97,7 +98,8 @@ def health():
+     return {
+         "ok": True,
+         "llm": bool(os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")),
+-        "students_loaded": len(seed.students),
++        "students_loaded": db.query_one(
++            "SELECT COUNT(*) AS c FROM unstuck.students")["c"],
+     }
+ 
+ 
+@@ -116,11 +118,19 @@ def curriculum_skills():
+ 
+ @app.get("/students")
+ def students_list():
+-    return list(seed.students.values()) or [STORE.student("demo")]
++    rows = db.query_all(
++        "SELECT id, name, grade_level, target_skill, gap_skill, strategy"
++        " FROM unstuck.students ORDER BY id")
++    out = []
++    for r in rows:
++        m = db.query_all(
++            "SELECT skill_id, value FROM unstuck.mastery WHERE student_id = ?",
++            (r["id"],))
++        out.append({**r, "mastery": {x["skill_id"]: x["value"] for x in m}})
++    return out or [STORE.student("demo")]
+ 
+ 
+ from .store import STORE
+-from . import seed
+ from . import progress
+ 
+ 
+@@ -140,7 +150,7 @@ def assessment_start(student_id: str = "demo"):
+ @app.post("/assessments/{assessment_id}/answer")
+ def assessment_answer(assessment_id: str, body: AnswerIn, student_id: str = "demo"):
+     """Grade one answer, award gamification points, persist to the student's file."""
+-    question = seed.questions.get(body.question_id)
++    question = db.question_get(body.question_id)
+     if not question:
+         raise HTTPException(404, f"question not found: {body.question_id}")
+     return progress.record_answer(student_id, assessment_id, question, body.answer)
+@@ -180,10 +190,8 @@ def student_progress(student_id: str):
+ 
+ @app.delete("/students/{student_id}/progress")
+ def student_progress_reset(student_id: str):
+-    path = progress._file(student_id)
+-    if path.exists():
+-        path.unlink()
+-    return {"ok": True, "student_id": student_id, "reset": True}
++    removed = progress.reset_progress(student_id)
++    return {"ok": True, "student_id": student_id, "reset": removed}
+ 
+ 
+ @app.post("/worksheets/generate")
+@@ -252,12 +260,12 @@ def worksheets_grade(body: GradeIn):
+ 
+ @app.get("/students/{student_id}")
+ def student_get(student_id: str):
+-    return seed.students.get(student_id) or STORE.student(student_id)
++    return STORE.student(student_id)
+ 
+ 
+ @app.get("/students/{student_id}/mastery")
+ def student_mastery(student_id: str):
+-    s = seed.students.get(student_id) or STORE.student(student_id)
++    s = STORE.student(student_id)
+     return {
+         "student_id": student_id,
+         "mastery": s.get("mastery", {}),
+diff --git a/services/api/app/progress.py b/services/api/app/progress.py
+index d2d86dc..4a2d626 100644
+--- a/services/api/app/progress.py
++++ b/services/api/app/progress.py
+@@ -1,6 +1,7 @@
+-"""progress.py — file-based, per-user assessment results + gamification.
++"""progress.py — per-student assessment progress + gamification (SQLite).
+ 
+-One JSON file per student at  data/progress/{student_id}.json:
++State lives in schema ``unstuck`` (students / answers / assessment_* tables)
++and survives restarts.  Shape returned by load_progress():
+     {
+       "student_id": "demo",
+       "points": 130, "level": 2,
+@@ -25,27 +26,10 @@ Gamification rules (per question):
+ from __future__ import annotations
+ 
+ import json
+-import os
+ from datetime import datetime, timezone
+-from pathlib import Path
+ from typing import Any, Optional
+-from threading import Lock
+ 
+-_THIS_DIR = Path(__file__).resolve().parent
+-
+-
+-def _progress_dir() -> Path:
+-    """data/progress next to the mock data dir (same walk-up logic as seed.py)."""
+-    candidate = _THIS_DIR
+-    for _ in range(6):
+-        if (candidate / "data" / "mock").exists():
+-            return candidate / "data" / "progress"
+-        candidate = candidate.parent
+-    return _THIS_DIR.parent / "data" / "progress"
+-
+-
+-_PROGRESS_DIR = Path(os.getenv("PROGRESS_DIR", str(_progress_dir())))
+-_LOCK = Lock()
++from . import db
+ 
+ BASE_POINTS = 10
+ LEVEL_SIZE = 100
+@@ -62,40 +46,108 @@ def _now() -> str:
+     return datetime.now(timezone.utc).isoformat(timespec="seconds")
+ 
+ 
+-def _file(student_id: str) -> Path:
+-    safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in student_id)
+-    return _PROGRESS_DIR / f"{safe}.json"
++def _ensure_student(student_id: str) -> None:
++    db.execute(
++        "INSERT OR IGNORE INTO unstuck.students(id, created_at, updated_at)"
++        " VALUES(?,?,?)", (student_id, _now(), _now()))
++
++
++def _entries(student_id: str) -> dict[str, dict[str, Any]]:
++    """All of a student's assessment entries, keyed by assessment id."""
++    aids = {r["id"] for r in db.query_all(
++        "SELECT id FROM unstuck.assessments WHERE student_id = ?", (student_id,))}
++    aids |= {r["id"] for r in db.query_all(
++        "SELECT DISTINCT assessment_id AS id FROM unstuck.answers"
++        " WHERE student_id = ?", (student_id,))}
++    aids |= {r["id"] for r in db.query_all(
++        "SELECT assessment_id AS id FROM unstuck.assessment_results"
++        " WHERE student_id = ?", (student_id,))}
++    entries: dict[str, dict[str, Any]] = {}
++    for aid in sorted(aids):
++        qids = [r["question_id"] for r in db.query_all(
++            "SELECT question_id FROM unstuck.assessment_questions"
++            " WHERE assessment_id = ? ORDER BY position", (aid,))]
++        answers = [{
++            "question_id": r["question_id"],
++            "skill_id": r["skill_id"],
++            "answer": json.loads(r["answer"]) if r["answer"] is not None else None,
++            "correct": bool(r["correct"]),
++            "points": r["points"],
++            "streak": r["streak"],
++            "ts": r["answered_at"],
++        } for r in db.query_all(
++            "SELECT a.question_id, q.skill_id, a.answer, a.correct,"
++            " a.points, a.streak, a.answered_at"
++            " FROM unstuck.answers a LEFT JOIN unstuck.questions q"
++            " ON q.id = a.question_id"
++            " WHERE a.student_id = ? AND a.assessment_id = ?"
++            " ORDER BY a.seq", (student_id, aid))]
++        entry: dict[str, Any] = {"answers": answers, "question_ids": qids}
++        res = db.query_one(
++            "SELECT evaluated_by, result FROM unstuck.assessment_results"
++            " WHERE student_id = ? AND assessment_id = ?", (student_id, aid))
++        if res:
++            entry["result"] = json.loads(res["result"] or "{}")
++            entry["evaluated_by"] = res["evaluated_by"]
++        entries[aid] = entry
++    return entries
++
++
++def reset_progress(student_id: str) -> bool:
++    """Clear a student's assessment history + gamification counters."""
++    _ensure_student(student_id)
++    row = db.query_one(
++        "SELECT (SELECT COUNT(*) FROM unstuck.answers WHERE student_id = :s)"
++        " + (SELECT COUNT(*) FROM unstuck.assessments WHERE student_id = :s)"
++        " + (SELECT MAX(points, 0) FROM unstuck.students WHERE id = :s) AS n",
++        {"s": student_id})
++    with db.tx() as conn:
++        conn.execute(
++            "DELETE FROM unstuck.answers WHERE student_id = ?", (student_id,))
++        conn.execute(
++            "DELETE FROM unstuck.assessment_results WHERE student_id = ?",
++            (student_id,))
++        conn.execute(
++            "DELETE FROM unstuck.assessment_questions WHERE assessment_id IN"
++            " (SELECT id FROM unstuck.assessments WHERE student_id = ?)",
++            (student_id,))
++        conn.execute(
++            "DELETE FROM unstuck.assessments WHERE student_id = ?", (student_id,))
++        conn.execute(
++            "UPDATE unstuck.students SET points = 0, level = 1,"
++            " current_streak = 0, best_streak = 0, badges = '[]',"
++            " updated_at = ? WHERE id = ?", (_now(), student_id))
++    return (row["n"] or 0) > 0
+ 
+ 
+ def load_progress(student_id: str) -> dict[str, Any]:
+-    """Load a student's progress file, creating a fresh one if missing."""
+-    path = _file(student_id)
+-    if path.exists():
+-        try:
+-            with open(path, encoding="utf-8") as fh:
+-                return json.load(fh)
+-        except (json.JSONDecodeError, OSError):
+-            pass  # corrupted -> start fresh
++    """Return the student's progress from SQLite, creating state if absent."""
++    _ensure_student(student_id)
++    row = db.query_one(
++        "SELECT * FROM unstuck.students WHERE id = ?", (student_id,))
+     return {
+         "student_id": student_id,
+-        "points": 0,
+-        "level": 1,
+-        "current_streak": 0,
+-        "best_streak": 0,
+-        "badges": [],
+-        "assessments": {},
+-        "updated_at": _now(),
++        "name": row["name"],
++        "grade_level": row["grade_level"],
++        "points": row["points"],
++        "level": row["level"],
++        "current_streak": row["current_streak"],
++        "best_streak": row["best_streak"],
++        "badges": json.loads(row["badges"] or "[]"),
++        "assessments": _entries(student_id),
++        "updated_at": row["updated_at"],
+     }
+ 
+ 
+ def save_progress(student_id: str, progress: dict[str, Any]) -> None:
+-    path = _file(student_id)
+-    with _LOCK:
+-        path.parent.mkdir(parents=True, exist_ok=True)
+-        tmp = path.with_suffix(".tmp")
+-        with open(tmp, "w", encoding="utf-8") as fh:
+-            json.dump(progress, fh, indent=2)
+-        os.replace(tmp, path)  # atomic write
++    """Persist the mutable gamification counters back to SQLite."""
++    _ensure_student(student_id)
++    db.execute(
++        "UPDATE unstuck.students SET points = ?, level = ?, current_streak = ?,"
++        " best_streak = ?, badges = ?, updated_at = ? WHERE id = ?",
++        (progress.get("points", 0), progress.get("level", 1),
++         progress.get("current_streak", 0), progress.get("best_streak", 0),
++         json.dumps(progress.get("badges") or []), _now(), student_id))
+ 
+ 
+ def _apply_badges(progress: dict[str, Any]) -> list[str]:
+@@ -132,49 +184,53 @@ def record_answer(
+     question: dict[str, Any],
+     answer: Any,
+ ) -> dict[str, Any]:
+-    """Grade one question, update gamification, persist to the user's file."""
+-    progress = load_progress(student_id)
++    """Grade one question, update gamification, persist everything to SQLite."""
+     correct = is_correct(question, answer)
+-
+-    if correct:
+-        progress["current_streak"] += 1
+-        progress["best_streak"] = max(progress["best_streak"], progress["current_streak"])
+-        streak_bonus = min(progress["current_streak"] - 1, 5) * 2
+-        points = BASE_POINTS + streak_bonus
+-    else:
+-        progress["current_streak"] = 0
+-        points = 0
+-
+-    progress["points"] += points
+-    progress["level"] = progress["points"] // LEVEL_SIZE + 1
+-    new_badges = _apply_badges(progress)
+-    progress["updated_at"] = _now()
+-
+-    assessment = progress["assessments"].setdefault(assessment_id, {"answers": []})
+-    assessment["answers"].append({
+-        "question_id": question["id"],
+-        "skill_id": question.get("skill_id"),
+-        "answer": answer,
+-        "correct": correct,
+-        "points": points,
+-        "streak": progress["current_streak"],
+-        "ts": progress["updated_at"],
+-    })
+-
+-    save_progress(student_id, progress)
++    _ensure_student(student_id)
++    row = db.query_one(
++        "SELECT points, level, current_streak, best_streak, badges"
++        " FROM unstuck.students WHERE id = ?", (student_id,))
++    badges = json.loads(row["badges"] or "[]")
++
++    streak = row["current_streak"] + 1 if correct else 0
++    best = max(row["best_streak"], streak)
++    bonus = min(streak - 1, 5) * 2 if correct else 0
++    points = BASE_POINTS + bonus if correct else 0
++    total = row["points"] + points
++    level = total // LEVEL_SIZE + 1
++    now = _now()
++
++    new_badges = [
++        name for name, rule in _BADGES.items()
++        if name not in badges and rule({"points": total, "best_streak": best})
++    ]
++    badges.extend(new_badges)
++
++    db.execute(
++        "UPDATE unstuck.students SET points = ?, level = ?, current_streak = ?,"
++        " best_streak = ?, badges = ?, updated_at = ? WHERE id = ?",
++        (total, level, streak, best, json.dumps(badges), now, student_id))
++    db.execute(
++        "INSERT INTO unstuck.answers(assessment_id, student_id, question_id,"
++        " answer, correct, points, streak, answered_at) VALUES(?,?,?,?,?,?,?,?)",
++        (assessment_id, student_id, question["id"], json.dumps(answer),
++         1 if correct else 0, points, streak, now))
++    db.execute(
++        "INSERT OR IGNORE INTO unstuck.assessments(id, student_id, status,"
++        " started_at) VALUES(?,?,'started',?)", (assessment_id, student_id, now))
+ 
+     return {
+         "assessment_id": assessment_id,
+         "question_id": question["id"],
+         "correct": correct,
+         "points_earned": points,
+-        "streak_bonus": max(0, points - BASE_POINTS) if correct else 0,
+-        "total_points": progress["points"],
+-        "level": progress["level"],
+-        "current_streak": progress["current_streak"],
++        "streak_bonus": bonus if correct else 0,
++        "total_points": total,
++        "level": level,
++        "current_streak": streak,
+         "new_badges": new_badges,
+         "message": (
+-            f"✅ +{points} pts! 🔥 {progress['current_streak']} in a row!"
++            f"✅ +{points} pts! 🔥 {streak} in a row!"
+             if correct else "❌ Not quite — streak reset. Keep going!"
+         ),
+     }
+@@ -182,10 +238,20 @@ def record_answer(
+ 
+ def finish_assessment(student_id: str, assessment_id: str, result: dict[str, Any]) -> None:
+     """Attach the final result (scores/gap/level) to the assessment record."""
+-    progress = load_progress(student_id)
+-    progress["assessments"].setdefault(assessment_id, {"answers": []})["result"] = result
+-    progress["updated_at"] = _now()
+-    save_progress(student_id, progress)
++    _ensure_student(student_id)
++    now = _now()
++    db.execute(
++        "INSERT OR IGNORE INTO unstuck.assessments(id, student_id, status,"
++        " started_at) VALUES(?,?,'finished',?)", (assessment_id, student_id, now))
++    db.execute(
++        "UPDATE unstuck.assessments SET status = 'finished', finished_at = ?"
++        " WHERE id = ?", (now, assessment_id))
++    db.execute(
++        "INSERT OR REPLACE INTO unstuck.assessment_results"
++        "(assessment_id, student_id, evaluated_by, result, created_at)"
++        " VALUES(?,?,?,?,?)",
++        (assessment_id, student_id, str(result.get("evaluated_by") or ""),
++         json.dumps(result), now))
+ 
+ 
+ def register_assessment(
+@@ -196,28 +262,36 @@ def register_assessment(
+     The evaluator needs the full question set, not just the answered ones --
+     otherwise a half-finished quiz looks complete and can report mastery.
+     """
+-    progress = load_progress(student_id)
+-    entry = progress["assessments"].setdefault(assessment_id, {"answers": []})
+-    entry["question_ids"] = list(question_ids)
+-    progress["updated_at"] = _now()
+-    save_progress(student_id, progress)
++    _ensure_student(student_id)
++    now = _now()
++    with db.tx() as conn:
++        conn.execute(
++            "INSERT OR IGNORE INTO unstuck.assessments(id, student_id, status,"
++            " started_at) VALUES(?,?,'started',?)", (assessment_id, student_id, now))
++        conn.execute(
++            "DELETE FROM unstuck.assessment_questions WHERE assessment_id = ?",
++            (assessment_id,))
++        conn.executemany(
++            "INSERT OR REPLACE INTO unstuck.assessment_questions"
++            "(assessment_id, position, question_id) VALUES(?,?,?)",
++            [(assessment_id, i, q) for i, q in enumerate(question_ids)])
+ 
+ 
+ def assessment_questions(student_id: str, assessment_id: str) -> list[str]:
+-    entry = load_progress(student_id)["assessments"].get(assessment_id) or {}
+-    ids = entry.get("question_ids")
++    ids = [r["question_id"] for r in db.query_all(
++        "SELECT question_id FROM unstuck.assessment_questions"
++        " WHERE assessment_id = ? ORDER BY position", (assessment_id,))]
+     if ids:
+-        return list(ids)
++        return ids
+     # Older records predate question_ids; fall back to what was answered.
+-    return [a["question_id"] for a in entry.get("answers", [])]
++    return [a["question_id"] for a in assessment_answers(student_id, assessment_id)]
+ 
+ 
+ def assessment_answers(student_id: str, assessment_id: str) -> list[dict[str, Any]]:
+-    progress = load_progress(student_id)
+-    return progress["assessments"].get(assessment_id, {}).get("answers", [])
++    entries = _entries(student_id)
++    return entries.get(assessment_id, {}).get("answers", [])
+ 
+ 
+ def get_assessment(student_id: str, assessment_id: str) -> Optional[dict[str, Any]]:
+-    progress = load_progress(student_id)
+-    return progress["assessments"].get(assessment_id)
++    return _entries(student_id).get(assessment_id)
+ 
+diff --git a/services/api/app/seed.py b/services/api/app/seed.py
+deleted file mode 100644
+index 6ff6143..0000000
+--- a/services/api/app/seed.py
++++ /dev/null
+@@ -1,160 +0,0 @@
+-"""
+-seed.py — loads all mock JSON fixtures into in-memory stores at startup.
+-
+-The stores are plain dicts/lists imported by main.py.  No database required.
+-Call `load()` once from the FastAPI lifespan hook.
+-"""
+-from __future__ import annotations
+-
+-import json
+-import os
+-from pathlib import Path
+-from typing import Any
+-
+-# ---------------------------------------------------------------------------
+-# Locate the data directory.
+-# Works for two layouts:
+-#   Local dev  → repo-root/services/api/app/seed.py  → repo-root/data/mock/
+-#   Docker     → /app/app/seed.py                    → /app/data/mock/
+-# ---------------------------------------------------------------------------
+-_THIS_DIR = Path(__file__).resolve().parent   # the 'app' package directory
+-
+-def _find_data_dir() -> Path:
+-    """Walk up from this file until we find a 'data/mock' sibling."""
+-    candidate = _THIS_DIR
+-    for _ in range(6):
+-        p = candidate / "data" / "mock"
+-        if p.exists():
+-            return p
+-        candidate = candidate.parent
+-    # Last resort: same level as app package (Docker layout)
+-    return _THIS_DIR.parent / "data" / "mock"
+-
+-_DATA_DIR = _find_data_dir()
+-
+-
+-def _load(filename: str) -> Any:
+-    path = _DATA_DIR / filename
+-    if not path.exists():
+-        raise FileNotFoundError(f"Mock data file not found: {path}")
+-    with open(path, encoding="utf-8") as fh:
+-        return json.load(fh)
+-
+-
+-# ---------------------------------------------------------------------------
+-# In-memory stores  (module-level so all routes share the same objects)
+-# ---------------------------------------------------------------------------
+-
+-# List[dict]  — student objects keyed by "id"
+-students: dict[str, dict] = {}
+-
+-# mastery: student_id -> {skill_id: float}
+-mastery: dict[str, dict[str, float]] = {}
+-
+-# List[dict]  — assessment header records, keyed by "id"
+-assessments: dict[str, dict] = {}
+-
+-# List[dict]  — all quiz questions, keyed by "id"
+-questions: dict[str, dict] = {}
+-
+-# questions grouped by skill_id  — for /assessments/start
+-questions_by_skill: dict[str, list[dict]] = {}
+-
+-# per-assessment recorded answers: assessment_id -> list[dict]
+-assessment_answers: dict[str, list[dict]] = {}
+-
+-# QuizResult objects: assessment_id -> dict
+-assessment_results: dict[str, dict] = {}
+-
+-# List[dict]  — worksheets keyed by "id"
+-worksheets: dict[str, dict] = {}
+-
+-# worksheets grouped by skill_id + strategy: (skill_id, strategy) -> list[dict]
+-worksheets_by_skill_strategy: dict[tuple[str, str], list[dict]] = {}
+-
+-# attempt records keyed by "id"
+-attempts: dict[str, dict] = {}
+-
+-# session history: student_id -> list[dict]
+-session_history: dict[str, list[dict]] = {}
+-
+-# simple counter for generating new IDs during a session
+-_counters: dict[str, int] = {"assessment": 100, "attempt": 100}
+-
+-
+-def next_id(prefix: str) -> str:
+-    _counters[prefix] = _counters.get(prefix, 100) + 1
+-    return f"{prefix}-{_counters[prefix]:03d}"
+-
+-
+-# ---------------------------------------------------------------------------
+-# Loader
+-# ---------------------------------------------------------------------------
+-
+-def load() -> None:
+-    """Populate all in-memory stores from the mock JSON files."""
+-
+-    # ---- students ----------------------------------------------------------
+-    raw_students: list[dict] = _load("students.json")
+-    for s in raw_students:
+-        students[s["id"]] = s
+-        mastery[s["id"]] = dict(s.get("mastery", {}))
+-
+-    # ---- assessments -------------------------------------------------------
+-    raw_asmt = _load("assessments.json")
+-
+-    for a in raw_asmt["assessments"]:
+-        assessments[a["id"]] = a
+-
+-    for q in raw_asmt["questions"]:
+-        questions[q["id"]] = q
+-        skill = q["skill_id"]
+-        questions_by_skill.setdefault(skill, []).append(q)
+-
+-    for asmt_id, answers in raw_asmt["answers"].items():
+-        assessment_answers[asmt_id] = answers
+-
+-    for asmt_id, result in raw_asmt["results"].items():
+-        assessment_results[asmt_id] = result
+-
+-    # ---- worksheets --------------------------------------------------------
+-    raw_ws = _load("worksheets.json")
+-    for ws in raw_ws["worksheets"]:
+-        worksheets[ws["id"]] = ws
+-        key = (ws["skill_id"], ws["strategy"])
+-        worksheets_by_skill_strategy.setdefault(key, []).append(ws)
+-
+-    # ---- attempts ----------------------------------------------------------
+-    raw_att = _load("attempts.json")
+-    for att in raw_att["attempts"]:
+-        attempts[att["id"]] = att
+-
+-    for hist in raw_att["session_history"]:
+-        session_history[hist["student_id"]] = hist["sessions"]
+-
+-    print(
+-        f"[seed] loaded  students={len(students)}  questions={len(questions)}"
+-        f"  worksheets={len(worksheets)}  attempts={len(attempts)}"
+-    )
+-
+-
+-# ---------------------------------------------------------------------------
+-# Mastery update helper (mirrors services/student-model/app/mastery/update.py)
+-# Kept here so main.py has a single import surface.
+-# ---------------------------------------------------------------------------
+-
+-def update_mastery_store(
+-    mastery_map: dict[str, float],
+-    skill_id: str,
+-    score: float,
+-    lr: float = 0.2,
+-) -> dict[str, float]:
+-    """Exponential moving-average mastery update.
+-
+-    score is treated as the target (0.0–1.0).
+-    A score >= 0.5 moves mastery toward 1.0; below moves it toward 0.0.
+-    """
+-    cur = mastery_map.get(skill_id, 0.5)
+-    target = 1.0 if score >= 0.5 else 0.0
+-    mastery_map[skill_id] = round(cur + lr * (target - cur), 4)
+-    return mastery_map
+diff --git a/services/api/app/store.py b/services/api/app/store.py
+index 1f9eae3..1913486 100644
+--- a/services/api/app/store.py
++++ b/services/api/app/store.py
+@@ -1,55 +1,153 @@
+-"""In-memory session store. Hackathon scope: one process, no DB.
++"""Student/worksheet/attempt persistence -- backed by SQLite (schema unstuck).
+ 
+-Swap for Postgres later -- the shapes already match the long-term data model
+-(student_skill_mastery, worksheets, attempts).
++Keeps the exact interface the routes already use (STORE.student,
++save_worksheet, get_worksheet, record_attempt) so main.py needed no changes
++when the in-memory dicts were replaced by SQL.
+ """
+ from __future__ import annotations
+-from threading import Lock
++
++import json
+ from typing import Any, Optional
+ 
++from . import db
++
++_HISTORY_LIMIT = 20
++
++_WRITABLE = ("name", "grade_level", "target_skill", "gap_skill",
++             "strategy", "sessions_completed", "points", "level",
++             "current_streak", "best_streak", "badges", "notes")
++
+ 
+ class Store:
+-    def __init__(self) -> None:
+-        self._lock = Lock()
+-        self.worksheets: dict[str, dict[str, Any]] = {}
+-        self.students: dict[str, dict[str, Any]] = {}
+-        self.attempts: list[dict[str, Any]] = []
++    # ---- students -----------------------------------------------------------
++    def _ensure(self, student_id: str) -> dict:
++        row = db.query_one(
++            "SELECT * FROM unstuck.students WHERE id = ?", (student_id,))
++        if row is None:
++            db.execute(
++                "INSERT INTO unstuck.students(id, created_at, updated_at)"
++                " VALUES(?,?,?)", (student_id, db._now(), db._now()))
++            row = db.query_one(
++                "SELECT * FROM unstuck.students WHERE id = ?", (student_id,))
++        return row
+ 
+     def student(self, student_id: str) -> dict[str, Any]:
+-        with self._lock:
+-            return self.students.setdefault(
+-                student_id,
+-                {
+-                    "student_id": student_id,
+-                    "grade_level": None,
+-                    "target_skill": None,
+-                    "mastery": {},
+-                    "history": [],
+-                },
+-            )
++        """Full adaptive profile: identity + mastery + history + notes."""
++        row = self._ensure(student_id)
++        mastery = {
++            r["skill_id"]: r["value"]
++            for r in db.query_all(
++                "SELECT skill_id, value FROM unstuck.mastery WHERE student_id = ?",
++                (student_id,))
++        }
++        history = [
++            {"worksheet_id": r["worksheet_id"], "score": r["score"],
++             "decision": r["decision"], "next_target_skill": r["next_target_skill"]}
++            for r in db.query_all(
++                "SELECT worksheet_id, score, decision, next_target_skill"
++                " FROM unstuck.attempts WHERE student_id = ?"
++                " ORDER BY created_at DESC, id DESC LIMIT ?",
++                (student_id, _HISTORY_LIMIT))
++        ]
++        return {
++            "student_id": row["id"],
++            "name": row["name"],
++            "grade_level": row["grade_level"],
++            "target_skill": row["target_skill"],
++            "gap_skill": row["gap_skill"],
++            "strategy": row["strategy"],
++            "sessions_completed": row["sessions_completed"],
++            "points": row["points"],
++            "level": row["level"],
++            "mastery": mastery,
++            "history": list(reversed(history)),
++            "notes": json.loads(row["notes"] or "{}"),
++        }
++
++    def update_student(self, student_id: str, **fields: Any) -> None:
++        """Persist scalar columns (target_skill, grade_level, notes, ...)."""
++        self._ensure(student_id)
++        cols, params = [], []
++        for key, val in fields.items():
++            if key not in _WRITABLE:
++                continue
++            if key in ("badges", "notes") and not isinstance(val, str):
++                val = json.dumps(val)
++            cols.append(f"{key} = ?")
++            params.append(val)
++        if not cols:
++            return
++        cols.append("updated_at = ?")
++        params.append(db._now())
++        params.append(student_id)
++        db.execute(
++            f"UPDATE unstuck.students SET {', '.join(cols)} WHERE id = ?",
++            tuple(params))
+ 
++    # ---- worksheets -----------------------------------------------------------
+     def save_worksheet(self, ws: dict[str, Any]) -> None:
+-        with self._lock:
+-            self.worksheets[ws["id"]] = ws
++        with db.tx() as conn:
++            conn.execute(
++                "INSERT OR REPLACE INTO unstuck.worksheets"
++                "(id, student_id, target_skill, grade_level, strategy, created_at)"
++                " VALUES(?,?,?,?,?,?)",
++                (ws["id"], ws.get("student_id"), ws.get("target_skill"),
++                 ws.get("grade_level"), ws.get("strategy", ""), db._now()))
++            conn.execute(
++                "DELETE FROM unstuck.worksheet_items WHERE worksheet_id = ?",
++                (ws["id"],))
++            conn.executemany(
++                "INSERT INTO unstuck.worksheet_items(worksheet_id, position, item)"
++                " VALUES(?,?,?)",
++                [(ws["id"], i, json.dumps(it))
++                 for i, it in enumerate(ws.get("items") or [])])
+ 
+     def get_worksheet(self, worksheet_id: str) -> Optional[dict[str, Any]]:
+-        return self.worksheets.get(worksheet_id)
++        row = db.query_one(
++            "SELECT * FROM unstuck.worksheets WHERE id = ?", (worksheet_id,))
++        if row is None:
++            return None
++        items = [
++            json.loads(r["item"])
++            for r in db.query_all(
++                "SELECT item FROM unstuck.worksheet_items"
++                " WHERE worksheet_id = ? ORDER BY position", (worksheet_id,))
++        ]
++        return {
++            "id": row["id"],
++            "student_id": row["student_id"],
++            "target_skill": row["target_skill"],
++            "grade_level": row["grade_level"],
++            "strategy": row["strategy"],
++            "items": items,
++        }
+ 
++    # ---- attempts ---------------------------------------------------------------
+     def record_attempt(self, result: dict[str, Any]) -> None:
+-        with self._lock:
+-            self.attempts.append(result)
+-            s = self.students.setdefault(result["student_id"], {"history": []})
+-            s["mastery"] = result["mastery_after"]
+-            s["target_skill"] = result["next_target_skill"]
+-            s["grade_level"] = result["next_grade_level"]
+-            s.setdefault("history", []).append(
+-                {
+-                    "worksheet_id": result["worksheet_id"],
+-                    "score": result["score"],
+-                    "decision": result["decision"],
+-                    "next_target_skill": result["next_target_skill"],
+-                }
+-            )
++        """Store one graded attempt, then fold its effects into the student."""
++        att_id = result.get("attempt_id") or db.next_id("attempt")
++        with db.tx() as conn:
++            conn.execute(
++                "INSERT OR REPLACE INTO unstuck.attempts"
++                "(id, worksheet_id, student_id, score, decision,"
++                " next_target_skill, next_grade_level, payload, created_at)"
++                " VALUES(?,?,?,?,?,?,?,?,?)",
++                (att_id, result.get("worksheet_id"), result.get("student_id"),
++                 result.get("score"), result.get("decision"),
++                 result.get("next_target_skill"), result.get("next_grade_level"),
++                 json.dumps(result), db._now()))
++            sid = result.get("student_id")
++            self._ensure(sid)
++            conn.execute(
++                "UPDATE unstuck.students SET target_skill = ?, grade_level = ?,"
++                " updated_at = ? WHERE id = ?",
++                (result.get("next_target_skill"),
++                 result.get("next_grade_level"), db._now(), sid))
++            for skill, value in (result.get("mastery_after") or {}).items():
++                conn.execute(
++                    "INSERT OR REPLACE INTO unstuck.mastery"
++                    "(student_id, skill_id, value, updated_at) VALUES(?,?,?,?)",
++                    (sid, skill, float(value), db._now()))
+ 
+ 
+ STORE = Store()

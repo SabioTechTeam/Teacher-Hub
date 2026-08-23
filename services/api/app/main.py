@@ -33,14 +33,15 @@ from curriculum import load_curriculum  # noqa: E402
 import notes as notes_mod  # noqa: E402
 
 from .store import STORE
+from . import db
 from . import diagnostic
-from . import seed
 
-# Populate mock fixtures on startup
+# Open (and, on first boot, create + seed) the SQLite database.
 try:
-    seed.load()
+    _DB_INFO = db.init_db()
+    print(f"[db] unstuck ready: {_DB_INFO}")
 except Exception as exc:
-    print(f"[seed] note: fixture load skipped or failed: {exc}")
+    print(f"[db] init failed: {exc}")
 
 app = FastAPI(title="UnStuck API", version="0.2.0")
 app.add_middleware(
@@ -97,7 +98,8 @@ def health():
     return {
         "ok": True,
         "llm": bool(os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")),
-        "students_loaded": len(seed.students),
+        "students_loaded": db.query_one(
+            "SELECT COUNT(*) AS c FROM unstuck.students")["c"],
     }
 
 
@@ -116,11 +118,19 @@ def curriculum_skills():
 
 @app.get("/students")
 def students_list():
-    return list(seed.students.values()) or [STORE.student("demo")]
+    rows = db.query_all(
+        "SELECT id, name, grade_level, target_skill, gap_skill, strategy"
+        " FROM unstuck.students ORDER BY id")
+    out = []
+    for r in rows:
+        m = db.query_all(
+            "SELECT skill_id, value FROM unstuck.mastery WHERE student_id = ?",
+            (r["id"],))
+        out.append({**r, "mastery": {x["skill_id"]: x["value"] for x in m}})
+    return out or [STORE.student("demo")]
 
 
 from .store import STORE
-from . import seed
 from . import progress
 
 
@@ -140,7 +150,7 @@ def assessment_start(student_id: str = "demo"):
 @app.post("/assessments/{assessment_id}/answer")
 def assessment_answer(assessment_id: str, body: AnswerIn, student_id: str = "demo"):
     """Grade one answer, award gamification points, persist to the student's file."""
-    question = seed.questions.get(body.question_id)
+    question = db.question_get(body.question_id)
     if not question:
         raise HTTPException(404, f"question not found: {body.question_id}")
     return progress.record_answer(student_id, assessment_id, question, body.answer)
@@ -180,10 +190,8 @@ def student_progress(student_id: str):
 
 @app.delete("/students/{student_id}/progress")
 def student_progress_reset(student_id: str):
-    path = progress._file(student_id)
-    if path.exists():
-        path.unlink()
-    return {"ok": True, "student_id": student_id, "reset": True}
+    removed = progress.reset_progress(student_id)
+    return {"ok": True, "student_id": student_id, "reset": removed}
 
 
 @app.post("/worksheets/generate")
@@ -252,12 +260,12 @@ def worksheets_grade(body: GradeIn):
 
 @app.get("/students/{student_id}")
 def student_get(student_id: str):
-    return seed.students.get(student_id) or STORE.student(student_id)
+    return STORE.student(student_id)
 
 
 @app.get("/students/{student_id}/mastery")
 def student_mastery(student_id: str):
-    s = seed.students.get(student_id) or STORE.student(student_id)
+    s = STORE.student(student_id)
     return {
         "student_id": student_id,
         "mastery": s.get("mastery", {}),
