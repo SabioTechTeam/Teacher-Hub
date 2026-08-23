@@ -237,6 +237,30 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .beach-row.start p{color:rgba(255,255,255,.9)}
 .beach-row.start .title{color:#fff}
 
+/* Slide 4 — wedge hero */
+.wedge-v2{min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:center;padding:28px var(--pad-x) 36px;gap:22px;background:
+  radial-gradient(1200px 500px at 85% -10%, rgba(79,70,229,.18), transparent 55%),
+  radial-gradient(900px 420px at 0% 110%, rgba(254,243,199,.7), transparent 50%),
+  var(--cream)}
+.wedge-v2 .kicker{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.wedge-v2 .headline{margin:0;font-size:clamp(42px,6vw,72px);font-weight:800;letter-spacing:-.05em;line-height:1.02;max-width:12em;color:var(--ink)}
+.wedge-v2 .headline em{font-style:normal;color:var(--blue)}
+.wedge-exists{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:2px}
+.wedge-exists .lbl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.wedge-exists .chip{padding:10px 14px;border-radius:999px;background:#fff;border:1px solid rgba(15,23,42,.08);font-size:14px;font-weight:700;color:rgba(15,23,42,.55);text-decoration:line-through;text-decoration-color:rgba(15,23,42,.25)}
+.wedge-hero{display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center;padding:28px 30px;border-radius:28px;background:var(--yellow);box-shadow:0 24px 50px rgba(15,23,42,.12);border:1px solid rgba(15,23,42,.06)}
+.wedge-hero .tag{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(15,23,42,.55)}
+.wedge-hero h3{margin:0 0 10px;font-size:clamp(28px,3.4vw,40px);font-weight:800;letter-spacing:-.04em;line-height:1.08}
+.wedge-hero p{margin:0;font-size:clamp(16px,1.7vw,19px);font-weight:600;line-height:1.4;color:rgba(15,23,42,.78);max-width:34em}
+.wedge-hero .neg{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.wedge-hero .neg span{padding:8px 12px;border-radius:999px;background:rgba(15,23,42,.06);font-size:13px;font-weight:750;color:rgba(15,23,42,.7)}
+.wedge-who{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-radius:22px;background:var(--ink);color:#fff}
+.wedge-who .who-copy h4{margin:0 0 4px;font-size:clamp(20px,2.2vw,26px);font-weight:800;letter-spacing:-.03em}
+.wedge-who .who-copy p{margin:0;font-size:14px;font-weight:550;color:rgba(255,255,255,.75)}
+.wedge-who .people{display:flex;flex-wrap:wrap;gap:8px}
+.wedge-who .people span{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);font-size:14px;font-weight:750}
+@media (max-width:900px){.wedge-hero{grid-template-columns:1fr}}
+
 .close-v2{min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:center;padding:48px var(--pad-x) 56px;background:var(--ink);color:#fff;position:relative}
 .close-v2 .tiny{height:64px;width:auto;max-width:64px;aspect-ratio:1;object-fit:contain;display:block;margin-bottom:36px}
 .close-v2 .trust{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
@@ -423,31 +447,33 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
   <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Each outside note points at its block. Close on Adapt → Quiz.</p></aside>
 </section>
 
-<section class="slide" id="s4">
-  <div class="topbar">
-    <div class="topbar-row">
-      <div class="topbar-copy">
-        <h1>What doesn’t exist at 8pm</h1>
-        <p>Useful new angle. Someone would actually use it tonight.</p>
+<section class="slide slide-plain" id="s4">
+  <div class="wedge-v2">
+    <div class="kicker">The empty spot · market fit</div>
+    <h1 class="headline">What doesn’t exist at <em>8pm</em></h1>
+    <div class="wedge-exists" aria-label="What already exists">
+      <span class="lbl">Exists</span>
+      <span class="chip">Tutors</span>
+      <span class="chip">Khan Academy</span>
+      <span class="chip">Worksheets</span>
+    </div>
+    <div class="wedge-hero">
+      <div class="tag">Doesn’t exist</div>
+      <div>
+        <h3>A customized learning journey — right now</h3>
+        <p>From <strong>this miss</strong> (bigger-bottom) to a <strong>fresh set tonight</strong>.</p>
+        <div class="neg"><span>Not a tutor chat</span><span>Not a diagnosis</span><span>Not another generic worksheet</span></div>
       </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+    </div>
+    <div class="wedge-who">
+      <div class="who-copy">
+        <h4>Parents, teachers, and students use this tonight</h4>
+        <p>Same-night kitchen-table loop. Live adapt demo proves it. Teachers stay in control.</p>
+      </div>
+      <div class="people"><span>Parents</span><span>Teachers</span><span>Students</span></div>
     </div>
   </div>
-  <div class="body"><div class="content beach-full">
-    <div class="beach-row exists">
-      <div class="label">Exists</div>
-      <div><div class="title">Tutors. Khan Academy. Worksheets.</div><p>Help and personalization already scale. We don’t claim the category is empty.</p></div>
-    </div>
-    <div class="beach-row focus">
-      <div class="label">Doesn’t exist</div>
-      <div><div class="title">A customized learning journey — right now</div><p>From <strong>this miss</strong> (bigger-bottom) to a <strong>fresh set tonight</strong> — not a tutor chat, not a diagnosis, not another generic worksheet.</p></div>
-    </div>
-    <div class="beach-row start">
-      <div class="label">Who uses it</div>
-      <div><div class="title">Parents, teachers, and students use this tonight</div><p>Same-night kitchen-table loop. Live adapt demo proves it. Teachers stay in control.</p></div>
-    </div>
-  </div></div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Map to judges: Innovation = customized journey from this error tonight. Market fit = parent + teacher + student. Completeness = live adapt demo. Say Khan Academy, not Khan. Don’t claim personalization is new — claim the same-night journey from this miss.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Map to judges: Innovation = customized journey from this error tonight. Market fit = parent + teacher + student. Completeness = live adapt demo next. Say Khan Academy. Don’t claim personalization is new — claim the same-night journey from this miss.</p></aside>
 </section>
 
 <section class="slide slide-plain" id="s5">
