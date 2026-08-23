@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Confetti from "../app/student/Confetti";
 import FractionVisual from "./FractionVisual";
+import ThemeArt from "./ThemeArt";
+import { styleFor } from "../lib/themeStyle";
 import { getSession, setSession } from "../lib/session";
 import { mockGrade, mockWorksheet } from "../lib/mockWorksheet";
 import type { Grade, Result, Worksheet } from "../lib/types";
@@ -161,6 +163,8 @@ export default function WorksheetFlow() {
     });
   }
 
+  const T = styleFor(ws?.themes);
+
   if (!ready) {
     return (
       <main style={wrap}>
@@ -186,25 +190,31 @@ export default function WorksheetFlow() {
         </span>
       </div>
 
-      <header style={{ marginBottom: 16 }}>
-        <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>
-          {ws ? ws.skill_name : "Practice Worksheet"}
-        </h1>
-        {ws && (
-          <p style={{ margin: "4px 0 0", color: "#666", fontSize: 14 }}>
-            Grade {ws.grade_level} · {ws.items.length} items
-            {(ws.themes ?? []).length > 0 && (
-              <span style={{ color: "#4338CA" }}>
-                {" · written for "}
-                {(ws.themes ?? []).map((t) => THEME_LABEL[t] ?? t).join(" · ")}
-              </span>
+      <header style={{
+        marginBottom: 18, borderRadius: 20, padding: "18px 22px",
+        background: T.soft, border: `2px solid ${T.edge}`,
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+          <div style={{ flex: "1 1 auto", minWidth: 0 }}>
+            <h1 style={{ margin: 0, fontSize: 28, fontWeight: 800, color: T.ink, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+              {ws ? ws.skill_name : "Practice Worksheet"}
+            </h1>
+            {ws && (
+              <p style={{ margin: "6px 0 0", color: T.ink, opacity: 0.85, fontSize: 14, fontWeight: 600 }}>
+                Grade {ws.grade_level} · {ws.items.length} items
+                {(ws.themes ?? []).length > 0 && (
+                  <span>{" · made for "}{(ws.themes ?? []).map((t) => THEME_LABEL[t] ?? t).join(" · ")}</span>
+                )}
+              </p>
             )}
-          </p>
-        )}
+          </div>
+          {ws && <ThemeArt theme={T} />}
+        </div>
+
         {ws && (ws.guidance_applied ?? []).length > 0 && (
           /* An adjustment made on a child's behalf should never be invisible. */
-          <p style={{ margin: "8px 0 0", fontSize: 13, color: "#3730A3", background: "#EEF2FF",
-                      border: "1px solid #C7D2FE", borderRadius: 8, padding: "8px 12px" }}>
+          <p style={{ margin: "14px 0 0", fontSize: 13, color: T.ink, background: "#fff",
+                      border: `1px solid ${T.edge}`, borderRadius: 10, padding: "10px 14px", fontWeight: 600 }}>
             ✏️ Adjusted from your teacher and family: {(ws.guidance_applied ?? []).join(" · ")}
           </p>
         )}
@@ -219,8 +229,9 @@ export default function WorksheetFlow() {
           <p style={{ color: "#666", marginBottom: 16 }}>
             Ready to practice? Your AI tutor has customized a problem set for you.
           </p>
-          <button onClick={generate} disabled={busy} style={btn}>
-            {busy ? "Generating…" : "Generate worksheet"}
+          <button onClick={generate} disabled={busy}
+            style={{ ...btn, background: T.accent, boxShadow: `0 4px 14px ${T.accent}44` }}>
+            {busy ? "Generating…" : "Generate my worksheet"}
           </button>
         </div>
       )}
@@ -241,12 +252,31 @@ export default function WorksheetFlow() {
             </div>
           )}
 
-          <ol style={{ paddingLeft: 20, margin: "16px 0" }}>
-            {ws.items.map((it) => {
+          <ol style={{ padding: 0, margin: "16px 0" }}>
+            {ws.items.map((it, n) => {
               const g: Grade | undefined = result?.grades.find((x) => x.item_id === it.id);
               return (
-                <li key={it.id} style={{ marginBottom: 24 }}>
-                  <div style={{ fontWeight: 500, lineHeight: 1.5 }}>{it.prompt}</div>
+                <li key={it.id} style={{
+                  marginBottom: 18, listStyle: "none", position: "relative",
+                  background: "#fff", border: `2px solid ${g ? (g.correct ? "#86EFAC" : "#FECACA") : T.edge}`,
+                  borderRadius: 18, padding: "18px 20px 18px 58px",
+                  boxShadow: "0 2px 10px rgba(15,23,42,.05)",
+                }}>
+                  {/* Question number as a badge — a page of numbered cards reads
+                      as progress, which a flat ordered list does not. */}
+                  <span aria-hidden="true" style={{
+                    position: "absolute", left: 16, top: 16,
+                    width: 30, height: 30, borderRadius: "50%",
+                    background: g ? (g.correct ? "#16A34A" : "#DC2626") : T.accent,
+                    color: "#fff", fontWeight: 800, fontSize: 15,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
+                    {g ? (g.correct ? "✓" : "!") : n + 1}
+                  </span>
+                  {/* Kept plain and high-contrast on purpose: decoration around
+                      the maths costs comprehension for the students who need
+                      the most support. */}
+                  <div style={{ fontWeight: 600, lineHeight: 1.55, fontSize: 17, color: "#0f172a" }}>{it.prompt}</div>
 
                   {/* Visual model before the abstract arithmetic — the IEP
                       accommodation surfaced in the parent hub, made real. */}
@@ -263,12 +293,16 @@ export default function WorksheetFlow() {
                       if (e.key === "Enter" && !result) submit();
                     }}
                     style={{
-                      marginTop: 6,
-                      padding: "8px 12px",
-                      width: 160,
-                      fontSize: 15,
-                      borderRadius: 8,
-                      border: `1px solid ${g ? (g.correct ? "#0a7c2f" : "#a33") : "#ccc"}`,
+                      marginTop: 10,
+                      padding: "12px 16px",
+                      width: 170,
+                      fontSize: 20,
+                      fontWeight: 700,
+                      textAlign: "center",
+                      borderRadius: 14,
+                      outlineColor: T.accent,
+                      border: `2px solid ${g ? (g.correct ? "#16A34A" : "#DC2626") : "#CBD5E1"}`,
+                      background: g ? (g.correct ? "#F0FDF4" : "#FEF2F2") : "#fff",
                     }}
                   />
                   {g && (
@@ -296,16 +330,32 @@ export default function WorksheetFlow() {
           </ol>
 
           {!result && (
-            <button onClick={submit} disabled={busy} style={btn}>
-              {busy ? "Grading…" : "Turn it in"}
+            <button onClick={submit} disabled={busy}
+              style={{ ...btn, background: T.accent, boxShadow: `0 4px 14px ${T.accent}44` }}>
+              {busy ? "Checking…" : "Turn it in ✓"}
             </button>
           )}
         </>
       )}
 
       {result && (
-        <div style={{ ...card, borderColor: DECISION_COLOR[result.decision] }}>
-          <div style={{ fontSize: 28, fontWeight: 800 }}>{Math.round(result.score * 100)}%</div>
+        <div style={{
+          ...card, borderColor: T.edge, borderWidth: 2, background: T.soft,
+          textAlign: "center", padding: "28px 22px",
+        }}>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 4 }}>
+            <ThemeArt theme={T} height={80} />
+          </div>
+          <div style={{ fontSize: 20, fontWeight: 800, color: T.ink, marginBottom: 6 }}>
+            {result.score >= 0.8
+              ? T.cheer[Math.min(result.grades.length, T.cheer.length - 1)]
+              : result.score >= 0.5
+              ? "Good progress — keep going!"
+              : "Nice try — let's take a step back together."}
+          </div>
+          <div style={{ fontSize: 52, fontWeight: 900, color: T.accent, lineHeight: 1 }}>
+            {Math.round(result.score * 100)}%
+          </div>
           <div
             style={{
               color: DECISION_COLOR[result.decision],
@@ -320,11 +370,12 @@ export default function WorksheetFlow() {
           <p style={{ margin: "10px 0 12px", color: "#333", fontSize: 15 }}>{result.rationale}</p>
 
           {earnedBadges(result, hintsUsed).length > 0 && (
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "0 0 16px" }}>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "14px 0 18px", justifyContent: "center" }}>
               {earnedBadges(result, hintsUsed).map((b) => (
                 <span key={b.label} style={{
-                  background: "#EEF2FF", color: "#3730A3", border: "1px solid #C7D2FE",
-                  borderRadius: 999, padding: "6px 12px", fontSize: 13, fontWeight: 600,
+                  background: "#fff", color: T.ink, border: `2px solid ${T.edge}`,
+                  borderRadius: 999, padding: "8px 14px", fontSize: 14, fontWeight: 700,
+                  boxShadow: "0 1px 4px rgba(15,23,42,.06)",
                 }}>
                   {b.icon} {b.label}
                 </span>
@@ -332,7 +383,8 @@ export default function WorksheetFlow() {
             </div>
           )}
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={generate} disabled={busy} style={btn}>
+            <button onClick={generate} disabled={busy}
+              style={{ ...btn, background: T.accent, boxShadow: `0 4px 14px ${T.accent}44` }}>
               Next worksheet →
             </button>
             <button
@@ -359,19 +411,20 @@ export default function WorksheetFlow() {
 
 const wrap: React.CSSProperties = { padding: "28px 24px", maxWidth: 760, margin: "0 auto", fontFamily: "system-ui, sans-serif" };
 const btn: React.CSSProperties = {
-  padding: "10px 20px",
-  fontSize: 15,
-  borderRadius: 8,
+  padding: "14px 28px",
+  fontSize: 17,
+  borderRadius: 999,
   border: "none",
   background: "#4F46E5",
   color: "#fff",
   cursor: "pointer",
-  fontWeight: 600,
+  fontWeight: 800,
+  boxShadow: "0 4px 14px rgba(79,70,229,.28)",
 };
 const ghostBtn: React.CSSProperties = {
-  marginLeft: 12, padding: "6px 12px", fontSize: 13, borderRadius: 8,
-  border: "1px solid #cbd5e1", background: "#fff", color: "#475569",
-  cursor: "pointer", fontWeight: 600,
+  marginLeft: 12, padding: "9px 16px", fontSize: 14, borderRadius: 999,
+  border: "2px solid #E2E8F0", background: "#fff", color: "#475569",
+  cursor: "pointer", fontWeight: 700,
 };
 const card: React.CSSProperties = {
   border: "2px solid #ddd",
