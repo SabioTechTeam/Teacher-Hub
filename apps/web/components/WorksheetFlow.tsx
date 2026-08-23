@@ -181,9 +181,10 @@ export default function WorksheetFlow() {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, borderBottom: "1px solid #eee", paddingBottom: 12 }}>
         <button
           onClick={() => router.push("/student/dashboard")}
-          style={{ background: "none", border: "none", color: "#4F46E5", fontWeight: 600, fontSize: 14, cursor: "pointer", padding: 0 }}
+          style={{ background: "none", border: "none", color: "#4F46E5", fontWeight: 600, fontSize: 14, cursor: "pointer", padding: 0, display: "flex", alignItems: "center", gap: 8 }}
         >
-          ← Back to Student Dashboard
+          <img src="/unstuck-logo-mark.png" alt="UnStuck" width={22} height={22} style={{ objectFit: "contain", borderRadius: 6 }} />
+          <span>← Back to Student Dashboard</span>
         </button>
         <span style={{ fontSize: 13, color: "#888", fontWeight: 500 }}>
           UnStuck Adaptive Tutor

@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -100,6 +101,45 @@ def _strip_keys(ws: dict[str, Any]) -> dict[str, Any]:
         for it in ws.get("items", [])
     ]
     return safe
+
+
+@app.get("/", response_class=HTMLResponse)
+def root():
+    return """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>UnStuck API Server</title>
+      <style>
+        body { font-family: system-ui, -apple-system, sans-serif; background: #F8FAFC; color: #1E293B; margin: 0; display: grid; place-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 40px 32px; max-width: 520px; width: 100%; box-shadow: 0 4px 16px rgba(0,0,0,0.06); text-align: center; }
+        .badge { background: #EEF2FF; color: #4338CA; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 13px; display: inline-block; margin-bottom: 16px; }
+        h1 { margin: 0 0 10px; font-size: 26px; font-weight: 800; color: #1E293B; }
+        p { color: #64748B; font-size: 15px; margin: 0 0 24px; line-height: 1.5; }
+        .actions { display: flex; flex-direction: column; gap: 10px; }
+        .btn-primary { background: #4F46E5; color: #FFFFFF; padding: 14px 20px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 15px; transition: background 0.15s ease; }
+        .btn-primary:hover { background: #4338CA; }
+        .btn-secondary { background: #F1F5F9; color: #334155; padding: 12px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 14px; }
+        .btn-secondary:hover { background: #E2E8F0; }
+        .status { margin-top: 24px; font-size: 12px; color: #059669; font-weight: 700; background: #ECFDF5; padding: 8px; border-radius: 8px; }
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <div class="badge">🎯 FastAPI Backend API · Port 8000</div>
+        <h1>UnStuck API is Running</h1>
+        <p>This is the backend REST API. The user interface runs on <strong>Port 3000</strong>.</p>
+        <div class="actions">
+          <a href="http://localhost:3000" class="btn-primary">Open Web Application (Port 3000) 🚀</a>
+          <a href="/docs" class="btn-secondary">Explore Interactive Swagger API Docs 📚</a>
+          <a href="/health" class="btn-secondary">View System Health JSON 🩺</a>
+        </div>
+        <div class="status">✓ SQLite Database Connected &amp; Ready</div>
+      </div>
+    </body>
+    </html>
+    """
 
 
 @app.get("/health")

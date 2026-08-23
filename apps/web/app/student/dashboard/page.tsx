@@ -84,9 +84,9 @@ export default function StudentDashboard() {
     <div className={styles.shell}>
       {/* ── Nav ── */}
       <nav className={styles.nav}>
-        <div className={styles.navBrand} onClick={() => router.push("/")} style={{ cursor: "pointer" }}>
-          <div className={styles.navMark}>🎯</div>
-          UnStuck
+        <div className={styles.navBrand} onClick={() => router.push("/")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
+          <img src="/unstuck-logo-mark.png" alt="UnStuck Logo" width={32} height={32} style={{ objectFit: "contain", borderRadius: 8 }} />
+          <span>UnStuck</span>
         </div>
         <div className={styles.navRight}>
           <button
