@@ -9,6 +9,7 @@ class AgentState(BaseModel):
     gap_skill: Optional[str] = None
     strategy: Optional[str] = "worked_example"
     mastery: dict[str, float] = Field(default_factory=dict)
+    themes: list[str] = Field(default_factory=list)
     worksheet: Optional[dict[str, Any]] = None
     evaluation: Optional[dict[str, Any]] = None
     result: Optional[dict[str, Any]] = None

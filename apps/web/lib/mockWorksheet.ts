@@ -45,12 +45,12 @@ const BANK: Record<string, { prompt: string; answer: string }[]> = {
     { prompt: "What is 54 ÷ 9?", answer: "6" },
   ],
   "math.4.fractions.parts": [
-    { prompt: "A pizza is cut into 8 equal slices. You eat 3. What fraction did you eat?", answer: "3/8" },
-    { prompt: "A chocolate bar has 5 equal pieces. You take 2. What fraction did you take?", answer: "2/5" },
-    { prompt: "A ribbon is cut into 6 equal parts. You use 1. What fraction did you use?", answer: "1/6" },
-    { prompt: "A cake is cut into 4 equal slices. You eat 3. What fraction did you eat?", answer: "3/4" },
-    { prompt: "A pie has 10 equal slices. You take 7. What fraction did you take?", answer: "7/10" },
-    { prompt: "A sandwich is cut into 3 equal parts. You eat 2. What fraction did you eat?", answer: "2/3" },
+    { prompt: "A {v} is divided into 8 equal {u}s. 3 are used. What fraction is used?", answer: "3/8" },
+    { prompt: "A {v} is divided into 5 equal {u}s. 2 are used. What fraction is used?", answer: "2/5" },
+    { prompt: "A {v} is divided into 6 equal {u}s. 1 {u} is used. What fraction is used?", answer: "1/6" },
+    { prompt: "A {v} is divided into 4 equal {u}s. 3 are used. What fraction is used?", answer: "3/4" },
+    { prompt: "A {v} is divided into 10 equal {u}s. 7 are used. What fraction is used?", answer: "7/10" },
+    { prompt: "A {v} is divided into 3 equal {u}s. 2 are used. What fraction is used?", answer: "2/3" },
   ],
   "math.4.fractions.equivalent": [
     { prompt: "Fill in the blank: 1/2 = ___/8", answer: "4" },
@@ -77,7 +77,7 @@ const BANK: Record<string, { prompt: string; answer: string }[]> = {
     { prompt: "4/11 + 5/11 = ?", answer: "9/11" },
   ],
   "math.6.ratios.intro": [
-    { prompt: "A recipe uses 3 cups of flour for 4 cups of milk. Write the ratio as a fraction.", answer: "3/4" },
+    { prompt: "There are 3 full {u}s for every 4 {u}s in the {v}. Write full to total as a fraction.", answer: "3/4" },
     { prompt: "There are 2 cats for every 5 dogs. Write the ratio of cats to dogs as a fraction.", answer: "2/5" },
     { prompt: "A team wins 6 games and plays 9. Write wins to games as a fraction.", answer: "2/3" },
     { prompt: "5 red marbles, 8 blue marbles. Write red to blue as a fraction.", answer: "5/8" },
@@ -88,18 +88,77 @@ const BANK: Record<string, { prompt: string; answer: string }[]> = {
 
 const keys = new Map<string, Record<string, string>>();
 
-export function mockWorksheet(studentId: string, skillId: string): Worksheet {
+/** Mirrors services/agent/themes.py so mock mode looks like the real thing. */
+const THEME_VESSEL: Record<string, { emoji: string; vessel: string; unit: string }> = {
+  space: { emoji: "🚀", vessel: "rocket", unit: "fuel cell" },
+  minecraft: { emoji: "🧱", vessel: "chest", unit: "block" },
+  videogames: { emoji: "🎮", vessel: "quest log", unit: "objective" },
+  basketball: { emoji: "🏀", vessel: "game", unit: "quarter" },
+  dinosaurs: { emoji: "🦖", vessel: "nest", unit: "egg" },
+  robotics: { emoji: "🤖", vessel: "battery pack", unit: "cell" },
+  soccer: { emoji: "⚽", vessel: "match", unit: "half" },
+  neutral: { emoji: "✏️", vessel: "pizza", unit: "slice" },
+};
+
+/** Parse "a/b" out of a mock prompt so we can draw the same scaffold the API sends. */
+function visualFor(skill: string, prompt: string, n: number): any {
+  const fracs = [...prompt.matchAll(/(\d+)\s*\/\s*(\d+)/g)].map((m) => ({
+    num: Number(m[1]), den: Number(m[2]),
+  }));
+  if (skill.includes("parts")) {
+    const den = Number(prompt.match(/into (\d+) equal/)?.[1] ?? 8);
+    const used = prompt.match(/(\d+)\s+(?:\S+\s+)?(?:are|is) used/);
+    const num = used ? Number(used[1]) : 1;
+    return { kind: "shaded_whole", bars: [{ num, den, label: "shaded" }] };
+  }
+  if (skill.includes("equivalent") && fracs.length) {
+    const bigDen = Number(prompt.match(/___\/(\d+)/)?.[1] ?? fracs[0].den * 2);
+    return { kind: "equivalence", bars: [
+      { num: fracs[0].num, den: fracs[0].den, label: `${fracs[0].num}/${fracs[0].den}` },
+      { num: null, den: bigDen, label: `?/${bigDen}` },
+    ]};
+  }
+  if (skill.includes("compare") && fracs.length >= 2) {
+    return { kind: "compare", bars: fracs.slice(0, 2).map((f) => ({ ...f, label: `${f.num}/${f.den}` })) };
+  }
+  if (skill.includes("add-like") && fracs.length >= 2) {
+    return { kind: "sum", bars: fracs.slice(0, 2).map((f) => ({ ...f, label: `${f.num}/${f.den}` })) };
+  }
+  // Ratios are written as prose, not "a/b" — take the first two whole numbers,
+  // which the bank always orders as (part, whole).
+  const ints = [...prompt.matchAll(/\b(\d+)\b/g)].map((m) => Number(m[1]));
+  if (ints.length >= 2) {
+    return { kind: "ratio", counts: [
+      { n: ints[0], label: "first quantity" }, { n: ints[1], label: "second quantity" },
+    ]};
+  }
+  if (fracs.length) {
+    return { kind: "compare", bars: fracs.slice(0, 1).map((f) => ({ ...f, label: `${f.num}/${f.den}` })) };
+  }
+  return null;
+}
+
+export function mockWorksheet(studentId: string, skillId: string, interests: string[] = []): Worksheet {
   const skill = SKILLS[skillId] ? skillId : "math.5.fractions.compare";
   const meta = SKILLS[skill];
   const id = `w-mock-${Math.random().toString(36).slice(2, 10)}`;
-  const items = BANK[skill].map((q, n) => ({
-    id: `${id}-i${n}`,
-    skill_id: skill,
-    type: "fraction",
-    prompt: q.prompt,
-    difficulty: 0.4,
-    hint: "Work it out one step at a time.",
-  }));
+  const picked = interests.filter((t) => t in THEME_VESSEL);
+  const items = BANK[skill].map((q, n) => {
+    const t = THEME_VESSEL[picked.length ? picked[n % picked.length] : "neutral"];
+    // Re-dress the prompt in the child's world without touching the numbers.
+    // Placeholders only — no regex over prose, so nothing can mangle a word.
+    const prompt = `${t.emoji} ${q.prompt.split("{v}").join(t.vessel).split("{u}").join(t.unit)}`;
+    return {
+      id: `${id}-i${n}`,
+      skill_id: skill,
+      type: "fraction",
+      prompt,
+      difficulty: 0.4,
+      hint: "Look at the picture first, then work it out one step at a time.",
+      visual: visualFor(skill, prompt, n),
+      theme: picked.length ? picked[n % picked.length] : "neutral",
+    };
+  });
   keys.set(id, Object.fromEntries(BANK[skill].map((q, n) => [`${id}-i${n}`, q.answer])));
   return {
     id,
@@ -109,6 +168,7 @@ export function mockWorksheet(studentId: string, skillId: string): Worksheet {
     skill_name: meta.name,
     standards: meta.standards,
     strategy: "worked_example",
+    themes: picked.length ? picked : ["neutral"],
     source: "mock",
     generated_at: new Date().toISOString(),
     items,

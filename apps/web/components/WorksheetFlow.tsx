@@ -13,6 +13,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Confetti from "../app/student/Confetti";
+import FractionVisual from "./FractionVisual";
 import { getSession, setSession } from "../lib/session";
 import { mockGrade, mockWorksheet } from "../lib/mockWorksheet";
 import type { Grade, Result, Worksheet } from "../lib/types";
@@ -26,6 +28,29 @@ const DECISION_COLOR: Record<string, string> = {
   remediate: "#a33",
 };
 
+const THEME_LABEL: Record<string, string> = {
+  space: "🚀 Space & Rockets",
+  minecraft: "🧱 Building Blocks",
+  videogames: "🎮 Video Games",
+  basketball: "🏀 Basketball Stats",
+  dinosaurs: "🦖 Dinosaurs",
+  robotics: "🤖 Robotics & Coding",
+  soccer: "⚽ Soccer",
+  neutral: "✏️ Everyday",
+};
+
+const CHEERS = ["Nice one!", "You got it!", "Sharp!", "That's it!", "Brilliant!"];
+
+/** Badges are earned on the worksheet, not handed out for showing up. */
+function earnedBadges(result: Result, usedHints: number) {
+  const out: { icon: string; label: string }[] = [];
+  if (result.score === 1) out.push({ icon: "🏆", label: "Perfect set" });
+  if (result.score === 1 && usedHints === 0) out.push({ icon: "🧠", label: "No hints needed" });
+  if (result.score >= 0.8 && result.decision === "advance") out.push({ icon: "🚀", label: "Level up" });
+  if (result.score > 0 && result.score < 0.8) out.push({ icon: "💪", label: "Kept going" });
+  return out;
+}
+
 export default function WorksheetFlow() {
   const router = useRouter();
   const [ws, setWs] = useState<Worksheet | null>(null);
@@ -35,18 +60,40 @@ export default function WorksheetFlow() {
   const [note, setNote] = useState<string | null>(null);
   const [mocked, setMocked] = useState(USE_MOCKS);
   const [ready, setReady] = useState(false);
+  const [hints, setHints] = useState<Record<string, boolean>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [confettiTrigger, setConfettiTrigger] = useState(0);
+  const [cheer, setCheer] = useState<string | null>(null);
 
   useEffect(() => setReady(true), []); // localStorage is client-only
+
+  const answered = ws ? ws.items.filter((i) => (answers[i.id] ?? "").trim() !== "").length : 0;
+  const total = ws?.items.length ?? 0;
+  const hintsUsed = Object.values(hints).filter(Boolean).length;
+
+  /** Light acknowledgement as the student works. Not marking -- just momentum. */
+  function noteAttempt(itemId: string, value: string) {
+    setAnswers({ ...answers, [itemId]: value });
+    if (value.trim() !== "" && !touched[itemId]) {
+      setTouched({ ...touched, [itemId]: true });
+      setCheer(CHEERS[Math.floor(Date.now() / 700) % CHEERS.length]);
+      window.setTimeout(() => setCheer(null), 1200);
+    }
+  }
 
   async function generate() {
     setBusy(true);
     setNote(null);
     setResult(null);
     setAnswers({});
+    setHints({});
+    setTouched({});
+    setCheer(null);
     const s = getSession();
+    const interests = s.interests ?? [];
 
     if (mocked) {
-      setWs(mockWorksheet(s.studentId, s.gapSkill || "math.5.fractions.compare"));
+      setWs(mockWorksheet(s.studentId, s.gapSkill || "math.5.fractions.compare", interests));
       setBusy(false);
       return;
     }
@@ -54,14 +101,19 @@ export default function WorksheetFlow() {
       const r = await fetch(`${API}/worksheets/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ student_id: s.studentId, skill_id: s.gapSkill ?? null }),
+        body: JSON.stringify({
+          student_id: s.studentId,
+          skill_id: s.gapSkill ?? null,
+          // Interest themes the parent picked in /parent/dashboard.
+          themes: interests.length ? interests : null,
+        }),
       });
       if (!r.ok) throw new Error(await r.text());
       setWs(await r.json());
     } catch {
       setMocked(true);
       setNote("API unreachable — running on mock items.");
-      setWs(mockWorksheet(s.studentId, s.gapSkill || "math.5.fractions.compare"));
+      setWs(mockWorksheet(s.studentId, s.gapSkill || "math.5.fractions.compare", interests));
     }
     setBusy(false);
   }
@@ -119,6 +171,8 @@ export default function WorksheetFlow() {
 
   return (
     <main style={wrap}>
+      <Confetti trigger={confettiTrigger} />
+
       {/* Top Navigation Connector */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, borderBottom: "1px solid #eee", paddingBottom: 12 }}>
         <button
@@ -139,6 +193,12 @@ export default function WorksheetFlow() {
         {ws && (
           <p style={{ margin: "4px 0 0", color: "#666", fontSize: 14 }}>
             Grade {ws.grade_level} · {ws.items.length} items
+            {(ws.themes ?? []).length > 0 && (
+              <span style={{ color: "#4338CA" }}>
+                {" · written for "}
+                {(ws.themes ?? []).map((t) => THEME_LABEL[t] ?? t).join(" · ")}
+              </span>
+            )}
           </p>
         )}
         {ws && (ws.guidance_applied ?? []).length > 0 && (
@@ -167,18 +227,37 @@ export default function WorksheetFlow() {
 
       {ws && (
         <>
+          {!result && (
+            <div style={{ margin: "16px 0" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#475569", marginBottom: 6 }}>
+                <span>{answered} of {total} answered</span>
+                <span style={{ color: cheer ? "#059669" : "transparent", fontWeight: 700, transition: "color .2s" }}>
+                  {cheer ?? "·"}
+                </span>
+              </div>
+              <div style={{ height: 8, background: "#f1f5f9", borderRadius: 4, overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${total ? (answered / total) * 100 : 0}%`, background: "#4F46E5", transition: "width .3s ease" }} />
+              </div>
+            </div>
+          )}
+
           <ol style={{ paddingLeft: 20, margin: "16px 0" }}>
             {ws.items.map((it) => {
               const g: Grade | undefined = result?.grades.find((x) => x.item_id === it.id);
               return (
-                <li key={it.id} style={{ marginBottom: 18 }}>
-                  <div style={{ fontWeight: 500 }}>{it.prompt}</div>
+                <li key={it.id} style={{ marginBottom: 24 }}>
+                  <div style={{ fontWeight: 500, lineHeight: 1.5 }}>{it.prompt}</div>
+
+                  {/* Visual model before the abstract arithmetic — the IEP
+                      accommodation surfaced in the parent hub, made real. */}
+                  <FractionVisual visual={it.visual} />
+
                   <input
                     type="text"
                     value={answers[it.id] ?? ""}
-                    onChange={(e) => setAnswers({ ...answers, [it.id]: e.target.value })}
+                    onChange={(e) => noteAttempt(it.id, e.target.value)}
                     disabled={Boolean(result)}
-                    placeholder="e.g. 3/4"
+                    placeholder={it.answer_format === "whole" ? "e.g. 12" : "e.g. 3/4"}
                     aria-label={it.prompt}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !result) submit();
@@ -196,6 +275,20 @@ export default function WorksheetFlow() {
                     <span style={{ marginLeft: 12, fontWeight: 600, color: g.correct ? "#0a7c2f" : "#a33" }}>
                       {g.correct ? "✓ Correct" : `✗ Answer: ${g.expected}`}
                     </span>
+                  )}
+                  {!result && it.hint && (
+                    <button
+                      type="button"
+                      onClick={() => setHints({ ...hints, [it.id]: !hints[it.id] })}
+                      style={ghostBtn}
+                    >
+                      {hints[it.id] ? "Hide hint" : "Need a hint?"}
+                    </button>
+                  )}
+                  {!result && hints[it.id] && it.hint && (
+                    <div style={{ marginTop: 8, fontSize: 13, color: "#7C2D12", background: "#FFF7ED", border: "1px solid #FED7AA", borderRadius: 8, padding: "8px 12px" }}>
+                      💡 {it.hint}
+                    </div>
                   )}
                 </li>
               );
@@ -224,7 +317,20 @@ export default function WorksheetFlow() {
           >
             {result.decision.toUpperCase()}
           </div>
-          <p style={{ margin: "10px 0 16px", color: "#333", fontSize: 15 }}>{result.rationale}</p>
+          <p style={{ margin: "10px 0 12px", color: "#333", fontSize: 15 }}>{result.rationale}</p>
+
+          {earnedBadges(result, hintsUsed).length > 0 && (
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "0 0 16px" }}>
+              {earnedBadges(result, hintsUsed).map((b) => (
+                <span key={b.label} style={{
+                  background: "#EEF2FF", color: "#3730A3", border: "1px solid #C7D2FE",
+                  borderRadius: 999, padding: "6px 12px", fontSize: 13, fontWeight: 600,
+                }}>
+                  {b.icon} {b.label}
+                </span>
+              ))}
+            </div>
+          )}
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={generate} disabled={busy} style={btn}>
               Next worksheet →
@@ -261,6 +367,11 @@ const btn: React.CSSProperties = {
   color: "#fff",
   cursor: "pointer",
   fontWeight: 600,
+};
+const ghostBtn: React.CSSProperties = {
+  marginLeft: 12, padding: "6px 12px", fontSize: 13, borderRadius: 8,
+  border: "1px solid #cbd5e1", background: "#fff", color: "#475569",
+  cursor: "pointer", fontWeight: 600,
 };
 const card: React.CSSProperties = {
   border: "2px solid #ddd",

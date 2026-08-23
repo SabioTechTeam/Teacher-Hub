@@ -18,6 +18,13 @@ class WorksheetItem(BaseModel):
     hint: Optional[str] = None
     explanation: Optional[str] = None
     check: Optional[str] = None  # arithmetic expression proving `answer`
+    # Visual scaffold spec. Safe to send to the browser -- never contains the answer.
+    # kinds: shaded_whole | equivalence | compare | sum | ratio
+    visual: Optional[dict[str, Any]] = None
+    theme: Optional[str] = None  # interest theme id this item was written for
+    # "whole" or "fraction" -- drives the input placeholder. A first grader
+    # should not be shown "e.g. 3/4".
+    answer_format: Optional[str] = None
 
 
 class Worksheet(BaseModel):
@@ -28,6 +35,7 @@ class Worksheet(BaseModel):
     skill_name: str = ""
     standards: list[str] = Field(default_factory=list)
     strategy: str = "worked_example"
+    themes: list[str] = Field(default_factory=list)
     items: list[WorksheetItem] = Field(default_factory=list)
     generated_at: str = ""
     # Provenance: what parent/teacher notes changed about this set. Shown in the

@@ -7,6 +7,9 @@ export type StudentSession = {
   gradeLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   gapSkill?: string;
   strategy?: string;
+  /** Interest theme ids chosen by the parent in /parent/dashboard.
+   *  Drives the word-problem context of generated worksheets. */
+  interests?: string[];
 };
 
 const KEY = "teacherhub.session";
