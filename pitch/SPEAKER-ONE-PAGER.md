@@ -11,7 +11,7 @@
 | ~0:30 | 3 Wedge | Tutors + Khan Academy exist. Missing: customized journey from this miss → fresh set tonight. Parents, teachers, students use tonight. | WHY before HOW. |
 | ~0:35 | 4 Loop | One adaptive loop. Quiz → Generate → Grade → Adapt → Quiz. | Don’t overcomplicate roles. |
 | ~2:30 | 5 Demo ★ | “Now a live demo — same skill, wrong answer, next set changes on purpose.” Bigger-bottom 3/8 vs 3/5. | One laptop. |
-| ~0:25 | 6 Close | Personalize practice. Don’t diagnose disabilities. Teachers stay in control. That’s UnStuck. | End if short. |
-| optional | 7 Future | Deepen math, other subjects, teacher clarity, homework snap. Impact = close the 6-in-10 gap. | Skip if near time. |
+| ~0:25 | 6 Close | Personalize practice. Don’t diagnose disabilities. Teachers stay in control. That’s how we chip away at the six in ten / NAEP gap. That’s UnStuck. | Safety + tie-back. End if short. |
+| optional | 7 Future | Deepen math, other subjects, teacher clarity, homework snap. Impact = shrink the six-in-ten / NAEP gap. | Skip if near time. |
 
 **Time cut:** 1 → 2 → 3 → 5 → 6
