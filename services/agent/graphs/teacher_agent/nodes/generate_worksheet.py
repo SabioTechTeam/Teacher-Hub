@@ -108,15 +108,72 @@ def _template_items(
         th = themes_mod.pick(theme_ids, rng)
         vessel, unit = rng.choice(th.vessels)
         activity = rng.choice(th.activities) if th.activities else "practice session"
+        token = rng.choice(th.tokens) if th.tokens else "sticker"
+        tokens = themes_mod.plural(token)
+        vessels_pl = themes_mod.plural(vessel)
         pair_a, pair_b = rng.choice(th.pairs)
 
         b, d = rng.randint(2, 9), rng.randint(2, 9)
         a, c = rng.randint(1, b - 1), rng.randint(1, d - 1)
         visual: dict = {}
 
-        if "parts" in skill_id:
+        # ---- Grades 1-3 -------------------------------------------------
+        # The diagnostic now places students from grade 1 up. Without these,
+        # every sub-grade-4 skill fell through to the ratio branch and a
+        # six-year-old was asked to write a ratio as a fraction.
+        if "addsub" in skill_id:
+            # 1.OA.C.6 -- add and subtract within 20.
+            if rng.random() < 0.5:
+                x, y = rng.randint(2, 12), rng.randint(2, 8)
+                while x + y > 20:
+                    x, y = rng.randint(2, 12), rng.randint(2, 8)
+                prompt = (f"{th.emoji} You have {x} {tokens}, then you find {y} more. "
+                          f"How many {tokens} now?")
+                check = f"{x} + {y}"
+                visual = {"kind": "counters", "groups": [
+                    {"n": x, "label": f"{x}"}, {"n": y, "label": f"+ {y}"}]}
+            else:
+                x = rng.randint(6, 20)
+                y = rng.randint(1, x - 1)
+                prompt = (f"{th.emoji} You have {x} {tokens} and use {y} of them. "
+                          f"How many {tokens} are left?")
+                check = f"{x} - {y}"
+                visual = {"kind": "counters", "groups": [
+                    {"n": x, "label": f"{x}"}, {"n": y, "label": f"take away {y}", "removed": True}]}
+
+        elif "placevalue" in skill_id:
+            # 2.NBT.B.5 -- add and subtract within 100 using place value.
+            x, y = rng.randint(11, 58), rng.randint(11, 39)
+            prompt = (f"{th.emoji} You collect {x} {tokens} on Monday and {y} more on Tuesday. "
+                      f"How many {tokens} altogether?")
+            check = f"{x} + {y}"
+            visual = {"kind": "place_value", "numbers": [
+                {"tens": x // 10, "ones": x % 10, "label": f"{x}"},
+                {"tens": y // 10, "ones": y % 10, "label": f"{y}"}]}
+
+        elif "mult" in skill_id:
+            # 3.OA.A.1 -- products as equal groups; division as sharing.
+            rows, cols = rng.randint(2, 9), rng.randint(2, 9)
+            if rng.random() < 0.5:
+                prompt = (f"{th.emoji} There are {rows} {vessels_pl}. Each one holds {cols} {tokens}. "
+                          f"How many {tokens} in total?")
+                check = f"{rows} * {cols}"
+                visual = {"kind": "array", "rows": rows, "cols": cols,
+                          "row_label": vessel, "item_label": token}
+            else:
+                total = rows * cols
+                prompt = (f"{th.emoji} You share {total} {tokens} equally into {rows} {vessels_pl}. "
+                          f"How many {tokens} in each one?")
+                check = f"{total} / {rows}"
+                # An array of rows x cols would lay the quotient out for them.
+                # Show the pile and the empty groups; the sharing is the work.
+                visual = {"kind": "share", "total": total, "groups": rows,
+                          "group_label": vessel, "item_label": token}
+
+        # ---- Grades 4-6 -------------------------------------------------
+        elif "parts" in skill_id:
             verb = "is" if a == 1 else "are"
-            prompt = (f"{th.emoji} A {vessel} holds {b} equal {unit}s. "
+            prompt = (f"{th.emoji} A {vessel} holds {b} equal {themes_mod.plural(unit)}. "
                       f"{a} {unit}{'' if a == 1 else 's'} {verb} used. What fraction is used?")
             check = f"{a}/{b}"
             visual = {"kind": "shaded_whole", "bars": [{"num": a, "den": b, "label": vessel}]}
@@ -156,7 +213,7 @@ def _template_items(
                                {"num": y, "den": den, "label": f"{y}/{den}"}]}
         else:  # ratios
             # "there are 1 power-ups" reads badly to a nine-year-old.
-            a_label = pair_a[:-1] if a == 1 and pair_a.endswith("s") else pair_a
+            a_label = themes_mod.singular(pair_a) if a == 1 else pair_a
             there = "is" if a == 1 else "are"
             prompt = (f"{th.emoji} For every {b} {pair_b} there {there} {a} {a_label}. "
                       f"Write {pair_a} to {pair_b} as a fraction.")
@@ -176,6 +233,8 @@ def _template_items(
                 answer=str(val),
                 check=check,
                 difficulty=0.4,
+                answer_format=("whole" if val.denominator == 1 and skill_id.split(".")[1] in ("1", "2", "3")
+                               else "fraction"),
                 hint="Look at the picture first, then work it out one step at a time.",
                 explanation=f"{check} = {val}",
                 visual=visual,

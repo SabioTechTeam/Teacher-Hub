@@ -257,7 +257,7 @@ export default function WorksheetFlow() {
                     value={answers[it.id] ?? ""}
                     onChange={(e) => noteAttempt(it.id, e.target.value)}
                     disabled={Boolean(result)}
-                    placeholder="e.g. 3/4"
+                    placeholder={it.answer_format === "whole" ? "e.g. 12" : "e.g. 3/4"}
                     aria-label={it.prompt}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !result) submit();

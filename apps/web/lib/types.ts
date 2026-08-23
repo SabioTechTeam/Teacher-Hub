@@ -5,7 +5,12 @@ export type VisualBar = { num: number | null; den: number; label?: string };
  *  Never contains the answer — see _strip_keys in services/api. */
 export type Visual =
   | { kind: "shaded_whole" | "equivalence" | "compare" | "sum"; bars: VisualBar[] }
-  | { kind: "ratio"; counts: { n: number; label: string }[] };
+  | { kind: "ratio"; counts: { n: number; label: string }[] }
+  // Grades 1-3
+  | { kind: "counters"; groups: { n: number; label: string; removed?: boolean }[] }
+  | { kind: "place_value"; numbers: { tens: number; ones: number; label: string }[] }
+  | { kind: "array"; rows: number; cols: number; row_label?: string; item_label?: string }
+  | { kind: "share"; total: number; groups: number; group_label?: string; item_label?: string };
 
 export type Item = {
   id: string;
@@ -17,6 +22,8 @@ export type Item = {
   hint?: string;
   visual?: Visual | null;
   theme?: string | null;
+  /** "whole" | "fraction" — drives the answer input placeholder. */
+  answer_format?: string | null;
 };
 
 export type Worksheet = {

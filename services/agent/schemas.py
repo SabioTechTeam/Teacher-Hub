@@ -22,6 +22,9 @@ class WorksheetItem(BaseModel):
     # kinds: shaded_whole | equivalence | compare | sum | ratio
     visual: Optional[dict[str, Any]] = None
     theme: Optional[str] = None  # interest theme id this item was written for
+    # "whole" or "fraction" -- drives the input placeholder. A first grader
+    # should not be shown "e.g. 3/4".
+    answer_format: Optional[str] = None
 
 
 class Worksheet(BaseModel):
