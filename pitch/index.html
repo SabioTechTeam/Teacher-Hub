@@ -274,6 +274,13 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .close-v2 .close-gap{margin:14px 0 0;max-width:30em;font-size:clamp(16px,1.7vw,19px);font-weight:600;line-height:1.4;color:rgba(255,255,255,.78)}
 .close-v2 .close-gap strong{color:var(--yellow);font-weight:800}
 
+.future-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 16px}
+.future-bar .fb{background:#fff;border-radius:18px;padding:16px 14px;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.06);text-align:center}
+.future-bar .fb .v{font-size:clamp(28px,3vw,36px);font-weight:800;letter-spacing:-.04em;color:var(--blue);line-height:1}
+.future-bar .fb .l{margin-top:6px;font-size:13px;font-weight:750;color:var(--ink)}
+.future-bar .fb .s{margin-top:2px;font-size:12px;font-weight:600;color:var(--muted)}
+.future-bar .fb.us .v{color:var(--ink)}
+.future-note{margin:12px 0 0;font-size:13px;font-weight:600;color:var(--muted);text-align:center}
 .future-v2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .future-v2 .cell{padding:26px 24px;border-radius:22px;min-height:180px;background:#fff;box-shadow:var(--shadow);border:1px solid rgba(11,18,32,.05)}
 .future-v2 .cell.dark{background:var(--ink);color:#fff}
@@ -526,13 +533,18 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 
 <section class="slide slide-plain" id="s7">
   <div class="body" style="min-height:calc(100vh - 48px)"><div class="content">
-    <div class="hiw-head" style="margin-bottom:18px">
+    <div class="hiw-head" style="margin-bottom:14px">
       <div>
         <div class="opt-banner">Optional · skip if near time</div>
         <h2 style="margin-top:10px">If we have a minute more</h2>
-        <p style="margin:10px 0 0;font-size:18px;font-weight:550;color:rgba(11,18,32,.7);max-width:38em">Same adaptive engine — aimed at shrinking that <strong style="color:var(--blue)">six-in-ten / NAEP</strong> gap, then more subjects and more people helped.</p>
+        <p style="margin:10px 0 0;font-size:18px;font-weight:550;color:rgba(11,18,32,.7);max-width:40em">Shrink the <strong style="color:var(--blue)">six-in-ten / NAEP</strong> gap at home — then aim at the bar Japan and Singapore already set.</p>
       </div>
       <img class="mark" src="unstuck-logo-mark.png" alt="UnStuck"/>
+    </div>
+    <div class="future-bar" aria-label="TIMSS 2019 grade 4 math averages">
+      <div class="fb"><div class="v">625</div><div class="l">Singapore</div><div class="s">TIMSS 2019 · Grade 4 math</div></div>
+      <div class="fb"><div class="v">593</div><div class="l">Japan</div><div class="s">TIMSS 2019 · Grade 4 math</div></div>
+      <div class="fb us"><div class="v">535</div><div class="l">United States</div><div class="s">TIMSS 2019 · Grade 4 math</div></div>
     </div>
     <div class="future-v2">
       <div class="cell dark"><div class="n">01</div><h3>Deepen math first</h3><p>Fractions → ratios, then more of grades 4–6.</p></div>
@@ -540,8 +552,9 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
       <div class="cell"><div class="n">03</div><h3>Teacher clarity</h3><p>Plain English: why this kid is stuck.</p></div>
       <div class="cell"><div class="n">04</div><h3>Homework snap</h3><p>Short practice from tonight’s page — aimed at the miss.</p></div>
     </div>
+    <p class="future-note">Receipt: TIMSS 2019 Grade 4 mathematics averages. Optional slide — skip if near time.</p>
   </div></div>
-  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Only if time leftover. Lead with closing the 6-in-10 gap, not roadmap. Skip Singapore/Japan unless asked.</p></aside>
+  <aside class="speak"><div class="speak-label">Speaking notes</div><p class="say">Only if time leftover. NAEP gap first, then Japan/Singapore as the bar (TIMSS 625 / 593 vs US 535). Don’t lead with roadmap.</p></aside>
 </section>
 
 <script>
