@@ -20,7 +20,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .nav button{border:0;border-radius:8px;cursor:pointer;background:var(--blue);color:#fff;font:600 13px Inter,system-ui,sans-serif;padding:7px 11px}
 .nav button.ghost{background:transparent;border:1px solid rgba(255,255,255,.35)}
 #counter{margin-left:auto;font-size:12px;opacity:.85}
-.nav-logo{height:34px;width:auto;background:transparent;padding:0;border-radius:8px;object-fit:contain}
+.nav-logo{height:34px;width:auto;background:#fff;padding:3px;border-radius:8px;object-fit:contain}
 
 .slide{display:none;min-height:calc(100vh - 48px);background:var(--cream);position:relative;overflow:hidden}
 .slide.active{display:flex;flex-direction:column}
@@ -32,7 +32,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .brand-lockup{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .hero-brand{display:flex;align-items:center;gap:12px;margin:0 0 168px !important}
 .hero-brand img{height:104px;width:auto;max-width:min(640px,86vw);object-fit:contain;background:transparent;box-shadow:none;border-radius:0;display:block}
-.brand-lockup img{height:72px;width:auto;display:block;background:transparent;padding:0;box-shadow:none;border-radius:16px;object-fit:contain}
+.brand-lockup img{height:64px;width:auto;display:block;background:#fff;padding:8px;box-shadow:none;border-radius:16px;object-fit:contain}
 
 
 .hero-brand span{font-weight:800;font-size:22px;letter-spacing:-.03em}
@@ -176,7 +176,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 .hiw{padding:4px 0 0}
 .hiw-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:10px}
 .hiw-head h2{margin:0;font-size:clamp(30px,3.6vw,44px);font-weight:800;letter-spacing:-.045em;line-height:1.05;max-width:14em}
-.hiw-head .mark{height:44px;width:auto}
+.hiw-head .mark{height:48px;width:auto;background:#fff;padding:6px;border-radius:12px;object-fit:contain}
 .cycle-stage{position:relative;width:min(1080px,100%);height:600px;margin:0 auto}
 .cycle{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:440px;aspect-ratio:1}
 .cycle-svg{position:absolute;inset:12%;width:76%;height:76%}
@@ -262,7 +262,9 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 @media (max-width:900px){.wedge-hero{grid-template-columns:1fr}}
 
 .close-v2{min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:center;padding:48px var(--pad-x) 56px;background:var(--ink);color:#fff;position:relative}
-.close-v2 .tiny{height:72px;width:auto;max-width:min(420px,70vw);object-fit:contain;object-position:left center;display:block;margin-bottom:36px}
+.close-v2 .close-brand{display:inline-flex;align-items:center;padding:14px 18px;border-radius:18px;background:#fff;margin-bottom:36px;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.close-v2 .close-brand img{height:64px;width:auto;max-width:min(380px,70vw);object-fit:contain;display:block}
+.close-v2 .tiny{height:64px;width:auto;object-fit:contain;display:block;margin-bottom:36px}
 .close-v2 .trust{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
 .close-v2 .trust span{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.28);font-size:14px;font-weight:700;color:rgba(255,255,255,.9)}
 .close-v2 h1{margin:0 0 20px;font-size:clamp(40px,5.5vw,64px);font-weight:800;letter-spacing:-.045em;line-height:1.05;max-width:14em}
@@ -333,7 +335,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 </head>
 <body>
 <div class="nav">
-  <img class="nav-logo" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
+  <img class="nav-logo" src="unstuck-logo-mark.png" alt="UnStuck"/>
   <button type="button" id="prev">← Prev</button>
   <button type="button" id="next">Next →</button>
   <button type="button" class="ghost" id="toggleNotes">Show notes</button>
@@ -375,7 +377,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
         <h1>The gap is already here</h1>
         <p>Six in ten fourth graders are behind — and they still get practice that isn’t written for their miss.</p>
       </div>
-      <div class="brand-lockup"><img src="unstuck-logo-mark-chip.png" alt="UnStuck"/></div>
+      <div class="brand-lockup"><img src="unstuck-logo-mark.png" alt="UnStuck"/></div>
     </div>
   </div>
   <div class="body"><div class="blob-tr"></div><div class="blob-bl"></div>
@@ -427,7 +429,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
         <div class="opt-banner" style="margin-bottom:10px">Shipped this weekend</div>
         <h2>One adaptive loop — not another worksheet generator.</h2>
       </div>
-      <img class="mark" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
+      <img class="mark" src="unstuck-logo-mark.png" alt="UnStuck"/>
     </div>
     <div class="cycle-stage">
       <div class="cycle-note" data-for="quiz"><span class="who">→ Quiz</span>Exact miss, named in plain English — the gap a parent can say out loud.<span class="ptr" aria-hidden="true"></span></div>
@@ -501,7 +503,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
 
 <section class="slide" id="s6">
   <div class="close-v2">
-    <img class="tiny" src="unstuck-logo-wordmark.png" alt="UnStuck"/>
+    <div class="close-brand"><img src="unstuck-logo-wordmark.png" alt="UnStuck"/></div>
     <div class="trust">
       <span>Personalize practice</span>
       <span>Don’t diagnose disabilities</span>
@@ -521,7 +523,7 @@ body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background
         <h2 style="margin-top:10px">If we have a minute more</h2>
         <p style="margin:10px 0 0;font-size:18px;font-weight:550;color:rgba(11,18,32,.7);max-width:36em">Same adaptive engine — more subjects, more people helped.</p>
       </div>
-      <img class="mark" src="unstuck-logo-mark-chip.png" alt="UnStuck"/>
+      <img class="mark" src="unstuck-logo-mark.png" alt="UnStuck"/>
     </div>
     <div class="future-v2">
       <div class="cell dark"><div class="n">01</div><h3>Deepen math first</h3><p>Fractions → ratios, then more of grades 4–6.</p></div>
